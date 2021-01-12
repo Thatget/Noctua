@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////
+ *
+ * @author Emipro Technologies
+ * @Category Emipro
+ * @package Emipro_MultilangCmsblock
+ * @license http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ *
+ * //////////////////////////////////////////////////////////////////////////////////////
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+	<preference for="Magento\Cms\Model\Block\DataProvider" type="Emipro\MultilangCmsblock\Plugin\DataProviderPlugin" /> 
+	
+	<preference for="Magento\Cms\Block\Adminhtml\Block\Edit\DeleteButton" type="Emipro\MultilangCmsblock\Block\Adminhtml\Block\Edit\DeleteButton" /> 
+
+    <preference for="Magento\Cms\Block\Adminhtml\Block\Edit\BackButton" type="Emipro\MultilangCmsblock\Block\Adminhtml\Block\Edit\BackButton" />
+
+ 	<preference for="Magento\Cms\Controller\Adminhtml\Block\Save" type="Emipro\MultilangCmsblock\Controller\Adminhtml\Block\Save" /> 
+
+    <preference for="Magento\Cms\Controller\Adminhtml\Block\Edit" type="Emipro\MultilangCmsblock\Controller\Adminhtml\Block\Edit" /> 
+
+    <preference for="Magento\Cms\Controller\Adminhtml\Block\Delete" type="Emipro\MultilangCmsblock\Controller\Adminhtml\Block\Delete" />    
+
+    <preference for="Magento\Cms\Controller\Adminhtml\Block\MassDelete" type="Emipro\MultilangCmsblock\Controller\Adminhtml\Block\MassDelete" /> 
+
+    <preference for="Magento\Cms\Ui\Component\Listing\Column\BlockActions" 
+    type="Emipro\MultilangCmsblock\Ui\Component\Listing\Column\BlockActions" />
+
+    <preference for="Magento\Cms\Model\ResourceModel\Block\Collection" 
+    type="Emipro\MultilangCmsblock\Model\ResourceModel\Block\Collection" />
+
+    <preference for="Magento\Cms\Model\ResourceModel\Block\Grid\Collection" 
+    type="Emipro\MultilangCmsblock\Model\ResourceModel\Block\Grid\Collection" />
+
+    <preference for="Magento\Cms\Model\ResourceModel\Block" type="Emipro\MultilangCmsblock\Model\ResourceModel\Block" />
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">                  
+                <item name="cms_block_listing_data_source" xsi:type="string">Emipro\MultilangCmsblock\Model\ResourceModel\Block\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Emipro\MultilangCmsblock\Model\ResourceModel\Block\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">cms_block</argument>
+            <argument name="eventPrefix" xsi:type="string">cms_block_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">block_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Magento\Cms\Model\ResourceModel\Block</argument>
+        </arguments>
+    </type>    
+</config>

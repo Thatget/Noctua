@@ -1,0 +1,69 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [1-3-2019]
+ */
+-->
+<div>
+	<div class="section-inner-presse-page product-video-product-page">
+	    <div class="product-page-videos-container">
+	    	<!-- ko foreach: productVideoCollArray().nullCollection -->
+	        <div class="product-page-videos-main">
+	        	<div class="product-page-videos-title">
+				    <div class="videos-inner-title" data-bind="text:video_title"></div>
+				    <!-- ko if: productvideo_language != null && video_reviewer_url != null -->
+				    <div class="videos-inner-content">
+					    <div class="video-flag">
+					    	<img alt="language" data-bind="attr: { src:productvideo_language }"/>
+					    </div>
+					    <div class="video-arrow">
+					        <a data-bind="attr: { href:video_reviewer_url }" target="_blank">
+					            <img data-bind="attr: { src:arrow_img }" alt="duble-arrow-gray.png">
+					        </a>
+					    </div>
+				    </div>
+					<!-- /ko -->
+				</div>
+	            <div class="product-page-videos-iframe">
+            		<iframe data-bind="attr: { src:video_link }" allowfullscreen=""></iframe>
+            	</div>
+	        </div>
+        	<!-- /ko -->
+	        <div class="product-video-notice">
+	        	<span data-bind="html: 'Video Reviews'"></span>
+	        	<div class="product-video-notice-div" data-bind="html: productVideoCollArray().block"></div>
+	        </div>
+	        <!-- ko foreach: productVideoCollArray().notNullCollection -->
+	        <div class="product-page-videos-main">
+	    	    <div class="product-page-videos-title">
+				    <!-- ko if: productvideo_language != null && video_reviewer_url != null -->
+				    <!-- ko if: productvideo_lang_name != null -->
+				    <div class="videos-inner-title" data-bind="text:video_title+' ('+productvideo_lang_name+') '"></div>
+				    <!-- /ko -->
+				    <!-- ko if: productvideo_lang_name == null -->
+				    <div class="videos-inner-title" data-bind="text:video_title"></div>
+				    <!-- /ko -->
+				    <div class="videos-inner-content">
+					    <div class="video-flag">
+					    	<img alt="language" data-bind="attr: { src:productvideo_language }"/>
+					    </div>
+					    <div class="video-arrow">
+					        <a data-bind="attr: { href:video_reviewer_url }" target="_blank">
+					            <img data-bind="attr: { src:arrow_img }" alt="duble-arrow-gray.png">
+					        </a>
+					    </div>
+				    </div>
+					<!-- /ko -->
+				</div>
+		        <div class="product-page-videos-iframe">
+		    		<iframe data-bind="attr: { src:video_link }" allowfullscreen=""></iframe>
+		    	</div>
+			</div>
+	        <!-- /ko -->
+	    </div>
+	</div>
+</div>

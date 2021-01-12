@@ -1,0 +1,87 @@
+.lib-font-face(
+  @family-name,
+  @font-path,
+  @font-weight: normal,
+  @font-style: normal,
+  @font-display: swap
+) {
+  @font-face {
+    font-family: @family-name;
+    src: url('@{font-path}.woff') format('woff'),
+    url('@{font-path}.woff') format('woff');
+    font-weight: @font-weight;
+    font-style: @font-style;
+    font-display: swap;
+  }
+}
+
+& when (@media-common = true) {
+
+    .lib-font-face(
+        @family-name: 'DINNNextRoundedLTPro',
+        @font-path: '@{baseDir}fonts/DINNextRoundedLTPro-Regular',
+        @font-weight: 400,
+        @font-style: normal,
+        @font-display: swap
+    );
+
+    .lib-font-face(
+        @family-name: 'DINNNextRoundedLTPro-light',
+        @font-path: '@{baseDir}fonts/DINNextRoundedLTPro-Light',
+        @font-weight: 400,
+        @font-style: normal,
+        @font-display: swap
+    );
+
+    .lib-font-face(
+        @family-name: 'Flaticon',
+        @font-path: '@{baseDir}fonts/flaticon',
+        @font-weight: 400,
+        @font-style: normal,
+        @font-display: swap
+    );
+
+    .lib-font-face(
+        @family-name: 'FontAwesome',
+        @font-path: '@{baseDir}fonts/fontawesome-webfont',
+        @font-weight: 400,
+        @font-style: normal,
+        @font-display: swap
+    );
+    .lib-font-face(
+        @family-name: 'HelveticaNeueLTStd-47LC',
+        @font-path: '@{baseDir}fonts/HelveticaNeueLTStd-LtCn',
+        @font-weight: 400,
+        @font-style: normal,
+        @font-display: swap
+    );
+    .lib-font-face(
+        @family-name: 'HelveticaNeueLTStd-57C',
+        @font-path: '@{baseDir}fonts/HelveticaNeueLTStd-Cn',
+        @font-weight: 400,
+        @font-style: normal,
+        @font-display: swap
+    );
+    .lib-font-face(
+        @family-name: 'MinionProRegular',
+        @font-path: '@{baseDir}fonts/minionpro-regular',
+        @font-weight: 400,
+        @font-style: normal,
+        @font-display: swap
+    );
+     .lib-font-face(
+        @family-name: 'HelveticaNeueLT Std Thin Cn',
+        @font-path: '@{baseDir}fonts/helveticaneueltstd-thcn_1',
+        @font-weight: 400,
+        @font-style: normal,
+        @font-display: swap
+    );
+    .lib-font-face(
+        @family-name: 'HelveticaNeueLT Std Lt Cn',
+        @font-path: '@{baseDir}fonts/helveticaneueltstd-ltcn_1',
+        @font-weight: 400,
+        @font-style: normal,
+        @font-display: swap
+    );
+
+}

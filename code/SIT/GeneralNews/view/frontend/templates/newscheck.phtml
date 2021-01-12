@@ -1,0 +1,23 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [1-3-2019]
+ */
+?>
+<script src="<?php echo $block->getViewFileUrl('SIT_GeneralNews::js/newsfancybox.js')?>"></script>
+<?php
+$newsCollection = $block->getCheckNewsDetails();
+?>
+<div class="general-news-continer">
+    <h2 class="news-title">
+        <?= $newsCollection->getNewsTitle() ?>
+    </h2>
+    <!-- <div class="line"></div> -->
+    <div class="general-news-desc">
+        <?= $block->getFilterableCMSData($newsCollection->getNewsDesc()) ?>
+    </div>
+</div>

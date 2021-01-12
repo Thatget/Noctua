@@ -1,0 +1,127 @@
+<?php
+	$compSocketOpt = $block->getAttrOptions('comp_socket');
+	$compManufactureOpt = $block->getAttrOptions('comp_manufacture');
+	$compModelOpt = $block->getAttrOptions('comp_model');
+	$compSeriesOpt = $block->getAttrOptions('comp_series');
+	$compValueOpt = $block->getAttrOptions('comp_value');
+?>
+<script type="text/javascript">
+require(['mage/url','jquery', 'jquery/ui'], function(url,$) {
+	var baseUrl = '<?php /* @escapeNotVerified */ echo $block->getAdminBaseUrl();?>';
+	var comp_socket_opt = [
+		<?php
+			foreach ($compSocketOpt as $socketattr) {
+				$socketLabel = $socketattr['value'];
+				echo "'".$socketLabel."',";
+			}
+		?>
+	];
+	var comp_manufacture_opt = [
+		<?php
+			foreach ($compManufactureOpt as $manufattr) {
+				$manufLabel = $manufattr['value'];
+				echo "'".$manufLabel."',";
+			}
+		?>
+	];
+	var comp_model_opt = [
+		<?php
+			foreach ($compModelOpt as $modelattr) {
+				$modelLabel = $modelattr['value'];
+				echo "'".$modelLabel."',";
+			}
+		?>
+	];
+	var comp_series_opt = [
+		<?php
+			foreach ($compSeriesOpt as $seriesattr) {
+				$seriesLabel = $seriesattr['value'];
+				echo "'".$seriesLabel."',";
+			}
+		?>
+	];
+	var comp_value_opt = [
+		<?php
+			foreach ($compValueOpt as $valueattr) {
+				$valueLabel = $valueattr['value'];
+				echo "'".$valueLabel."',";
+			}
+		?>
+	];
+
+    $(document).ready(function () {
+    	/**
+    	 * For Comp Socket
+    	 */
+       $(document).on('keyup',"input[name='comp_socket']",function () {
+            $("input[name='comp_socket']").autocomplete({
+                source: comp_socket_opt,
+                delay: 500,
+                minLength: 0,
+                messages: {
+			        noResults: '',
+			        results: function() {}
+			    }
+			});
+		});
+		/**
+    	 * For Comp Manufacture
+    	 */
+    	$(document).on('keyup',"input[name='comp_manufacture']",function () {
+            $("input[name='comp_manufacture']").autocomplete({
+                source: comp_manufacture_opt,
+                delay: 500,
+                minLength: 0,
+                messages: {
+			        noResults: '',
+			        results: function() {}
+			    }
+			});
+		});
+		/**
+    	 * For Comp Model
+    	 */
+    	$(document).on('keyup',"input[name='comp_model']",function () {
+    		console.log("type...");
+            $("input[name='comp_model']").autocomplete({
+                source: comp_model_opt,
+                delay: 500,
+                minLength: 0,
+                messages: {
+			        noResults: '',
+			        results: function() {}
+			    }
+			});
+		});
+		/**
+    	 * For Comp Series
+    	 */
+    	$(document).on('keyup',"input[name='comp_series']",function () {
+            $("input[name='comp_series']").autocomplete({
+                source: comp_series_opt,
+                delay: 500,
+                minLength: 0,
+                messages: {
+			        noResults: '',
+			        results: function() {}
+			    }
+			});
+		});
+		/**
+    	 * For Comp Series
+    	 */
+    	$(document).on('keyup',"input[name='comp_value']",function () {
+            $("input[name='comp_value']").autocomplete({
+                source: comp_value_opt,
+                delay: 500,
+                minLength: 0,
+                messages: {
+			        noResults: '',
+			        results: function() {}
+			    }
+			});
+		});
+    });
+	return url.setBaseUrl('<?php /* @escapeNotVerified */ echo $block->getAdminBaseUrl();?>');
+});
+</script>

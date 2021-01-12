@@ -1,0 +1,46 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [1-3-2019]
+ */
+?>
+<?php
+    $tabData = $block->getTabdata();
+    $tabId = $tabData['id'];
+    $helper=$this->helper('Swissup\Easytabs\Helper\Data');
+    $params=$helper->getVisible($tabId);
+    $removefrom=$helper->getRemoveFrom($tabId);
+    $page = $helper->getPageInfo($params,$removefrom);
+    // $page = $this->helper('Swissup\Easytabs\Helper\Data')->getPageInfo('fan');
+    if($page === false):
+        return true;
+    endif;
+
+    $sizeOptions = $block->getFanSearchAttrOptions('size_mm');
+    $connectorOptions = $block->getFanSearchAttrOptions('connector');
+    $reduxCollection = $block->getFanSearchProList('line-redux');
+?>
+<div id="sit-ajaxreduxsearch-category-div" data-bind="scope:'sit-ajaxreduxsearch-category-div'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+               "components": {
+                    "sit-ajaxreduxsearch-category-div": {
+                        "component": "SIT_AjaxFanSearch/js/koajaxreduxsearch",
+                        "template" : "SIT_AjaxFanSearch/koajaxreduxsearch",
+                        "sizeOptions": <?= /* @escapeNotVerified */ $sizeOptions ?>,
+                        "connectorOptions": <?= /* @escapeNotVerified */ $connectorOptions ?>,
+                        "reduxCollection": <?= /* @escapeNotVerified */ $reduxCollection ?>
+                        }
+                    }
+                }
+            }
+    }
+    </script>
+</div>

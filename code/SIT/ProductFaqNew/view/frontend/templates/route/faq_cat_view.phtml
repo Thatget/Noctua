@@ -1,0 +1,19 @@
+<?php
+    /** For display faq view page in custom page : NG */
+    $sitHelper = $this->helper('SIT\MainAdmin\Helper\Data');
+    $product = $sitHelper->getCurrentCategory();
+    $faq_view_coll = $block->getFAQCustomForCategory($block->getData('faq_view'));
+?>
+<div class="product-faq-product-tab-main-div">
+	<?php if($faq_view_coll->getSize() > 0):?>
+		<div class="main-div-product-faq-content">
+			<?php foreach ($faq_view_coll as $key => $value): ?>
+		        <h1 class="faq-collection-question-title" id="<?= $value['entity_id'] ?>"><?= 'FAQ: '.$value->getFaqQue(); ?></h1>
+		        <div class="faq-collection-answer"><?= $sitHelper->getCmsFilterContent($value->getFaqAns()) ?></div>
+		    <?php endforeach; ?>
+		</div>
+	<?php endif; ?>
+	<div class="product-faq-custom-tab-footer">
+		<?php echo __('Do you have a question concerning one of our products ? Please use <a class="dotted_link" href="' . $sitHelper->getStoreBaseUrl() . 'contact' . '"><strong>this form</strong></a> to pose a question!'); ?>
+	</div>
+</div>

@@ -1,0 +1,56 @@
+<div class="cpu-manufacturer" data-bind="css:{hide_category_view_comp_compcpu: cpuHeader().length <= 0}">
+	<div class="cpu-manu-title">
+		 <div class="cpu-manufacturer-title" data-bind="i18n: 'Manufacturer'"></div>
+		 <div class="cpu-socket-title" data-bind="i18n: 'Socket'"></div>
+		 <div class="cpu-series-title" data-bind="i18n: 'Series'"></div>
+		</div>
+	<div class="cpu-manu-data">
+		<!-- ko foreach: cpuHeader -->
+			<div class="cpu-name" data-bind="attr:{'data-id':'manuf_'+$data.comp_manufacture}">
+				<a href="javascript:void(0)" data-bind="i18n: comp_manufacture_value,attr:{id: '#manuf_'+$data.comp_manufacture},event:{'click': $parent.getManufacturer}"></a>
+			</div>
+			<div class="cpu-content">
+				<!-- ko foreach: $data.comp_socket_manufacture.socket -->
+					<!-- ko if: $index() != 0 -->
+						<span> - </span>
+					<!-- /ko -->
+					<a href="javascript:void(0)" data-bind="i18n: comp_socket_value,attr:{id: '#manuf_'+$parent.comp_manufacture+'_socket_'+comp_socket},click: function(data, event) { $parents[1].getSocket($parent.comp_manufacture,$data);}"></a>
+				<!-- /ko -->
+			</div>
+			<div class="cpu-series">
+				<!-- ko foreach: $data.comp_socket_manufacture.series -->
+					<!-- ko if: $index() != 0 -->
+						<span> - </span>
+					<!-- /ko -->
+					<a href="javascript:void(0)" data-bind="i18n: comp_series_value,attr: {id: '#manuf_'+$parent.comp_manufacture+'_socket_'+$data.comp_socket+'_cpu_'+$data.comp_series},click: function(data, event) { $parents[1].getSeries($parent.comp_manufacture,$data);}"></a>
+					<!-- ko if: ($parentContext.$index()+1) == $parents[1].cpuHeader().length -->
+						<span data-bind="text:$parents[1].loadData()"></span>
+					<!-- /ko -->
+				<!-- /ko -->
+			</div>
+		<!-- /ko -->
+	</div>
+</div>
+<div class="socket-cpu">
+	<!-- ko foreach: {data: cpuList, as: 'row'} -->
+	<h1 class="cpu-head" data-bind="i18n: row.comp_manufacture_value,attr:{id: 'manuf_'+row.comp_manufacture}"></h1>
+	<div class="cpu-data">
+		<!-- ko foreach: row.comp_socket_manufacture.socket -->
+		<div class="main-cpu heading border-bottom" data-bind="attr:{id: 'manuf_'+row.comp_manufacture+'_socket_'+$data.comp_socket}">
+			<div class="cpu-col cpu-col-left-manufacturer" data-bind="i18n: 'Manufacturer'"></div>
+			<div class="cpu-col" data-bind="i18n: 'Socket'"></div>
+			<div class="cpu-col" data-bind="i18n: 'Series'"></div>
+			<div class="cpu-col" data-bind="i18n: 'Model'"></div>
+		</div>
+			<!-- ko foreach: $data.comp_models -->
+				<div class="main-cpu">
+					<div class="cpu-col cpu-col-left-manufacturer" data-bind="i18n: row.comp_manufacture_value"></div>
+					<div class="cpu-col" data-bind="i18n: $parent.comp_socket_value"></div>
+					<div class="cpu-col" data-bind="i18n: $data.comp_series_value,attr: {id: 'manuf_'+row.comp_manufacture+'_socket_'+$parent.comp_socket+'_cpu_'+$data.comp_series}"></div>
+					<div class="cpu-col"><a href="javascript:void(0)" data-bind="i18n: $data.comp_model_value,attr:{href:$data.url_key}"></a></div>
+				</div>
+			<!-- /ko -->
+		<!-- /ko -->
+	</div>
+	<!-- /ko -->
+</div>

@@ -1,0 +1,114 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Product additional attributes template
+ *
+ * @var $block \Magento\Catalog\Block\Product\View\Attributes
+ */
+?>
+<?php
+$tabData = $block->getTabdata();
+$tabId = $tabData['id'];
+$helper=$this->helper('Swissup\Easytabs\Helper\Data');
+$params=$helper->getVisible($tabId);
+$removefrom=$helper->getRemoveFrom($tabId);
+$page = $helper->getProductInfo($params,$removefrom);
+if($page === false){
+    return true;
+}
+    $_helper = $this->helper('Magento\Catalog\Helper\Output');
+    $sitHelper = $this->helper('SIT\MainAdmin\Helper\Data');
+    $_product = $helper->getProduct();
+    $additionalBlock = $this->getLayout()->createBlock('SIT\MainAdmin\Block\Product\View\Attributes');
+    //$additionalBlock = $this->getLayout()->createBlock('Magento\Catalog\Block\Product\View\Attributes');
+    $additionalBlock->setProduct($_product->getId());
+    $specification_bottom_image = $sitHelper->getImage('catalog/product',$_product->getData('specification_bottom_image'));
+    $specification_image = $sitHelper->getImage('catalog/product',$_product->getData('specification_image'));
+    $baseUrl = $sitHelper->getStoreBaseUrl();
+?>
+<?php if ($_additional = $additionalBlock->getAdditionalData()):?>
+    <div class="section-inner-presse-page-full specification">
+        <?php if($_product->getData('specification_image') != 'no_selection'): ?>
+        <div class="specification-left">
+            <div class="specification-left-inner">
+                <img src="<?= $specification_image; ?>" alt="NH-D15">
+            </div>
+        </div>
+        <?php endif; ?>
+        <div class="specification-right">
+            <div class="additional-attributes-wrapper table-wrapper">
+                <!-- loop -->
+                <div class="specification-right-details">
+                    <?php foreach ($_additional as $_data): ?>
+                    <?php if($_data['title'] != 'Migration_Amazon' && $_data['title'] != 'Amazon'): ?>
+                    <div class="right-inner-details">
+                        <div class="specification-main-title">
+                            <span><?= $block->escapeHtml(__(str_replace('Migration_', '', $_data['title']))); ?></span>
+                        </div>
+                        <?php foreach ($_data['items'] as $_dataValue):
+                            $labelLink = $additionalBlock->getAttrData($_dataValue['code']);
+                        if($_dataValue["code"] != 'height_with_fan_url') :
+                        ?>
+                        <div class="specification-data" data-code="<?= $_dataValue['code'] ?>">
+                            <?php if($labelLink) : ?>
+                            <div class="col label" scope="row">
+                                <a class="dotted_link" href="<?= $baseUrl.$labelLink; ?>">
+                                    <?= $block->escapeHtml(__($_dataValue['label'])) ?>
+                                </a>
+                            </div>
+                            <?php else : ?>
+                                <div class="col label" scope="row"><?= $block->escapeHtml(__($_dataValue['label'])) ?></div>
+                            <?php endif; ?>
+                            <?php if ($_dataValue['code'] == 'scope_of_delivery') :
+                                $scopeofdelivery = $_helper->productAttribute($_product, $_dataValue['value'], $_dataValue['code']);
+                                $scopeofdelivery = preg_replace('/^<ul>|<\/ul>$/', '', $scopeofdelivery);
+                                $resultValue = '<ul>' . $scopeofdelivery . '</ul>';
+                            ?>
+                                <div class="col data" data-th="<?= $block->escapeHtml(__($_dataValue['label'])) ?>"><?= /* @escapeNotVerified */ $resultValue; ?></div>
+                            <?php else :
+                                $result = __('%s ' . $_dataValue['code'],$_helper->productAttribute($_product, $_dataValue['value'], $_dataValue['code']));
+                                $resultValue= str_replace("%s", "", $result);
+
+                                // Start: Fix issue "max_tdp" in specifications
+                                //$attValue = __($_helper->productAttribute($_product, $_dataValue['value'], $_dataValue['code']).$resultValue);
+                                if ($_dataValue['code'] == 'max_tdp' || $_dataValue['code'] == $resultValue) {
+                                    $attValue = __($_helper->productAttribute($_product, $_dataValue['value'], $_dataValue['code']));
+                                } else {
+                                    $attValue = __($_helper->productAttribute($_product, $_dataValue['value'], $_dataValue['code']).$resultValue);
+                                }
+                                // End code
+
+                                if (strpos($attValue, 'fan_compatibility_accessories') !== false) {
+                                    $attValue = str_replace("fan_compatibility_accessories","",$attValue);
+                                }
+                            ?>
+                            <div class="col data" data-th="<?= $block->escapeHtml(__($_dataValue['label'])) ?>"><?= $sitHelper->getCmsFilterContent($attValue); ?></div>
+                            <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php endforeach; ?>
+                    </div>
+                    <?php endif; ?>
+                    <?php endforeach; ?>
+                </div>
+                <!-- loop -->
+                <?php if($_product->getData('specification_bottom_image') != 'no_selection'): ?>
+                <div class="specification-bottom-img">
+                    <div>
+                        <img src="<?= $specification_bottom_image; ?>" alt="NH-D15">
+                    </div>
+                </div>
+                <?php endif; ?>
+            </div>
+        </div>
+        <div class="specification-mobile">
+            <div class="specification-mobile-inner">
+                <img src="<?= $specification_image; ?>" alt="NH-D15">
+            </div>
+        </div>
+    </div>
+<?php endif;?>

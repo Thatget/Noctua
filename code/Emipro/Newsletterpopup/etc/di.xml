@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+	<type name="Magento\Newsletter\Model\Subscriber">
+        <plugin name="emipro_newsletter_model_subscriber" type="\Emipro\Newsletterpopup\Plugin\Subscriber" sortOrder="1" />
+    </type>
+    <preference for="Magento\Newsletter\Model\Subscriber" type="Emipro\Newsletterpopup\Model\Subscriber" />
+</config>

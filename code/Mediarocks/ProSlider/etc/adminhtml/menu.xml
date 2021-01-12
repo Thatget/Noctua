@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [26-03-2019]
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Mediarocks_ProSlider::mediarocks" title="MediaRocks" module="Mediarocks_ProSlider" sortOrder="10" resource="Mediarocks_ProSlider::mediarocks"/>
+
+        <add id="Mediarocks_ProSlider::slider" resource="Mediarocks_ProSlider::slider" title="Manage Slider" module="Mediarocks_ProSlider" sortOrder="999" parent="Mediarocks_ProSlider::mediarocks"  action="proslider/slider/"/>
+
+        <add id="Mediarocks_ProSlider::slide" resource="Mediarocks_ProSlider::slide" title="Manage Slide" module="Mediarocks_ProSlider" sortOrder="999" parent="Mediarocks_ProSlider::mediarocks"  action="proslider/slide/"/>
+    </menu>
+</config>

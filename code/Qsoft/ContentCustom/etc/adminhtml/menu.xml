@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [26-03-2019]
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/menu.xsd">
+   <menu>
+       <add id="Qsoft_ContentCustom::contentcustom_linkreplace" title="Link Replaces" translate="title" module="Qsoft_ContentCustom" sortOrder="100" parent="Magento_Backend::content_elements" action="contentcustom/linkreplace/index" resource="Qsoft_ContentCustom::linkreplace"/>
+	</menu>
+</config>

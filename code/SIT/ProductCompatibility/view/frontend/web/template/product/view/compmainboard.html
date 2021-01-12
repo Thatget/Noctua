@@ -1,0 +1,74 @@
+<div class="show-all-methods">
+	<div class="image" ></div>
+	<div class="method-content">
+		<span class="motherboard-note" >
+			Please select a motherboard manufacturer according to the required socket, from the list below.
+		</span>
+		<span class="socket-title main-comp-all-data comp-all-data">
+			<a href="javascript:void(0)" data-bind="click: getAllSocket" id="mainboardcomp_all"> Show all motherboards</a>
+		</span>
+	</div>
+</div>
+
+<div class="socket-tables-list"  data-bind="css:{hide_product_view_comp: mainboardList().length <= 0}">
+	<div class="socket-header">
+		<div class="socket-title" data-bind="i18n: 'Socket'"></div>
+		<div class="socket-content" data-bind="i18n: 'Manufacturer'"></div>
+	</div>
+	<div class="socket-list">
+		<!-- ko foreach: mainboardList -->
+			<div class="socket">
+				<span class="socket-title" data-bind="attr:{'data-id':'socket_'+$data.comp_socket}">
+					<a href="javascript:void(0)" data-bind="i18n: $data.comp_socket_value,attr:{id: '#socket_'+$data.comp_socket},event:{'click': $parent.getSocket}"></a>
+				</span>
+				<span class="socket-content">
+					<!-- ko foreach: $data.comp_socket_manufacture -->
+						<!-- ko if: $index() != 0 -->
+							<span> - </span>
+						<!-- /ko -->
+						<a href="javascript:void(0)" data-bind="i18n: comp_manufacture_value,attr:{id: '#socket_'+$parent.comp_socket+'_manuf_'+comp_manufacture},click: function(data, event) { $parents[1].getManufacture($parent.comp_socket,$data);}"></a>
+						<!-- ko if: ($parentContext.$index()+1) == $parents[1].mainboardList().length -->
+							<span data-bind="text:$parents[1].loadData()"></span>
+						<!-- /ko -->
+					<!-- /ko -->
+				</span>
+			</div>
+		<!-- /ko -->
+		<span class="socket-title main-comp-all-data comp-all-data" style="margin: 12px 0px;">
+<!--			<a href="javascript:void(0)" data-bind="click: getAllSocket" id="mainboardcomp_all"> Show all motherboards</a>-->
+		</span>
+		<span class="mainboard-comp-all-data comp-all-data-line"></span>
+	</div>
+</div>
+<div class="pro-mainboard-socket-case" data-bind="css:{hide_product_view_comp: mainboardList().length <= 0}">
+	<div class="green" data-bind="i18n: 'Compatible'"></div>
+	<div class="blue" data-bind="i18n: 'Possible Issues (see comment)'"></div>
+	<div class="red" data-bind="i18n: 'Incompatible (see comment)'"></div>
+</div>
+<!-- ko foreach: {data: mainboardGrid, as: 'row'} -->
+<h1 class="socket-table-head" data-bind="i18n: $data.comp_socket_value,attr:{id: 'socket_'+row.comp_socket}"></h1>
+	<!-- ko foreach: row.comp_socket_manufacture -->
+		<div class="socket-table">
+			<div class="socket-table-title" data-bind="attr:{id: 'socket_'+$parent.comp_socket+'_manuf_'+$data.comp_manufacture}">
+				<span class="pro-mainboard-socket" data-bind="i18n: 'Socket'"></span>
+				<span class="pro-mainboard-manufacturer" data-bind="i18n: 'Manufacturer'"></span>
+				<span class="pro-mainboard-model" data-bind="i18n: 'Model'"></span>
+				<span class="pro-mainboard-compatibility" data-bind="i18n: 'Compatibility'"></span>
+				<span class="pro-mainboard-comment" data-bind="i18n: 'Comment'"></span>
+			</div>
+		<!-- ko foreach: $data.comp_models -->
+			<div class="socket-table-data">
+				<span class="pro-mainboard-socket" data-bind="i18n: row.comp_socket_value"></span>
+				<span class="pro-mainboard-manufacturer" data-bind="i18n:$parent.comp_manufacture_value"></span>
+				<span class="pro-mainboard-model">
+					<a href="javascript:void(0)" data-bind="i18n: $data.comp_model_value,attr:{href:$data.url_key}"></a>
+				</span>
+				<span class="pro-mainboard-compatibility">
+					<img data-bind="attr:{src: $data.comp_compatibility}">
+				</span>
+				<span class="pro-mainboard-comment" data-bind="html:$data.comp_comment"></span>
+			</div>
+		<!-- /ko -->
+		</div>
+	<!-- /ko -->
+<!-- /ko -->

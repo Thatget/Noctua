@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<config>
+  <settings>
+    <preloader image="images/Img4889.jpg" />
+    <userInterface showZoomButtons="true" showToolTips="false" showHotspotsButton="true" showFullScreenButton="false" showTogglePlayButton="false" showArrows="true" toolbarAlign="center" toolbarBackColor="transparent" toolbarHoverColor="#808285" toolbarForeColor="#A7A9AE" toolbarBackAlpha="0" toolbarAlpha="1" showProgressNumbers="true" showFullScreenToolbar="false" fullScreenBackColor="#FFFFFF" />
+    <control dragSpeed="0.13" doubleClickZooms="true" disableMouseControl="false" showHighresOnFullScreen="true" mouseHoverDrag="false" hideHotspotsOnLoad="false" hideHotspotsOnZoom="true" rowSensitivity="15" dragSensitivity="10" inBrowserFullScreen="false" doubleClickFullscreen="false" />
+    <rotation firstImage="0" rotate="false" rotatePeriod="7" bounce="false" rotateDirection="-1" forceDirection="false" inertiaRelToDragSpeed="true" inertiaTimeToStop="700" inertiaMaxInterval="120" useInertia="true" flipHorizontalInput="false" flipVerticalInput="false" bounceRows="true" />
+  </settings>
+  <hotspots>
+    <hotspot id="flowaccelerationchannels" renderMode="0" indicatorImage="hotspot3.svg" margin="0,0,0,0" align="center,right">
+      <spotinfo src="images/spots/noctua_nf_a20_flow_acceleration_channels.png" imgWidth="268" />
+    </hotspot>
+    <hotspot id="sso2bearing" renderMode="0" indicatorImage="hotspot3.svg" margin="0,0,0,0" align="center,right">
+      <spotinfo src="images/spots/noctua_nf_a20_SSO2_bearing.png" imgWidth="268" />
+    </hotspot>
+    <hotspot id="innersurface" renderMode="0" indicatorImage="hotspot3.svg" margin="0,0,0,0" align="center,right">
+      <spotinfo src="images/spots/noctua_nf_a20_flow_inner_surface_micostructure.png" imgWidth="279" />
+    </hotspot>
+    <hotspot id="steppedinletdesign" renderMode="0" indicatorImage="hotspot3.svg" margin="0,0,0,0" align="top,left">
+      <spotinfo src="images/spots/noctua_nf_a20_stepped_inlet_design.png" imgWidth="267" />
+    </hotspot>
+    <hotspot id="antivibrationpads" renderMode="0" indicatorImage="hotspot3.svg" margin="0,0,0,0" align="bottom,right">
+      <spotinfo src="images/spots/noctua_nf_a20_integrated_anti_vibration_pads.png" imgWidth="289" />
+    </hotspot>
+    <hotspot id="holespacing" renderMode="0" indicatorImage="hotspot3.svg">
+      <spotinfo src="images/spots/noctua_nf_a20_hole_spacings.png" imgWidth="288" />
+    </hotspot>
+  </hotspots>
+  <images rows="1">
+    <image src="images/Img4889.jpg">
+      <hotspot source="antivibrationpads" offsetX="883.5" offsetY="107.5" />
+    </image>
+    <image src="images/Img4890.jpg">
+      <hotspot source="flowaccelerationchannels" offsetX="490.5" offsetY="154.5" />
+    </image>
+    <image src="images/Img4891.jpg">
+      <hotspot source="flowaccelerationchannels" offsetX="493.5" offsetY="154.5" />
+    </image>
+    <image src="images/Img4892.jpg">
+      <hotspot source="flowaccelerationchannels" offsetX="498.5" offsetY="157.5" />
+    </image>
+    <image src="images/Img4893.jpg">
+      <hotspot source="flowaccelerationchannels" offsetX="504.5" offsetY="160.5" />
+    </image>
+    <image src="images/Img4894.jpg">
+      <hotspot source="flowaccelerationchannels" offsetX="508.5" offsetY="162.5" />
+    </image>
+    <image src="images/Img4895.jpg">
+      <hotspot source="flowaccelerationchannels" offsetX="516.5" offsetY="168.5" />
+    </image>
+    <image src="images/Img4896.jpg">
+      <hotspot source="flowaccelerationchannels" offsetX="529.5" offsetY="171.5" />
+    </image>
+    <image src="images/Img4897.jpg">
+      <hotspot source="flowaccelerationchannels" offsetX="537.5" offsetY="172.5" />
+    </image>
+    <image src="images/Img4898.jpg" />
+    <image src="images/Img4899.jpg" />
+    <image src="images/Img4900.jpg" />
+    <image src="images/Img4901.jpg">
+      <hotspot source="holespacing" offsetX="537.5" offsetY="162.5" />
+    </image>
+    <image src="images/Img4902.jpg">
+      <hotspot source="holespacing" offsetX="479.5" offsetY="165.5" />
+    </image>
+    <image src="images/Img4903.jpg">
+      <hotspot source="sso2bearing" offsetX="648.5" offsetY="379.5" />
+      <hotspot source="holespacing" offsetX="431.5" offsetY="166.5" />
+    </image>
+    <image src="images/Img4904.jpg">
+      <hotspot source="sso2bearing" offsetX="643.5" offsetY="379.5" />
+      <hotspot source="holespacing" offsetX="385.5" offsetY="171.5" />
+    </image>
+    <image src="images/Img4905.jpg">
+      <hotspot source="sso2bearing" offsetX="635.5" offsetY="380.5" />
+      <hotspot source="holespacing" offsetX="348.5" offsetY="172.5" />
+    </image>
+    <image src="images/Img4906.jpg">
+      <hotspot source="sso2bearing" offsetX="627.5" offsetY="380.5" />
+      <hotspot source="holespacing" offsetX="325.5" offsetY="175.5" />
+    </image>
+    <image src="images/Img4907.jpg">
+      <hotspot source="sso2bearing" offsetX="621.5" offsetY="380.5" />
+      <hotspot source="holespacing" offsetX="308.5" offsetY="179.5" />
+    </image>
+    <image src="images/Img4908.jpg">
+      <hotspot source="sso2bearing" offsetX="613.5" offsetY="380.5" />
+      <hotspot source="steppedinletdesign" offsetX="1300.5" offsetY="-49.5" />
+      <hotspot source="antivibrationpads" offsetX="1288.5" offsetY="-65.5" />
+      <hotspot source="holespacing" offsetX="300.5" offsetY="182.5" />
+    </image>
+    <image src="images/Img4909.jpg">
+      <hotspot source="sso2bearing" offsetX="605.5" offsetY="381.5" />
+      <hotspot source="innersurface" offsetX="305.5" offsetY="338.5" />
+      <hotspot source="holespacing" offsetX="309.5" offsetY="187.5" />
+    </image>
+    <image src="images/Img4910.jpg">
+      <hotspot source="sso2bearing" offsetX="595.5" offsetY="381.5" />
+      <hotspot source="innersurface" offsetX="319.5" offsetY="338.5" />
+      <hotspot source="holespacing" offsetX="319.5" offsetY="192.5" />
+    </image>
+    <image src="images/Img4911.jpg">
+      <hotspot source="sso2bearing" offsetX="591.5" offsetY="381.5" />
+      <hotspot source="innersurface" offsetX="347.5" offsetY="339.5" />
+      <hotspot source="holespacing" offsetX="341.5" offsetY="195.5" />
+    </image>
+    <image src="images/Img4912.jpg">
+      <hotspot source="sso2bearing" offsetX="583.5" offsetY="381.5" />
+      <hotspot source="innersurface" offsetX="383.5" offsetY="338.5" />
+    </image>
+    <image src="images/Img4913.jpg">
+      <hotspot source="innersurface" offsetX="422.5" offsetY="339.5" />
+    </image>
+    <image src="images/Img4914.jpg">
+      <hotspot source="innersurface" offsetX="466.5" offsetY="341.5" />
+    </image>
+    <image src="images/Img4915.jpg">
+      <hotspot source="innersurface" offsetX="514.5" offsetY="342.5" />
+    </image>
+    <image src="images/Img4916.jpg" />
+    <image src="images/Img4917.jpg" />
+    <image src="images/Img4918.jpg">
+      <hotspot source="steppedinletdesign" offsetX="720.5" offsetY="536.5" />
+      <hotspot source="antivibrationpads" offsetX="720.5" offsetY="143.5" />
+    </image>
+    <image src="images/Img4919.jpg">
+      <hotspot source="steppedinletdesign" offsetX="764.5" offsetY="538.5" />
+      <hotspot source="antivibrationpads" offsetX="762.5" offsetY="137.5" />
+    </image>
+    <image src="images/Img4920.jpg">
+      <hotspot source="steppedinletdesign" offsetX="800.5" offsetY="540.5" />
+      <hotspot source="antivibrationpads" offsetX="794.5" offsetY="133.5" />
+    </image>
+    <image src="images/Img4921.jpg">
+      <hotspot source="steppedinletdesign" offsetX="833.5" offsetY="545.5" />
+      <hotspot source="antivibrationpads" offsetX="828.5" offsetY="129.5" />
+    </image>
+    <image src="images/Img4922.jpg">
+      <hotspot source="steppedinletdesign" offsetX="859.5" offsetY="549.5" />
+      <hotspot source="antivibrationpads" offsetX="854.5" offsetY="125.5" />
+    </image>
+    <image src="images/Img4923.jpg">
+      <hotspot source="steppedinletdesign" offsetX="874.5" offsetY="552.5" />
+      <hotspot source="antivibrationpads" offsetX="872.5" offsetY="120.5" />
+    </image>
+    <image src="images/Img4924.jpg">
+      <hotspot source="steppedinletdesign" offsetX="888.5" offsetY="556.5" />
+      <hotspot source="antivibrationpads" offsetX="884.5" offsetY="115.5" />
+    </image>
+    <image src="images/Img4925.jpg">
+      <hotspot source="steppedinletdesign" offsetX="896.5" offsetY="558.5" />
+      <hotspot source="antivibrationpads" offsetX="888.5" offsetY="112.5" />
+    </image>
+  </images>
+</config>

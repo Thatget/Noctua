@@ -1,0 +1,140 @@
+.show-all-methods{
+    background-color: #eee;
+    float: left;
+    width: 100%;
+}
+
+.show-all-methods .image{
+    width: 70px;
+    float: left;
+    background: url(../images/icon_antwort.png) 15px  no-repeat;
+    height: 65px;
+}
+
+.show-all-methods .method-content{
+    float:right;
+    width: calc(100% - 85px);
+}
+
+.show-all-methods .method-content .motherboard-note{
+    margin: 12px 0px 0px 0px;
+    padding-left: 0px;
+    font-size: 12px;
+    line-height: 20px;
+    width: 100%;
+    float: left;
+}
+
+.show-all-methods .method-content .socket-name{
+    width: auto;
+}
+
+.show-all-methods .method-content .socket-name.maincomp-all-data.comp-all-data.selected a:after{
+    top: 3px;
+}
+.show-all-methods .method-content .socket-name.maincomp-all-data.comp-all-data.selected{
+    width: 30% !important;
+}
+
+.socket-manufacturer, .complist-case-manufacturer, .complist-cpu-manufacturer{
+    float: left;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.support-maincomp-border, .support-casecomp-border{
+    padding-top: 0px !important;
+    float: left;
+    width: 100%;
+}
+
+.complist-case-pretext, .complist-cpu-pretext{
+    margin-bottom: 5%;
+}
+
+.socket-tables-list, .cpucomp-tables-list, .service-case-manufacturer, .ram-tables-list {
+    float: left;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.product-service-mainboard-content .mainboard-inner-container .show-all-methods .socket-title,
+.product-service-cpucomp-content .cpucomp-inner-container .show-all-methods .socket-title{
+    margin: 0;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    background-image: url(../images/compatibility_right_arrow.png);
+    background-repeat: no-repeat;
+    background-position: left center;
+    padding-left: 12px;
+    font-weight: 700;
+    line-height: 22px;
+    color: #000;
+    background-position: left top 5px;
+    background-size: 9px;
+    width: 25% !important;
+}
+
+.product-service-cpucomp-content .cpucomp-tables-list .cpucomp-manufacturer.selected,
+.product-service-cpucomp-content .cpucomp-tables-list span.socket-title.main-comp-all-data.comp-all-data.selected
+{
+    background: unset;
+    border: unset;
+}
+
+.show-all-methods span.socket-title.main-comp-all-data.comp-all-data.selected {
+    width: 25% !important;
+    margin-right: 5% !important;
+    position: relative;
+    border: 1px solid #b5b5b5;
+    border-right: none;
+    background-color: #b5b5b5;
+    padding-bottom: 1px !important;
+}
+
+.show-all-methods .socket-title{ width: 50%;}
+
+.product-service-cpucomp-content .cpucomp-inner-container .show-all-methods span.socket-title.main-comp-all-data.comp-all-data.selected {
+    margin: 0;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    background-image: url(../images/compatibility_right_arrow.png);
+    background-repeat: no-repeat;
+    background-position: left center;
+    padding-left: 12px;
+    font-weight: 700;
+    line-height: 22px;
+    color: #000;
+    background-position: left top 5px;
+    background-size: 9px;
+}
+
+
+.product-service-cpucomp-content .cpucomp-inner-container .show-all-methods .cpucomp-manufacturer,
+.product-service-ram-content .ram-inner-container .show-all-methods .cpucomp-manufacturer
+{
+    margin: 0;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    background-image: url(../images/compatibility_right_arrow.png);
+    background-repeat: no-repeat;
+    background-position: left center;
+    padding-left: 12px;
+    font-weight: 700;
+    line-height: 22px;
+    color: #000;
+    background-position: left top 5px;
+    background-size: 9px;
+}
+
+.product-service-cpucomp-content .show-all-methods .cpucomp-manufacturer.selected {
+    width: 25%;
+}
+
+.product-service-mainboard-content .mainboard-inner-container .socket-tables-list span.socket-title.main-comp-all-data.comp-all-data.selected,
+.product-service-mainboard-content .service-case-comp .mainboard-inner-container .service-case-manufacturer span.manufacture-case-name.case-all-data.comp-all-data.selected,
+.service-case-comp .section-inner-presse-page-full .service-case-manufacturer span.manufacture-case-name.case-all-data.comp-all-data.selected,
+.product-service-ram-content .ram-tables-list .ram-list span.ram-title.selected {
+    border: unset;
+    background: unset;
+}

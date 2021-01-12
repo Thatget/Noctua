@@ -1,0 +1,47 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [1-3-2019]
+ */
+?>
+<?php
+    $tabData = $block->getTabdata();
+    $tabId = $tabData['id'];
+    $helper=$this->helper('Swissup\Easytabs\Helper\Data');
+    $params=$helper->getVisible($tabId);
+    $removefrom=$helper->getRemoveFrom($tabId);
+    $page = $helper->getPageInfo($params,$removefrom);
+    // $page = $this->helper('Swissup\Easytabs\Helper\Data')->getPageInfo('fan');
+    if($page === false):
+        return true;
+    endif;
+
+    $sizeOptions = $block->getFanSearchAttrOptions('size_mm');
+    $connectorOptions = $block->getFanSearchAttrOptions('connector');
+    $chromaxCollection = $block->getFanSearchProList('line-chromax');
+
+?>
+<div id="sit-ajaxchromaxsearch-category-div" data-bind="scope:'sit-ajaxchromaxsearch-category-div'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+               "components": {
+                    "sit-ajaxchromaxsearch-category-div": {
+                        "component": "SIT_AjaxFanSearch/js/koajaxchromaxsearch",
+                        "template" : "SIT_AjaxFanSearch/koajaxchromaxsearch",
+                        "sizeOptions": <?= /* @escapeNotVerified */ $sizeOptions ?>,
+                        "connectorOptions": <?= /* @escapeNotVerified */ $connectorOptions ?>,
+                        "chromaxCollection": <?= /* @escapeNotVerified */ $chromaxCollection ?>
+                        }
+                    }
+                }
+            }
+    }
+    </script>
+</div>

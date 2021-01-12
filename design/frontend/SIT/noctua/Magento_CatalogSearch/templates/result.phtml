@@ -1,0 +1,1215 @@
+<?php
+
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+/*Magento\CatalogSearch\Block;*/
+$isQuoted = false;
+$baseUrl = $block->getBaseUrl();
+$storeId = $block->getStoreId();
+$sitHelper = $this->helper('SIT\MainAdmin\Helper\Data');
+$text = htmlspecialchars( $this->getRequest()->getParam('q'),ENT_QUOTES, 'UTF-8');
+$text = str_replace('%', '\%', $text);
+$text = str_replace('_', '\_', $text);
+$text = trim($text);
+$len = strlen($text);
+$explodedWords = [];
+if (
+    strpos($text, '"') !== false && strpos($text, '"') == 0
+    && strrpos($text, '"') !== false && strrpos($text, '"') == ($len - 1)
+) {
+    $isQuoted = true;
+    $tmptext = trim($text, '"');
+    $tmptext = trim($tmptext, '.');
+    $text = '"' . $tmptext . '"';
+} else {
+    $text = trim($text, '.');
+    $explodedWords = multiexplode([" ", ".", ","], $text);
+}
+/**
+ * PHP functions[START]
+ */
+function multiexplode($delimiters, $string)
+{
+    $ready = str_replace($delimiters, $delimiters[0], $string);
+    $launch = explode($delimiters[0], $ready);
+    return  $launch;
+}
+function extractWords($str, $query, $numOfWordToAdd)
+{
+    list($before, $after) = explode($query, $str);
+    $before = rtrim($before);
+    $after  = ltrim($after);
+    $beforeArray = array_reverse(explode(" ", $before));
+    $afterArray  = explode(" ", $after);
+    $countBeforeArray = count($beforeArray);
+    $countAfterArray  = count($afterArray);
+    $beforeString = "";
+    if ($countBeforeArray < $numOfWordToAdd) {
+        $beforeString = implode(' ', $beforeArray);
+    } else {
+        for ($i = 0; $i < $numOfWordToAdd; $i++) {
+            $beforeString = $beforeArray[$i] . ' ' . $beforeString;
+        }
+    }
+    $afterString = "";
+    if ($countAfterArray < $numOfWordToAdd) {
+        $afterString = implode(' ', $afterArray);
+    } else {
+        for ($i = 0; $i < $numOfWordToAdd; $i++) {
+            $afterString = $afterString . $afterArray[$i] . ' ';
+        }
+    }
+    $string = $beforeString . $query . ' ' . $afterString;
+    return $string;
+}
+function highlight($txt, $words)
+{
+    $isQuotedHighlight = false;
+    $test = [];
+    $temp_words = $words;
+    $words = trim($words, '"');
+    $temp = $words;
+    $words = [];
+    $len = strlen($temp_words);
+    if (
+        strpos($temp_words, '"') !== false && strpos($temp_words, '"') == 0
+        && strrpos($temp_words, '"') !== false && strrpos($temp_words, '"') == ($len - 1)
+    ) {
+        $isQuotedHighlight = true;
+    }
+    if ($isQuotedHighlight) {
+        $words[0] = $temp;
+        $var = [];
+        $var = (multiexplode([".", ",", "?", "!"], $txt));
+        for ($i = 0; $i < count($words); $i++) {
+            foreach ($var as $wd) {
+                if (isset($words[$i])) {
+                    if (stristr($wd, $words[$i])) {
+                        $sub_string = mb_ereg_replace("/^([^a-zA-Z0-9])*/", "", $wd, 1);
+                        $sub_string = strrev(mb_ereg_replace("/^([^a-zA-Z0-9])*/", "", strrev($sub_string), 1));
+                        array_push($test, $sub_string);
+                    }
+                }
+            }
+        }
+        $repl = [];
+        $final = [];
+        for ($i = 0; $i < count($words); ++$i) {
+            if (isset($words[$i])) {
+                $repl[$i] = "<b class='keyword'>" . $words[$i] . "</b>";
+            }
+        }
+        $array_unique = array_unique($test);
+        $final_array = array_values($array_unique);
+        $final = implode(" | ", $final_array);
+        $extractWords = '';
+        foreach ($final_array as $farray) {
+            $s = $words[0];
+            $highlightstr = preg_replace("#($s)#i", "<b class='keyword'>$1</b>", $farray);
+            preg_match("#($s)#i", $farray, $matches);
+            $matches = array_unique($matches);
+            $query = "<b class='keyword'>" . $matches[0] . "</b>";
+            $extractWords .= extractWords($highlightstr, $query, 3) . ' | ';
+        }
+        $extractWords = trim($extractWords);
+        $extractWords = rtrim($extractWords, ' |');
+        return '<span class="or-line">|| ' . $extractWords . '</span>';
+    } else {
+        $test = [];
+        $words = $temp_words;
+        $words = trim($words, '"');
+        $temp = $words;
+        if (!is_array($words)) {
+            $words = explode(" ", $words);
+            if (substr_count($temp, ' ')) {
+                $words[count($words) + 1] = $temp;
+            }
+        }
+        $var = (multiexplode([" ", ".", ","], $txt));
+        for ($i = 0; $i < count($words); $i++) {
+            foreach ($var as $wd) {
+                if (isset($words[$i])) {
+                    if (stristr($wd, $words[$i])) {
+                        $sub_string = mb_ereg_replace("/^([^a-zA-Z0-9])*/", "", $wd, 1);
+                        $sub_string = strrev(mb_ereg_replace("/^([^a-zA-Z0-9])*/", "", strrev($sub_string), 1));
+                        array_push($test, $sub_string);
+                    }
+                }
+            }
+        }
+        $words = array_unique($words);
+        $repl = [];
+        $final = [];
+        for ($i = 0; $i < sizeof($words); ++$i) {
+            if (isset($words[$i])) {
+                $repl[$i] = "<b class='keyword'>" . $words[$i] . "</b>";
+            }
+        }
+        $array_unique = array_unique($test);
+        $final_array = array_values($array_unique);
+        $final = implode(" | ", $final_array);
+        array_walk($words, function (&$value, $key) {
+            $value = '#(' . $value . ')#i';
+        });
+        array_walk($repl, function (&$value, $key) {
+            $value = "<b class='keyword'>$1</b>";
+        });
+        return '<span class="or-line">|| ' . preg_replace($words, $repl, $final) . '</span>';
+    }
+}
+/**
+ * PHP funtions[END]
+ */
+/**
+ * Get Faq Collection
+ */
+$faqs = $block->getFaqCollection();
+if ($isQuoted == true) {
+    $faqs = $block->getFaqFilter($faqs, $text, $isQuoted);
+} else {
+    $larr = [];
+    foreach ($explodedWords as $explodedWord) {
+        $larr[] = ['attribute' => 'faq_que', 'like' => '%' . $explodedWord . '%'];
+        $larr[] = ['attribute' => 'faq_ans', 'like' => '%' . $explodedWord . '%'];
+    }
+    $faqs = $block->getFaqFilter($faqs, $larr, $isQuoted);
+}
+$faqcnt = 0;
+/**
+ * Get Review Collection
+ */
+$reviews = $block->getReviewCollection();
+if ($isQuoted == true) {
+    $reviews = $block->getReviewFilter($reviews, $text, $isQuoted);
+} else {
+    $larr = [];
+    foreach ($explodedWords as $explodedWord) {
+        $larr[] = ['attribute' => 'review_title', 'like' => '%' . $explodedWord . '%'];
+        $larr[] = ['attribute' => 'review_website', 'like' => '%' . $explodedWord . '%'];
+        $larr[] = ['attribute' => 'review_short_desc', 'like' => '%' . $explodedWord . '%'];
+        $larr[] = ['attribute' => 'review_desc', 'like' => '%' . $explodedWord . '%'];
+        $larr[] = ['attribute' => 'review_link', 'like' => '%' . $explodedWord . '%'];
+    }
+    $reviews = $block->getReviewFilter($reviews, $larr, $isQuoted);
+}
+$reviews->groupByAttribute(['review_website', 'review_short_desc'])
+    ->setOrder('created_at', 'desc');
+$reviewcnt = 0;
+/**
+ * Get General News Collection
+ */
+$news = $block->getNewsCollection();
+if ($isQuoted == true) {
+    $news = $block->getNewsFilter($news, $text, $isQuoted);
+} else {
+    $larr = [];
+    foreach ($explodedWords as $explodedWord) {
+        $larr[] = ['attribute' => 'news_title', 'like' => '%' . $explodedWord . '%'];
+        $larr[] = ['attribute' => 'news_shortdesc', 'like' => '%' . $explodedWord . '%'];
+        $larr[] = ['attribute' => 'news_desc', 'like' => '%' . $explodedWord . '%'];
+    }
+    $news = $block->getNewsFilter($news, $larr, $isQuoted);
+}
+$presscnt = 0;
+/**
+ * Get Where to Buy Collection (Onibi_StoreLocator)
+ */
+$stores = $block->getStoreCollection();
+if ($isQuoted == true) {
+    $countryId = '';
+    $countryCollection = $block->getCountryCollection();
+    foreach ($countryCollection as $country) {
+        $lowertext = trim(mb_strtolower($text, 'UTF-8'), '"');
+        $countrytext = mb_strtolower($country->getName(), 'UTF-8');
+        if ($lowertext == $countrytext) {
+            $countryId = $country->getCountryId();
+            break;
+        }
+    }
+    if ($countryId != '') {
+        $stores = $block->getStoreFilter($stores, $text, $countryId);
+    } else {
+        $stores = $block->getStoreFilter($stores, $text, $countryId);
+    }
+} else {
+    $farr = [];
+    $larr = [];
+    foreach ($explodedWords as $explodedWord) {
+        $countryId = '';
+        $countryCollection = $block->getCountryCollection();
+        foreach ($countryCollection as $country) {
+            $lowertext = trim(mb_strtolower($explodedWord, 'UTF-8'), '"');
+            $countrytext = mb_strtolower($country->getName(), 'UTF-8');
+            if ($lowertext == $countrytext) {
+                $countryId = $country->getCountryId();
+                break;
+            }
+        }
+        if ($countryId != '') {
+            array_push($farr, 'name');
+            array_push($larr, ['like' => '%' . $explodedWord . '%']);
+            array_push($farr, 'city');
+            array_push($larr, ['like' => '%' . $explodedWord . '%']);
+            array_push($farr, 'address');
+            array_push($larr, ['like' => '%' . $explodedWord . '%']);
+            array_push($farr, 'country_id');
+            array_push($larr, ['like' => '%' . $countryId . '%']);
+        } else {
+            array_push($farr, 'name');
+            array_push($larr, ['like' => '%' . $explodedWord . '%']);
+            array_push($farr, 'city');
+            array_push($larr, ['like' => '%' . $explodedWord . '%']);
+            array_push($farr, 'address');
+            array_push($larr, ['like' => '%' . $explodedWord . '%']);
+        }
+    }
+    $stores->addFieldToFilter($farr, $larr);
+}
+$storecnt = 0;
+/**
+ * Get Compatibility  Collection[START][MD]
+ */
+$collection_mainboard = $block->getCompCollection('Mainboard');
+$collection_ram = $block->getCompCollection('RAM');
+$collection_case = $block->getCompCollection('Case');
+$collection_cpu = $block->getCompCollection('CPU');
+
+foreach ($collection_ram as $comp_ram) {
+    $ram_manu[] = $comp_ram['comp_manufacture'];
+    $ram_socket[] = $comp_ram['comp_socket'];
+    $ram_model[] = $comp_ram['comp_model'];
+}
+foreach ($collection_mainboard as $comp_mainboard) {
+    $mainboard_model[] = $comp_mainboard['comp_model'];
+    $mainboard_manu[] = $comp_mainboard['comp_manufacture'];
+    $mainboard_socket[] = $comp_mainboard['comp_socket'];
+}
+foreach ($collection_case as $comp_case) {
+    $case_model[] = $comp_case['comp_model'];
+    $case_manu[] = $comp_case['comp_manufacture'];
+}
+foreach ($collection_cpu as $comp_cpu) {
+    $cpu_model[] = $comp_cpu['comp_model'];
+    $cpu_manu[] = $comp_cpu['comp_manufacture'];
+    $cpu_socket[] = $comp_cpu['comp_socket'];
+}
+
+$man_comp_array = [];
+$man_comp = $block->getCompAttrValue('COMP_MANUFACTURE');
+foreach ($man_comp as $option) {
+    if ($option['option_id']) {
+        $man_comp_array[$option['value']] = $option['option_id'];
+    }
+}
+$model_comp_array = [];
+$ram_model_arr = [];
+$mainboard_model_arr = [];
+$case_model_arr = $cpu_model_arr = [];
+$model_comp = $block->getCompAttrValue('COMP_MODEL');
+if (in_array($_SERVER['REMOTE_ADDR'], array('222.252.106.93'))) {
+    //$model_comp0    = $block->getCompAttrValue('COMP_MODEL');
+    $model_comp1    = $block->getCompAttrValue('COMP_MANUFACTURE');
+    $model_comp2    = $block->getCompAttrValue('COMP_SOCKET');
+    try {
+        foreach ($model_comp1 as $option) {
+            if ($option['option_id']) {
+                //$option['label'] =$option['value'];
+                $model_comp_array[$option['value']] = $option['option_id'];
+            }
+            if (in_array($option['option_id'], $ram_model)) {
+                $ram_model_arr[$option['value']] = $option['option_id'];
+            }
+            if (in_array($option['option_id'], $mainboard_model)) {
+                $mainboard_model_arr[$option['value']] = $option['option_id'];
+            }
+            if (in_array($option['option_id'], $case_model)) {
+                $case_model_arr[$option['value']] = $option['option_id'];
+            }
+            if (in_array($option['option_id'], $cpu_model)) {
+                $cpu_model_arr[$option['value']] = $option['option_id'];
+            }
+        }
+        foreach ($model_comp2 as $option) {
+            if ($option['option_id']) {
+                //$option['label'] =$option['value'];
+                $model_comp_array[$option['value']] = $option['option_id'];
+            }
+            if (in_array($option['option_id'], $ram_model)) {
+                $ram_model_arr[$option['value']] = $option['option_id'];
+            }
+            if (in_array($option['option_id'], $mainboard_model)) {
+                $mainboard_model_arr[$option['value']] = $option['option_id'];
+            }
+            if (in_array($option['option_id'], $case_model)) {
+                $case_model_arr[$option['value']] = $option['option_id'];
+            }
+            if (in_array($option['option_id'], $cpu_model)) {
+                $cpu_model_arr[$option['value']] = $option['option_id'];
+            }
+        }
+    } catch (Exception $exception) {
+        echo $exception->getMessage();
+    }
+}
+foreach ($model_comp as $option) {
+    if ($option['option_id']) {
+        //$option['label'] =$option['value'];
+        $model_comp_array[$option['value']] = $option['option_id'];
+    }
+    if (in_array($option['option_id'], $ram_model)) {
+        $ram_model_arr[$option['value']] = $option['option_id'];
+    }
+    if (in_array($option['option_id'], $mainboard_model)) {
+        $mainboard_model_arr[$option['value']] = $option['option_id'];
+    }
+    if (in_array($option['option_id'], $case_model)) {
+        $case_model_arr[$option['value']] = $option['option_id'];
+    }
+    if (in_array($option['option_id'], $cpu_model)) {
+        $cpu_model_arr[$option['value']] = $option['option_id'];
+    }
+}
+$socket_comp_array = [];
+$socket_comp = $block->getCompAttrValue('COMP_SOCKET');
+foreach ($socket_comp as $option) {
+    if ($option['option_id'])
+        $socket_comp_array[$option['value']] = $option['option_id'];
+}
+$products = $block->getProCollection();
+$products_array = [];
+foreach ($products as $product) {
+    $products_array[$product->getName()] = $product->getId();
+}
+$comp_list_url = $baseUrl . 'support/compatibility-lists.html';
+$comprcount = 0;
+
+//Compatibility functions[START]
+/*function getManufLinksMainboard($mid, $mval, $modlcomparr,$type) {
+    $compatibilities = $block->getManufLinksMainboardCollection($mid);
+    $manlinksarr=[];
+    foreach($compatibilities as $comp) {
+        $manlinkstr = '<a style="color:#616161;" href="'.$baseUrl.$type.'/'.$comp->getUrlKey().'">' . array_search($mid,$modlcomparr) . '</a>';
+        $manlinksarr[$comp->getCompManufacturer()] = $manlinkstr;
+    }
+    return $manlinksarr;
+}
+function getManufLinks($mid, $mval, $modlcomparr,$type) {
+    $compatibilities = $block->getManufLinksMainboardCollection($mid);
+    $manlinksarr=[];
+    foreach($compatibilities as $comp) {
+        $manlinkstr = '<a style="color:#616161;" href="'.$baseUrl.$type.'/'.$comp->getUrlKey().'">' . array_search($mid,$modlcomparr) . '</a>';
+            $manlinksarr[$comp->getCompManufacturer()] = $manlinkstr;
+    }
+    return $manlinksarr;
+}*/
+$compresarr = [];
+$compres = '';
+$temptext = trim($text, '"');
+if ($isQuoted) {
+    $explodedWords = [$temptext];
+} else {
+    $explodedWords = multiexplode([" ", ".", ","], $temptext);
+}
+//Compatibility functions[END]
+/**
+ * Get Compatibility  Collection[END][MD]
+ */
+
+
+/**
+ * Get Other Search Results
+ */
+//Custom CMS page[START]
+$otherarr = [];
+$otherres = '';
+$cmspages = $block->getCmsPageCollection();
+if ($isQuoted == true) {
+    $cmspages = $block->getCmsPageFilter($cmspages, $text);
+} else {
+    $farr = [];
+    $larr = [];
+    $explodedWords = multiexplode([" ", ".", ","], $text); //reset exploded words (as changed for compatibility)
+    foreach ($explodedWords as $explodedWord) {
+        array_push($farr, 'title');
+        array_push($larr, ['like' => '%' . $explodedWord . '%']);
+        array_push($farr, 'content');
+        array_push($larr, ['like' => '%' . $explodedWord . '%']);
+        array_push($farr, 'meta_description');
+        array_push($larr, ['like' => '%' . $explodedWord . '%']);
+        array_push($farr, 'identifier');
+        array_push($larr, ['like' => '%' . $explodedWord . '%']);
+    }
+    $cmspages->addFieldToFilter($farr, $larr);
+}
+$pageIdentifierArr = [];
+$pageCount = 0;
+//Custom CMS page[END]
+//Custom TCMS page[START]
+$tcmspages = $block->getTcmsPageCollection($text);
+$tpageCount = 0;
+if ($tcmspages->getSize() == 0) {
+    if ($isQuoted == true) {
+        $tcmspages = $block->getTcmsPageFilter($tcmspages, $text);
+    } else {
+        $farr = [];
+        $larr = [];
+        foreach ($explodedWords as $explodedWord) {
+            array_push($farr, 'title');
+            array_push($larr, ['like' => '%' . $explodedWord . '%']);
+            array_push($farr, 'content');
+            array_push($larr, ['like' => '%' . $explodedWord . '%']);
+            array_push($farr, 'meta_description');
+            array_push($larr, ['like' => '%' . $explodedWord . '%']);
+            array_push($farr, 'identifier');
+            array_push($larr, ['like' => '%' . $explodedWord . '%']);
+        }
+        $tcmspages->addFieldToFilter($farr, $larr);
+    }
+}
+//Custom TCMS page[END]
+//Category[START]
+$categories = $block->getCategoryCollection();
+if ($isQuoted == true) {
+    $categories = $block->getCategoryFilter($categories, $text, $isQuoted);
+} else {
+    $larr = [];
+    foreach ($explodedWords as $explodedWord) {
+        $larr[] = ['attribute' => 'name', 'like' => '%' . $explodedWord . '%'];
+        $larr[] = ['attribute' => 'description', 'like' => '%' . $explodedWord . '%'];
+    }
+    $categories = $block->getCategoryFilter($categories, $larr, $isQuoted);
+}
+//Category[END]
+//General Technology[START]
+$_generaltechnologies = $block->getGeneralTechCollection();
+if ($isQuoted == true) {
+    $_generaltechnologies = $block->getGeneralTechFilter($_generaltechnologies, $text, $isQuoted);
+} else {
+    $larr = [];
+    foreach ($explodedWords as $explodedWord) {
+        $larr[] = ['attribute' => 'gen_technology_title', 'like' => '%' . $explodedWord . '%'];
+        $larr[] = ['attribute' => 'gen_technology_shortdesc', 'like' => '%' . $explodedWord . '%'];
+        $larr[] = ['attribute' => 'gen_technology_desc', 'like' => '%' . $explodedWord . '%'];
+        $larr[] = ['attribute' => 'url_key', 'like' => '%' . $explodedWord . '%'];
+    }
+    $_generaltechnologies = $block->getGeneralTechFilter($_generaltechnologies, $larr, $isQuoted);
+}
+$genTechCount = 0;
+//General Technology[END]
+//CMS Block[START]
+$cmsblocks = $block->getBlockColllection();
+if ($isQuoted == true) {
+    $cmsblocks = $block->getBlockFilterData($cmsblocks, $text);
+} else {
+    $farr = [];
+    $larr = [];
+    $explodedWords = multiexplode([" ", ".", ","], $text); //reset exploded words (as changed for compatibility)
+    foreach ($explodedWords as $explodedWord) {
+        array_push($farr, 'title');
+        array_push($larr, ['like' => '%' . $explodedWord . '%']);
+        array_push($farr, 'content');
+        array_push($larr, ['like' => '%' . $explodedWord . '%']);
+        array_push($farr, 'identifier');
+        array_push($larr, ['like' => '%' . $explodedWord . '%']);
+    }
+    $cmsblocks->addFieldToFilter($farr, $larr);
+}
+$pageCount_block = 0;
+//CMS Block[END]
+?>
+<?= $block->getChildHtml('tagged_product_list_rss_link') ?>
+
+<!-- Core search div[START] -->
+<div class="search results">
+    <?php if ($messages = $block->getNoteMessages()) : ?>
+        <div class="message notice">
+            <div>
+                <?php foreach ($messages as $message) : ?>
+                    <?= /* @escapeNotVerified */ $message ?><br />
+                <?php endforeach; ?>
+            </div>
+        </div>
+    <?php endif; ?>
+</div>
+<!-- Core search div[END] -->
+
+<div class="product info detailed">
+    <div class="product data items collapsed" id="swissup-easy-tabs" role="tablist">
+        <div class="data item title active" aria-labeledby="tab-label-category.main.tab-title" data-role="collapsible" id="tab-label-category.main.tab" role="tab" data-collapsible="true" aria-controls="category.main.tab" aria-selected="false" aria-expanded="true" tabindex="0">
+            <a class="data switch" tabindex="-1" title="CPU COOLERS RETAIL" data-toggle="switch" href="" id="tab-label-category.main.tab-title">
+                SEARCH RESULT <?= "'" . $text . "'" ?>
+            </a>
+        </div>
+
+        <div class="data item content" id="category.main.tab" data-role="content" aria-labelledby="tab-label-category.main.tab" role="tabpanel" aria-hidden="false" style="display: block;">
+            <div class="section-inner-presse-page catalog-search">
+                <div id="searchnavigate" class="search-list-cat">
+                    <div class="search-cat-item">
+                        <img src="<?php echo $this->getViewFileUrl('images/duble-arrow.png'); ?>" />
+                        <a href="#productsresult">
+                            <strong>
+                                <?php echo __('Products') ?> <span id="prcount"></span>
+                            </strong>
+                        </a>
+                    </div>
+                    <div class="search-cat-item">
+                        <img src="<?php echo $this->getViewFileUrl('images/duble-arrow.png'); ?>" />
+                        <a href="#faqresult">
+                            <strong>
+                                <?php echo __('FAQs') ?> <span id="frcount"></span>
+                            </strong>
+                        </a>
+                    </div>
+                    <div class="search-cat-item">
+                        <img src="<?php echo $this->getViewFileUrl('images/duble-arrow.png'); ?>" />
+                        <a href="#reviewresult">
+                            <strong>
+                                <?php echo __('Reviews') ?> <span id="rrcount"></span>
+                            </strong>
+                        </a>
+                    </div>
+                    <div class="search-cat-item">
+                        <img src="<?php echo $this->getViewFileUrl('images/duble-arrow.png'); ?>" />
+                        <a href="#pressresult">
+                            <strong>
+                                <?php echo __('Press Releases') ?> <span id="presscount"></span>
+                            </strong>
+                        </a>
+                    </div>
+                    <div class="search-cat-item">
+                        <img src="<?php echo $this->getViewFileUrl('images/duble-arrow.png'); ?>" />
+                        <a href="#wheretobuyresult">
+                            <strong>
+                                <?php echo __('Where To Buy') ?> <span id="wheretobuycount"></span>
+                            </strong>
+                        </a>
+                    </div>
+                    <div class="search-cat-item">
+                        <img src="<?php echo $this->getViewFileUrl('images/duble-arrow.png'); ?>" />
+                        <a target='_blank' href=https://ncc.noctua.at/?hq=<?= $text ?>" >
+                            <strong>
+                                Click here to search our compatibility database
+                            </strong>
+                        </a>
+<!--                        <a href="#compresult">-->
+<!--                            <strong>-->
+<!--                                --><?php //echo __('Compatibility') ?><!-- <span style="display:none " id="crcount"></span>-->
+<!--                            </strong>-->
+<!--                        </a>-->
+                    </div>
+                    <div class="search-cat-item">
+                        <img src="<?php echo $this->getViewFileUrl('images/duble-arrow.png'); ?>" />
+                        <a href="#otherresult">
+                            <strong>
+                                <?php echo __('Other Search Results') ?> <span id="orcount"></span>
+                            </strong>
+                        </a>
+                    </div>
+                </div>
+                <h1 class="cat-title search-pro"><?php echo __('Products') ?></h1>
+                <div id="productsresult">
+                    <?= $block->getProductListHtml() ?>
+                </div>
+                <!-- FAQs [START] -->
+                <div id="faqresult"></div>
+                <h1 class="cat-title"><?php echo __('FAQs') ?></h1>
+                <div id="divfaqres" class="rescontent resultdiv">
+                    <p class="contents">
+                        <?php
+                        if ($faqs->getSize() > 0) {
+                            foreach ($faqs as $faq) {
+                                $faqcnt++;
+                                if ($faqcnt == 6) {
+                                    echo '<div class="complete"><p class="contents">';
+                                }
+                                echo '<a href="' . $baseUrl . $faq->getUrlKey() . '">' . $faq->getFaqQue() . '</a>';
+                                $txt = $faq->getFaqQue() . " " . $sitHelper->getCmsFilterContent($faq->getFaqAns());
+                                $txt = strip_tags($txt);
+                                echo highlight($txt, $text) . "<br>";
+                               // echo $txt . "<br>";
+//                                $res = highlight($txt, $text);
+//                                echo " " . $res . "<br>";
+                            }
+                            if ($faqcnt > 5) {
+                                echo '</p></div>';
+                            }
+                        } else {
+                            echo __('Your search returns no results.');
+                        }
+                        ?>
+                    </p>
+                    <p id="reviewresult" class="contents"></p>
+                    <?php if ($faqs->getSize() > 5) : ?>
+                        <div class="more" data-hash="faqresult">
+                            <img src="<?php echo $this->getViewFileUrl('images/pager_next.png'); ?>" />
+                            <span class="show-more"><?php echo __('Show More'); ?></span>
+                            <span class="show-less"><?php echo __('Show Less'); ?></span>
+                        </div><span class="morecount" id="morefaqres"></span>
+                    <?php endif; ?>
+                </div>
+                <!-- FAQs [END] -->
+                <!-- Reviews [START] -->
+                <h1 class="cat-title"><?php echo __('Reviews') ?></h1>
+                <div id="divreviewres" class="rescontent resultdiv">
+                    <p class="contents">
+                        <?php
+                        if ($reviews->getSize() > 0) {
+                            foreach ($reviews as $review) {
+                                $reviewcnt++;
+                                if ($reviewcnt == 6) {
+                                    echo '<div class="complete"><p class="contents">';
+                                }
+                                echo '<a href="' . $baseUrl . 'productreviewnew/productreview/view/id/' . $review->getId() . '">' . $review->getReviewWebsite() . ' - ' . date('d.m.Y', strtotime($review->getCreatedAt())) . '</a>';
+                                $txt = $review->getReviewTitle() . " " . $review->getReviewWebsite() . " " . $review->getReviewShortDesc() . " " . $review->getReviewDesc();
+                                $txt = strip_tags($txt);
+                                $res = highlight($txt, $text);
+                                if (trim($res) != "" && $res != '<span class="or-line">|| </span>') {
+                                    echo " " . $res . "<br>";
+                                } else {
+                                    echo "<br>";
+                                }
+                            }
+                            if ($reviewcnt > 5) {
+                                echo '</p></div>';
+                            }
+                        } else {
+                            echo __('Your search returns no results.');
+                        }
+                        ?>
+                    </p>
+                    <p id="pressresult" class="contents"> </p>
+                    <?php if ($reviews->getSize() > 5) : ?>
+                        <div class="more" data-hash="reviewresult">
+                            <img src="<?php echo $this->getViewFileUrl('images/pager_next.png'); ?>" />
+                            <span class="show-more"><?php echo __('Show More'); ?></span>
+                            <span class="show-less"><?php echo __('Show Less'); ?></span>
+                        </div><span class="morecount" id="morereviewres"></span>
+                    <?php endif; ?>
+                </div>
+                <!-- Reviews [END] -->
+                <!-- Press Releases [START] -->
+                <h1 class="cat-title"><?php echo __('Press Releases') ?></h1>
+                <div id="divpressres" class="rescontent resultdiv">
+                    <p class="contents">
+                        <?php
+                        if ($news->getSize() > 0) {
+                            foreach ($news as $anews) {
+                                $presscnt++;
+                                if ($presscnt == 6) {
+                                    echo '<div class="complete"><p class="contents">';
+                                }
+                                echo '<a href="' . $baseUrl . $anews->getUrlKey() . '">' . $anews->getNewsTitle() . '</a>';
+                                $txt = $anews->getNewsTitle() . " " . $anews->getNewsShortDesc() . " " . $anews->getNewsDesc();
+                                $txt = strip_tags($txt);
+                                $res = highlight($txt, $text);
+                                if (trim($res) != "" && $res != '<span class="or-line">|| </span>') {
+                                    echo " " . $res . "<br>";
+                                } else {
+                                    echo "<br>";
+                                }
+                            }
+                            if ($presscnt > 5) {
+                                echo '</p></div>';
+                            }
+                        } else {
+                            echo __('Your search returns no results.');
+                        }
+                        ?>
+                    </p>
+                    <p id="wheretobuyresult" class="contents"> </p>
+                    <?php if ($news->getSize() > 5) : ?>
+                        <div class="more" data-hash="pressresult">
+                            <img src="<?php echo $this->getViewFileUrl('images/pager_next.png'); ?>" />
+                            <span class="show-more"><?php echo __('Show More'); ?></span>
+                            <span class="show-less"><?php echo __('Show Less'); ?></span>
+                        </div><span class="morecount" id="morepressres"></span>
+                    <?php endif; ?>
+                </div>
+                <!-- Press Releases [END] -->
+                <!-- Where To Buy [START] -->
+                <h1 class="cat-title"><?php echo __('Where To Buy') ?></h1>
+                <div id="divwheretobuyres" class="rescontent resultdiv">
+                    <p class="contents">
+                        <?php
+                        if ($stores->getSize() > 0) {
+                            foreach ($stores as $store) {
+                                $storecnt++;
+                                if ($storecnt == 6) {
+                                    echo '<div class="complete"><p class="contents">';
+                                }
+                                echo '<a href="' . $baseUrl . 'where-to-buy/index/view/id/' . $store->getId() . '">' . $store->getName() . '</a>';
+                                $contname = $block->getCountryname($store->getCountryId());
+                                $txt = $store->getName() . ' ' . $store->getCity() . ' ' . $store->getAddress() . ' ' . $contname;
+                                $txt = strip_tags($txt);
+                                $res = highlight($txt, $text);
+                                if (trim($res) != "" && $res != '<span class="or-line">|| </span>') {
+                                    echo " " . $res . "<br>";
+                                } else {
+                                    echo "<br>";
+                                }
+                            }
+                            if ($storecnt > 5) {
+                                echo '</p></div>';
+                            }
+                        } else {
+                            echo __('Your search returns no results.');
+                        }
+                        ?>
+                    </p>
+                    <p id="compresult" class="contents"> </p>
+                    <?php if ($stores->getSize() > 5) : ?>
+                        <div class="more" data-hash="wheretobuyresult">
+                            <img src="<?php echo $this->getViewFileUrl('images/pager_next.png'); ?>" />
+                            <span class="show-more"><?php echo __('Show More'); ?></span>
+                            <span class="show-less"><?php echo __('Show Less'); ?></span>
+                        </div><span class="morecount" id="morewheretobuyres"></span>
+                    <?php endif; ?>
+                </div>
+                <!-- Where To Buy [END] -->
+                <!-- Compatibility  [START][MD] -->
+                <h1 class="cat-title"><?php echo __('Compatibility') ?></h1>
+                <div id="divcompres" class="rescontent resultdiv showCompatibility compcontent">
+                    <p class="cmpcnt" style="float:none">
+                        <li class='prod'>
+                            <a target='_blank' href=https://ncc.noctua.at/?hq=<?= $text ?>" >
+                                Click here to search our compatibility database
+                            </a>
+                        </li>
+                        <?php
+//                        foreach ($explodedWords as $explodedWord) {
+//                            $man_match_cnt = count(preg_grep('/' . $explodedWord . '/i', array_keys($man_comp_array)));
+//                            $model_match_cnt = count(preg_grep('/' . $explodedWord . '/i', array_keys($model_comp_array)));
+//                            $socket_match_cnt = count(preg_grep('/' . $explodedWord . '/i', array_keys($socket_comp_array)));
+//                            $product_match_cnt = count(preg_grep('/' . $text . '/i', array_keys($products_array)));
+//
+//                            if ($man_match_cnt > 0 || $model_match_cnt > 0 || $socket_match_cnt > 0 || $product_match_cnt > 0) {
+//                                if ($socket_match_cnt > 0) {
+//                                    foreach ($socket_comp_array as $socket_match_val => $socket_match_key) {
+//                                        if (preg_match('/' . $explodedWord . '/i', $socket_match_val) && (in_array($socket_match_key, $mainboard_socket) || in_array($socket_match_key, $ram_socket) || in_array($socket_match_key, $cpu_socket))) {
+//                                            if (in_array($socket_match_key, $mainboard_socket)) {
+//                                                echo '<span class="compitem"><a href="' . $comp_list_url . '/mainboard#socket_' . $socket_match_key . '">' .  $socket_match_val . '</a>';
+//                                            }
+//                                            if (in_array($socket_match_key, $ram_socket)) {
+//                                                echo '<span class="compitem"><a href="' . $comp_list_url . '?ram&socket_id=' . $socket_match_key . '">' .  $socket_match_val . '</a>';
+//                                            }
+//                                            if (in_array($socket_match_key, $cpu_socket)) {
+//                                                echo '<span class="compitem"><a href="' . $comp_list_url . '?cpu&socket_id=' . $socket_match_key . '">' .  $socket_match_val . '</a>';
+//                                            }
+//                                            $val = preg_replace("#($explodedWord)#i", "<strong style='color:#2E2E2E;'>$1</strong>", $socket_match_val);
+//                                            echo '<span style="color:#616161"> || ';
+//                                            echo $val . '</span><br/></span>';
+//                                            $comprcount++;
+//                                        }
+//                                    }
+//                                }
+//                                if ($man_match_cnt > 0) {
+//                                    foreach ($man_comp_array as $man_match_val => $man_match_key) {
+//                                        if (preg_match('/' . $explodedWord . '/i', $man_match_val) && (in_array($man_match_key, $mainboard_manu) || in_array($man_match_key, $ram_manu) || in_array($man_match_key, $case_manu) || in_array($man_match_key, $cpu_manu))) {
+//                                            if (in_array($man_match_key, $mainboard_manu)) {
+//                                                echo '<span class="compitem"><a href="' . $comp_list_url . '?mainboard&manufacturer_id=' . $man_match_key . '">' .  $man_match_val . '</a>';
+//                                            }
+//                                            if (in_array($man_match_key, $ram_manu)) {
+//                                                echo '<span class="compitem"><a href="' . $comp_list_url . '?ram&manufacturer_id=' . $man_match_key . '">' .  $man_match_val . '</a>';
+//                                            }
+//                                            if (in_array($man_match_key, $case_manu)) {
+//                                                echo '<span class="compitem"><a href="' . $comp_list_url . '/case#manuf_' . $man_match_key . '">' .  $man_match_val . '</a>';
+//                                            }
+//                                            if (in_array($man_match_key, $cpu_manu)) {
+//                                                echo '<span class="compitem"><a href="' . $comp_list_url . '?cpu&manufacturer_id=' . $man_match_key . '">' .  $man_match_val . '</a>';
+//                                            }
+//                                            $val = preg_replace("#($explodedWord)#i", "<strong style='color:#2E2E2E;'>$1</strong>", $man_match_val);
+//                                            echo '<span style="color:#616161"> || ';
+//                                            echo $val . '</span><br/></span>';
+//                                            $comprcount++;
+//                                        }
+//                                    }
+//                                }
+//
+//                                if ($model_match_cnt > 0) {
+//                                    $mlinksmergedarr = [];
+//                                    foreach ($model_comp_array as $model_match_val => $model_match_key) {
+//                                        if (preg_match('/' . $explodedWord . '/i', $model_match_val)) {
+//                                            if (in_array($model_match_key, $ram_model)) {
+//                                                $mlinksmergedarr[] = $block->getManufLinks($model_match_key, $model_match_val, $ram_model_arr, 'ram');
+//                                            }
+//                                            if (in_array($model_match_key, $mainboard_model)) {
+//                                                $mlinksmergedarr[] = $block->getManufLinksMainboard($model_match_key, $model_match_val, $mainboard_model_arr, 'mainboard');
+//                                            }
+//                                            if (in_array($model_match_key, $case_model)) {
+//                                                $mlinksmergedarr[] = $block->getManufLinks($model_match_key, $model_match_val, $case_model_arr, 'case');
+//                                            }
+//                                            if (in_array($model_match_key, $cpu_model)) {
+//                                                $mlinksmergedarr[] = $block->getManufLinks($model_match_key, $model_match_val, $cpu_model_arr, 'cpu');
+//                                            }
+//                                        }
+//                                    }
+//                                    $newarr = [];
+//                                    foreach ($mlinksmergedarr as $tempmerged) {
+//                                        if (array_key_exists(key($tempmerged), $newarr)) {
+//                                            $temp = $newarr[key($tempmerged)];
+//                                            $newarr[key($tempmerged)] = $temp . " | " . $tempmerged[key($tempmerged)];
+//                                        } else {
+//                                            $newarr[key($tempmerged)] = $tempmerged[key($tempmerged)];
+//                                        }
+//                                    }
+//                                    foreach ($newarr as $key => $value) {
+//                                        if (
+//                                            empty($value) || is_null($value) || $value == '' ||
+//                                            empty($key) || is_null($key) || $key == ''
+//                                        ) {
+//                                            unset($newarr[$key]);
+//                                        }
+//                                    }
+//                                    $comp_manu = [];
+//                                    foreach ($newarr as $key => $val) {
+//                                        if ($key) {
+//                                            if (in_array($key, $comp_manu)) {
+//                                                echo '<span class="compitem">' . array_search($key, $man_comp_array) . '<span style="color:#616161"> || </span>';
+//                                            } else {
+//                                                if (in_array($key, $ram_manu)) {
+//                                                    echo '<span class="compitem"><a href="' . $baseUrl . 'support/compatibility-lists.html?ram&manufacturer_id=' . $key . '">' . array_search($key, $man_comp_array) . '</a><span style="color:#616161"> || </span>';
+//                                                } else if (in_array($key, $case_manu)) {
+//                                                    echo '<span class="compitem"><a href="' . $baseUrl . 'support/compatibility-lists.html/case#manuf_' . $key . '">' . array_search($key, $man_comp_array) . '</a><span style="color:#616161"> || </span>';
+//                                                } else if (in_array($key, $cpu_manu)) {
+//                                                    echo '<span class="compitem"><a href="' . $baseUrl . 'support/compatibility-lists.html?cpu&manufacturer_id=' . $key . '">' . array_search($key, $man_comp_array) . '</a><span style="color:#616161"> || </span>';
+//                                                } else {
+//                                                    echo '<span class="compitem"><a href="' . $baseUrl . 'support/compatibility-lists.html?mainboard&manufacturer_id=' . $key . '">' . array_search($key, $man_comp_array) . '</a><span style="color:#616161"> || </span>';
+//                                                }
+//                                            }
+//                                            $targetArr = [];
+//                                            $dom = new DOMDocument();
+//                                            @$dom->loadHTML(mb_convert_encoding($val, 'HTML-ENTITIES', 'UTF-8'));
+//                                            $tags = $dom->getElementsByTagName('a');
+//                                            foreach ($tags as $tag) {
+//                                                $targetArr[$tag->nodeValue] = $tag->getAttribute('href');
+//                                            }
+//                                            $printstr = '';
+//                                            $tac = 0;
+//                                            foreach ($targetArr as $tk => $tv) {
+//                                                $tac++;
+//                                                $val = preg_replace("#($explodedWord)#i", "<strong style='color:#2E2E2E;'>$1</strong>", $tk);
+//                                                if ($tac != count($targetArr))
+//                                                    $printstr .= '<a style="color:#616161;border-bottom: 1px dashed #949494;" href="' . $tv . '">' . $val . '</a><span style="color:#616161"> | </span>';
+//                                                else
+//                                                    $printstr .= '<a style="color:#616161;border-bottom: 1px dashed #949494;" href="' . $tv . '">' . $val . '</a>';
+//                                            }
+//                                            echo '<span style="color:#616161">' . $printstr . '</span><br/>';
+//                                            echo '</strong></span>';
+//                                        }
+//                                    }
+//                                    $comprcount += count($newarr);
+//                                }
+//                                if ($product_match_cnt > 0) {
+//                                    $product_match_arr = preg_grep('/' . $explodedWord . '/i', array_keys($products_array));
+//                                    foreach ($product_match_arr as $prod_match_key => $prod_match_val) {
+//                                        $_product = $block->getCompProduct($products_array[$prod_match_val]);
+//                                        if ($_product) {
+//                                            $comps = $block->getCompsCollect($_product->getId(), 'Mainboard');
+//                                            if ($comps->getSize() > 0) {
+//                                                $comprcount++;
+//                                                echo '<span class="compitem"><a href="' . $_product->getProductUrl() . '?comp=1">' . $prod_match_val . ' - ' . __('Mainboard Compatibility') . '</a><br/></span>';
+//                                            }
+//                                            $comps = $block->getCompsCollect($_product->getId(), 'RAM');
+//                                            if ($comps->getSize() > 0) {
+//                                                $comprcount++;
+//                                                echo '<span class="compitem"><a href="' . $_product->getProductUrl() . '?rcomp=1">' . $prod_match_val . ' - ' . __('RAM Compatibility') . '</a><br/></span>';
+//                                            }
+//                                            $comps = $block->getCompsCollect($_product->getId(), 'Case');
+//                                            if ($comps->getSize() > 0) {
+//                                                $comprcount++;
+//                                                echo '<span class="compitem"><a href="' . $_product->getProductUrl() . '?ccomp=1">' . $prod_match_val . ' - ' . __('Case Compatibility') . '</a><br/></span>';
+//                                            }
+//                                            $comps = $block->getCompsCollect($_product->getId(), 'CPU');
+//                                            if ($comps->getSize() > 0) {
+//                                                $comprcount++;
+//                                                echo '<span class="compitem"><a href="' . $_product->getProductUrl() . '?cpucomp=1">' . $prod_match_val . ' - ' . __('CPU Compatibility') . '</a><br/></span>';
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                        if ($comprcount == 0) {
+//                            echo __('Your search returns no results.');
+//                        }
+                        ?>
+                    </p>
+                    <p id="otherresult" style="float:none"></p>
+                </div>
+                <?php if ($comprcount > 0) : ?>
+                    <div class="more-comp">
+                        <img src="<?php echo $this->getViewFileUrl('images/pager_next.png'); ?>" />
+                        <a href="javascript:void(0)" data-hash="compresult"></a>
+                        <span class="show-more"><?php echo __('Show More'); ?></span>
+                        <span class="show-less"><?php echo __('Show Less'); ?></span>
+                    </div><span class="morecount morecountcomp" id="morecompres"></span>
+                <?php endif; ?>
+                <!-- Compatibility  [END] -->
+                <!--  Other Search Results [START] -->
+                <h1 class="cat-title"><?php echo __('Other Search Results') ?></h1>
+                <div id="divotherres" class="rescontent resultdiv showContent">
+                    <p class="contents">
+                        <?php
+                        /*CMS Page[START]*/
+                        if ($cmspages->getSize() > 0) {
+                            foreach ($cmspages as $cmspage) {
+                                if ($block->getPageUrl($cmspage->getId()) != '') {
+                                    $pageCount++;
+                                    echo '<span class="otheritem"><a href="' . $block->getPageUrl($cmspage->getId()) . '">' . $cmspage->getTitle() . '</a>';
+                                    $search_text = ["{{customVar code=with}} ", "code=", "}}", "{{customVar"];
+                                    $replace_text   = ["", "", "", ""];
+                                    $newcontent = str_replace($search_text, $replace_text, $block->getPageContentFilter($cmspage->getContent()));
+                                    $txt = $cmspage->getTitle() . ' ' . $newcontent . ' ' . $cmspage->getMetaDescription() . ' ' . $cmspage->getIdentifier();
+                                    $txt = strip_tags($txt);
+                                    $res = highlight($txt, $text);
+                                    if (trim($res) != "" && $res != '<span class="or-line">|| </span>') {
+                                        echo " " . $res . "<br></span>";
+                                    } else {
+                                        echo "<br></span>";
+                                    }
+                                    $pageIdentifierArr[] = $cmspage->getIdentifier();
+                                }
+                            }
+                        }
+                        /*CMS Page[END]*/
+                        /*TCMS Page[START]*/
+                        if ($tcmspages->getSize() > 0) {
+                            foreach ($tcmspages as $tcmspage) {
+                                if ($block->getPageUrl($tcmspage->getId()) != '' && !in_array($tcmspage->getIdentifier(), $pageIdentifierArr)) {
+                                    echo '<span class="otheritem"><a href="' . $block->getPageUrl($tcmspage->getId()) . '">' . $tcmspage->getTitle() . '</a>';
+                                    $search_text = ["{{customVar code=with}} ", "code=", "}}", "{{customVar"];
+                                    $replace_text   = ["", "", "", ""];
+                                    $newcontent = str_replace($search_text, $replace_text, $block->getPageContentFilter($tcmspage->getContent()));
+
+                                    $txt = $tcmspage->getTitle() . ' ' . $newcontent . ' ' . $tcmspage->getMetaDescription() . ' ' . $tcmspage->getIdentifier();
+                                    $txt = strip_tags($txt);
+                                    $res = highlight($txt, $text);
+                                    if (trim($res) != "" && $res != '<span class="or-line">|| </span>') {
+                                        echo " " . $res . "<br></span>";
+                                    } else {
+                                        echo "<br></span>";
+                                    }
+                                    $tpageCount++;
+                                    $otherarr[$tcmspage->getTitle()] = $otherres;
+                                }
+                            }
+                        }
+                        /*TCMS Page[END]*/
+                        /*Category[START]*/
+                        if ($categories->getSize() > 0) {
+                            foreach ($categories as $category) {
+                                echo '<span class="otheritem"><a href="' . $category->getUrl() . '">' . $category->getName() . '</a>';
+                                $txt = $category->getName() . " " . $category->getDescription();
+                                $txt = strip_tags($txt);
+                                $res = highlight($txt, $text);
+                                if (trim($res) != "" && $res != '<span class="or-line">|| </span>') {
+                                    echo " " . $res . "<br></span>";
+                                } else {
+                                    echo "<br></span>";
+                                }
+                            }
+                        }
+                        /*Category[END]*/
+                        /*General Technology[START]*/
+                        if ($_generaltechnologies->getSize() > 0) {
+                            foreach ($_generaltechnologies as $_generaltechnology) {
+                                if ($_generaltechnology->getUrlKey() != '') {
+                                    echo '<span class="otheritem"><a href="' . $baseUrl . $_generaltechnology->getUrlKey() . '">' . $_generaltechnology->getGenTechnologyTitle() . '</a>';
+                                    $txt = $_generaltechnology->getGenTechnologyTitle() . " " . $_generaltechnology->getGenTechnologyShortdesc() . "" . $_generaltechnology->getGenTechnologyDesc() . " " . $_generaltechnology->getUrlKey();
+                                    $txt = strip_tags($txt);
+                                    $res = highlight($txt, $text);
+                                    if (trim($res) != "" && $res != '<span class="or-line">|| </span>') {
+                                        echo " " . $res . "<br></span>";
+                                    } else {
+                                        echo "<br></span>";
+                                    }
+                                    $genTechCount++;
+                                }
+                            }
+                        }
+                        /*General Technology[END]*/
+                        /*CMS Block & Custom Variable[START]*/
+                        $custom_new_block = [];
+                        if ($cmsblocks->getSize() > 0) {
+                            foreach ($cmsblocks as $tmp_block) {
+                                $blockData["title"] = $tmp_block["title"];
+                                $blockData["identifier"] = $tmp_block["identifier"];
+                                $blockData["block_url_page"] = $tmp_block["block_url_page"];
+                                $newcontent = strip_tags($tmp_block["content"]);
+                                $customvar_count = substr_count($newcontent, "customVar");
+                                $sysvar_count = substr_count($newcontent, "config");
+                                if ($customvar_count > 0) {
+                                    for ($i = 0; $i < $customvar_count; $i++) {
+                                        $endpos = 2;
+                                        $startpos = strpos($newcontent, '{{customVar code=');
+                                        $endpos += strpos($newcontent, '}}', $startpos);
+                                        $variable = substr($newcontent, $startpos, $endpos - $startpos);
+                                        $code = substr($variable, 17, $endpos - ($startpos + 19));
+                                        $customVariables = $block->getVariableValue($code);
+                                        if ($customVariables->getHtmlValue()) {
+                                            $value = $customVariables->getHtmlValue();
+                                        } else {
+                                            $value = $customVariables->getPlainValue();
+                                        }
+                                        $search_txt = ["{{customVar code=with}} ", "code=", "}}", "{{customVar"];
+                                        $replace_txt  = ["", "", "", ""];
+                                        $newcontent = substr_replace($newcontent, $value, $startpos, $endpos - $startpos);
+                                    }
+                                }
+                                if ($sysvar_count > 0) {
+                                    for ($j = 0; $j < $sysvar_count; $j++) {
+                                        $endpos = 2;
+                                        $startpos = strpos($newcontent, '{{config path=');
+                                        $endpos += strpos($newcontent, '}}', $startpos);
+                                        $variable = substr($newcontent, $startpos, $endpos - $startpos);
+                                        $code = substr($variable, 15, $endpos - ($startpos + 18));
+                                        $value = $block->getStoreData($code, $storeId);
+                                        $newcontent = substr_replace($newcontent, $value, $startpos, $endpos - $startpos);
+                                    }
+                                }
+                                $blockData["content"] = $newcontent;
+                                $custom_new_block[] = $blockData;
+                            }
+                            $explodedWords = multiexplode([" ", ".", ","], $text);
+                            $pageCount_block = 0;
+                            foreach ($custom_new_block as $b) {
+                                foreach ($explodedWords as $word) {
+                                    $findchar = preg_quote("$word", '~');
+                                    if (preg_grep('~' . $word . '~', $b)) {
+                                        $pageCount_block++;
+                                        echo '<span class="otheritem"><a href="' . $baseUrl . $b["block_url_page"] . '">' . $b["title"] . '</a>';
+                                        $txt = $b["title"] . ' ' . $b["content"] . ' ' . $b["identifier"];
+                                        $res = highlight($txt, $text);
+                                        if (trim($res) != "" && $res != '<span style="color:#616161">|| </span>') {
+                                            echo " " . $res . "<br></span>";
+                                        } else {
+                                            echo "<br></span>";
+                                        }
+                                        $pageIdentifierArr[] = $b["identifier"];
+                                    }
+                                }
+                            }
+                        }
+                        /*CMS Block & Custom Variable[END]*/
+                        if ($pageCount == 0 && $tpageCount == 0 && $categories->getSize() == 0 && $genTechCount == 0 && $pageCount_block == 0) {
+                            echo __('Your search returns no results.');
+                        }
+                        ?>
+                    </p>
+                </div>
+                <?php if ($pageCount != 0 || $tpageCount != 0 || $categories->getSize() != 0 || $genTechCount != 0) : ?>
+                    <div class="more-other">
+                        <img src="<?php echo $this->getViewFileUrl('images/pager_next.png'); ?>" />
+                        <a href="javascript:void(0)" data-hash="otherresult"></a>
+                        <span class="show-more"><?php echo __('Show More'); ?></span>
+                        <span class="show-less"><?php echo __('Show Less'); ?></span>
+                    </div><span class="morecount morecountother" id="moreotherres"></span>
+                <?php endif; ?>
+                <!--  Other Search Results [END] -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    require(['jquery', 'jquery/ui'], function($) {
+        /* active tab on search page */
+        setTimeout(function() {
+            $('#swissup-easy-tabs').children('.data.item').addClass('active');
+        }, 2000);
+        /* active tab on search page */
+        /** Search show more or less[START] */
+        $('.more').click(function() {
+            $(this).siblings('.complete').slideToggle("slow");
+            $(this).find('.show-more').toggle();
+            $(this).find('.show-less').toggle();
+            if ($(this).find('.show-less').hasClass('less-data')) {
+                var top = $(this).parents('.resultdiv').offset().top - $('.cat-title').outerHeight() - 100;
+                $('body,html').scrollTop(top);
+                $('.background-image').css('min-height', '100%');
+            }
+            $(this).find('.show-less').toggleClass('less-data');
+        });
+        $(document).ready(function() {
+            var height = $('.showContent').outerHeight();
+            var compheight = $('.showCompatibility').outerHeight();
+            var content = $("div.showContent");
+            var comp = $("div.showCompatibility");
+            if (height > 90) {
+                if ($('.otheritem').length > 5) {
+                    var lines = $('.otheritem').length - 5;
+                    content.switchClass("showContent", "otherresultdiv", "slow");
+                    $("#moreotherres").html("(" + lines + " " + "<?php echo __('lines') ?>" + ")");
+                    $('.more-other').css('display', 'inline-block');
+                }
+            }
+            if (compheight > 90) {
+                comp.switchClass("showCompatibility", "compatibilityResult", "slow");
+                var complines = $('.compitem').length - 5;
+                $("#morecompres").html("(" + complines + " " + "<?php echo __('lines') ?>" + ")");
+                $('.more-comp').css('display', 'inline-block');
+            }
+            $('.more-other').click(function() {
+                $(this).find('.show-more').toggle();
+                $(this).find('.show-less').toggle();
+                var top = $('.otherresultdiv').offset().top - $('.cat-title').outerHeight() - 100;
+                if ($(this).find('.show-less').hasClass('less-data')) {
+                    $('.otherresultdiv').css('height', '90px');
+                    $('body,html').scrollTop(top);
+                    $('.background-image').css('min-height', '100%');
+                } else {
+                    $('.otherresultdiv').css('height', height);
+                }
+                $(this).find('.show-less').toggleClass('less-data');
+            });
+            $('.more-comp').click(function() {
+                $(this).find('.show-more').toggle();
+                $(this).find('.show-less').toggle();
+                var top = $('.compatibilityResult').offset().top - $('.cat-title').outerHeight() - 100;
+                if ($(this).find('.show-less').hasClass('less-data')) {
+                    $('.compatibilityResult').css('height', '90px');;
+                    $('body,html').scrollTop(top);
+                    $('.background-image').css('min-height', '100%');
+                } else {
+                    $('.compatibilityResult').css('height', compheight);
+                }
+                $(this).find('.show-less').toggleClass('less-data');
+            });
+        });
+        /** Search show more or less[END] */
+
+        //Search Navigate Counter[START]
+        $("#prcount").html("(<?php echo $this->getResultCount(); ?>)");
+        $("#orcount").html("(<?php echo ($pageCount_block + $pageCount + $tpageCount + $categories->getSize() + $genTechCount); ?>)");
+        $("#frcount").html("(<?php echo $faqs->getSize(); ?>)");
+        $("#crcount").html("(<?php echo $comprcount; ?>)");
+        $("#rrcount").html("(<?php echo $reviews->getSize(); ?>)");
+        $("#presscount").html("(<?php echo $news->getSize(); ?>)");
+        $("#wheretobuycount").html("(<?php echo $stores->getSize(); ?>)");
+        //Search Navigate Counter[END]
+        //Search More Counter[START]
+        var faqres = <?php echo $faqs->getSize(); ?>;
+        var morefaqres = $("#divfaqres .complete p br").length;
+        if (parseInt(faqres) > 5) {
+            $("#morefaqres").html("(" + morefaqres + ")");
+        }
+        var reviewres = <?php echo $reviews->getSize(); ?>;
+        var morereviewsres = $("#divreviewres .complete p br").length;
+        if (parseInt(reviewres) > 5) {
+            $("#morereviewres").html("(" + morereviewsres + ")");
+        }
+        var pressres = <?php echo $news->getSize(); ?>;
+        var morepressres = $("#divpressres .complete p br").length;
+        if (parseInt(pressres) > 5) {
+            $("#morepressres").html("(" + morepressres + ")");
+        }
+        var wheretobuyres = <?php echo $stores->getSize(); ?>;
+        var morewheretobuyres = $("#divwheretobuyres .complete p br").length;
+        if (parseInt(wheretobuyres) > 5) {
+            $("#morewheretobuyres").html("(" + morewheretobuyres + ")");
+        }
+        //Search More Counter[END]
+    });
+</script>

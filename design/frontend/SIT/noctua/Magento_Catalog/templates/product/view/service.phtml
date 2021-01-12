@@ -1,0 +1,102 @@
+<?php
+  $tabData = $block->getTabdata();
+  $tabId = $tabData['id'];
+  $helper = $this->helper('Swissup\Easytabs\Helper\Data');
+  $params = $helper->getVisible($tabId);
+  $removefrom = $helper->getRemoveFrom($tabId);
+  $page = $helper->getProductInfo($params,$removefrom);
+  if ($this->helper('Swissup\Easytabs\Helper\Data')->getProduct()) {
+      $product = $this->helper('Swissup\Easytabs\Helper\Data')->getProduct();
+
+      $link = array();
+      $attributeCode = array(
+          'ccomp' => 'case_compatibility_link',
+          'rcomp'=>'ram_compatibility_link',
+          'cpucomp'=>'cpu_compatibility_link',
+          'comp'=>'motherboard_compatibility_link'
+      );
+      /**
+       * Edit By Philip
+       */
+//      $objectManager =  \Magento\Framework\App\ObjectManager::getInstance();
+//      $storeManager  = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
+//      $storeID       = (int)$storeManager->getStore()->getStoreId();
+      $resourceProduct = $product->getResource();
+      foreach ($attributeCode as $key => $value){
+          if ($resourceProduct->getAttribute($value)) {
+              //$link[$key] = $resourceProduct->getAttributeRawValue($product->getId(), $resourceProduct->getAttribute($value),  $storeID);
+              $link[$key] = $resourceProduct->getAttribute($value)->getFrontend()->getValue($product);
+          }
+      }
+  }
+  if($page === false){
+      return true;
+  }
+  $alias = $tabData['alias'];
+  if($helper->hasChildTab($alias)) {
+    $childTabs = $helper->getChildTabs($alias);
+?>
+<div class="childtab-title-main">
+<?php
+$childTabTitle1 = array();
+$childTabTitle2 = array();
+  foreach ($childTabs as $childtab){
+      $childTabTitle1[$childtab['alias']] = $childtab['title'];
+    $phtml = $this->getLayout()->createBlock($childtab['widget_block'])->setTemplate($childtab['widget_template'])->toHtml();
+    if(trim($phtml) == NULL)
+    {
+      continue;
+    }
+      $childTabTitle2[$childtab['alias']] = $childtab['title'];
+?>
+  <div class="child-tab-title">
+      <?php if (isset($link[$childtab['alias']]) && $link[$childtab['alias']] != "") : ?>
+        <a class="child data switch"
+           target="_blank"
+           href="<?php /* @escapeNotVerified */ echo $link[$childtab['alias']]; $tab_status = 1; ?>"
+      <?php else: ?>
+        <a class="child data switch checkSwitch"
+           href="?tab=<?php /* @escapeNotVerified */ echo $childtab['alias']; $tab_status = 1; ?>"
+      <?php endif; ?>
+       data-toggle="switch"
+       id="tab-label-<?php /* @escapeNotVerified */ echo $childtab['alias'] ?>-title"
+       title="<?php /* @escapeNotVerified */ echo $childtab['title'] ;?>"
+       data-id="tab-label-<?php /* @escapeNotVerified */ echo $childtab['alias'] ?>-title-content"
+       data-url="<?php /* @escapeNotVerified */ echo $childtab['alias'] ;?>">
+       <?php echo __($childtab['title']);?>
+   </a>
+  </div>
+    <?php } ?>
+    <?php if (isset($link)) {
+        $linkOffset = array_diff_key($link,$childTabTitle2);
+    foreach ($linkOffset as $key => $value){
+        ?>
+        <?php if (isset($value) && $value != "") : ?>
+            <?php if (isset($childTabTitle1[$key]) && $childTabTitle1[$key] != "") : ?>
+                <div class="child-tab-title">
+                    <a class="child data switch"
+                       target="_blank"
+                       href="<?php /* @escapeNotVerified */ echo $value; ?>"
+                       title="<?php /* @escapeNotVerified */ echo $childTabTitle1[$key] ;?>">
+                        <?php echo __($childTabTitle1[$key]);?>
+                    </a>
+                </div>
+            <?php endif; ?>
+        <?php endif; ?>
+        <?php } ?>
+    <?php } ?>
+
+
+    </div>
+    <div class="childtab-content-main">
+    <?php foreach ($childTabs as $childtab){
+            $phtml = $this->getLayout()->createBlock($childtab['widget_block'])->setTemplate($childtab['widget_template'])->toHtml();
+            if(trim($phtml) == NULL)
+            {
+              continue;
+            }
+    ?>
+    <div class="child-tab-content" id="<?php /* @escapeNotVerified */ echo $childtab['alias'] ?>" data-role="child-content"><?php  echo $phtml;?></div>
+    <?php } ?>
+    </div>
+<?php } ?>

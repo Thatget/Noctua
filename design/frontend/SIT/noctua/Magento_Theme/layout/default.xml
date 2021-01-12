@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page layout="3columns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="default_head_blocks"/>
+     <head>
+        <css src="css/component.css" />
+        <script type="text/javascript" src="Emipro_Newsletterpopup::js/newsletter.js"/>
+        <css src="css/jquery.fancybox.css"/>
+    </head>
+    <body>
+        <referenceBlock name="top.links" remove="true"/>
+        <referenceBlock name="skip_to_content" remove="true"/>
+        <referenceBlock name="minicart" remove="true"/>
+        <referenceBlock name="copyright" remove="true" />
+        <referenceBlock name="report.bugs" remove="true" />
+        <referenceBlock name="footer_links" remove="true"/>
+        <referenceBlock name="store.links" remove="true"/>
+        <referenceBlock name="store.settings.language" remove="true"/>
+        <referenceContainer name="footer" remove="true"/>
+        <referenceBlock name="breadcrumbs" remove="true" />
+        <referenceBlock name="div.sidebar.additional" remove="true" />
+
+
+        <move element="page.messages" destination="header-wrapper" before="-" />
+        <move element="store_language" destination="header-wrapper" after="top.search" />
+        <move element="main" destination="background.main.content"  />
+        <move element="div.sidebar.main" destination="background.main.content"  />
+
+
+        <referenceContainer name="header-wrapper">
+            <container name="change-view-container" htmlTag="div">
+                <block class="Magento\Framework\View\Element\Template" name="change-view" template="Magento_Theme::change-view.phtml" />
+            </container>
+        </referenceContainer>
+        <referenceContainer name="columns">
+             <container name="background.main.content" label="background-main-content" htmlTag="div" htmlClass="background-main-image">
+                <container name="background.content" label="background-main-image">
+                <block class="Magento\Framework\View\Element\Template" name="background-image" template="Magento_Theme::background.phtml" />
+                </container>
+             </container>
+        </referenceContainer>
+        <referenceContainer name="footer-container">
+        <block class="Magento\Cms\Block\Block" name="custom_footer_links">
+            <arguments>
+                <argument name="block_id" xsi:type="string">custom_footer_links</argument>
+            </arguments>
+        </block>
+        </referenceContainer>
+
+    </body>
+</page>

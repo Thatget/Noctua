@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [1-3-2019]
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+    	<add id="SIT_ProductCompatibility::productcompatibility" title="Product Compatibility" module="SIT_ProductCompatibility" sortOrder="120" resource="SIT_ProductCompatibility::productcompatibility" parent="SIT_MainAdmin::view"/>
+
+        <add id="SIT_ProductCompatibility::mainboard" title="Product Compatibility Mainboard" module="SIT_ProductCompatibility" sortOrder="10" parent="SIT_ProductCompatibility::productcompatibility" action="sit_productcompatibility/mainboard/index/comptype/Mainboard" resource="SIT_ProductCompatibility::mainboard"/>
+
+        <add id="SIT_ProductCompatibility::ram" title="Product Compatibility RAM" module="SIT_ProductCompatibility" sortOrder="20" parent="SIT_ProductCompatibility::productcompatibility" action="sit_productcompatibility/ram/index/comptype/RAM" resource="SIT_ProductCompatibility::ram"/>
+
+        <add id="SIT_ProductCompatibility::cpu" title="Product Compatibility CPU" module="SIT_ProductCompatibility" sortOrder="30" parent="SIT_ProductCompatibility::productcompatibility" action="sit_productcompatibility/cpu/index/comptype/CPU" resource="SIT_ProductCompatibility::cpu"/>
+
+        <add id="SIT_ProductCompatibility::coolers" title="Product Compatibility Case / Coolers" module="SIT_ProductCompatibility" sortOrder="40" parent="SIT_ProductCompatibility::productcompatibility" action="sit_productcompatibility/coolers/index/comptype/Case" resource="SIT_ProductCompatibility::coolers"/>
+
+        <add id="SIT_ProductCompatibility::fans" title="Product Compatibility Case / Fans" module="SIT_ProductCompatibility" sortOrder="50" parent="SIT_ProductCompatibility::productcompatibility" action="sit_productcompatibility/fans/index/comptype/Case" resource="SIT_ProductCompatibility::fans"/>
+
+        <add id="SIT_ProductCompatibility::importcomp" title="Import Compatibilities" module="SIT_ProductCompatibility" sortOrder="60" parent="SIT_ProductCompatibility::productcompatibility" action="sit_productcompatibility/import/import" resource="SIT_ProductCompatibility::importcomp"/>
+
+        <add id="SIT_ProductCompatibility::unusedcomp" title="Unused Compatibilities" module="SIT_ProductCompatibility" sortOrder="70" parent="SIT_ProductCompatibility::productcompatibility" action="sit_productcompatibility/unused/unused" resource="SIT_ProductCompatibility::unusedcomp"/>
+    </menu>
+</config>

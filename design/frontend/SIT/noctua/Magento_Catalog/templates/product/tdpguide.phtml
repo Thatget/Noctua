@@ -1,0 +1,17 @@
+<?php
+$tabData = $block->getTabdata();
+    $tabId = $tabData['id'];
+    $helper=$this->helper('Swissup\Easytabs\Helper\Data');
+    $params=$helper->getVisible($tabId);
+    $removefrom=$helper->getRemoveFrom($tabId);
+    $page = $helper->getPageInfo($params,$removefrom);
+    if($page === false):
+        return true;
+    endif;
+
+?>
+<?php
+    $sitHelper = $this->helper('SIT\MainAdmin\Helper\Data');
+    $cmsPageData = $sitHelper->getCmsPageData('tdp-guide');
+    echo $sitHelper->getCmsFilterContent($cmsPageData->getContent());
+?>

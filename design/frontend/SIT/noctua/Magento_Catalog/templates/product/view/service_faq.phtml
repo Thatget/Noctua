@@ -1,0 +1,30 @@
+<?php
+$sitHelper = $this->helper('SIT\MainAdmin\Helper\Data');
+$currentProductId = $sitHelper->getCurrentProduct()->getId();
+$currentProductUrl = $sitHelper->getCurrentProduct()->getProductUrl();
+$faq_data = $block->getProductFAQData($currentProductId);
+if(count($faq_data)):
+?>
+<div class="product-service-faq-content">
+	<div class="faq-inner-container" data-bind="scope:'faqData'">
+		<!-- ko template: getTemplate() --><!-- /ko -->
+	</div>
+</div>
+
+<script type="text/x-magento-init">
+{
+    "*": {
+        "Magento_Ui/js/core/app": {
+           "components": {
+                "faqData": {
+                        "component": "SIT_ProductFaqNew/js/servicefaq",
+                        "template" : "SIT_ProductFaqNew/servicefaq",
+                        "currentId":"<?= $currentProductId ?>",
+						"currentUrl":"<?= $currentProductUrl ?>"
+                    }
+                }
+            }
+        }
+}
+</script>
+<?php endif;?>

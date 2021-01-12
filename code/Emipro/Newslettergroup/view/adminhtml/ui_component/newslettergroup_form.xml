@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">newslettergroup_form.newslettergroup_form_data_source</item>
+            <item name="deps" xsi:type="string">newslettergroup_form.newslettergroup_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Group Information</item>
+        <item name="config" xsi:type="array">
+            <item name="dataScope" xsi:type="string">data</item>
+            <item name="namespace" xsi:type="string">newslettergroup_form</item>
+        </item>
+        <item name="spinner" xsi:type="string">general_information</item>
+        <item name="buttons" xsi:type="array">
+            <item name="back" xsi:type="string">Emipro\Newslettergroup\Block\Adminhtml\Index\Edit\Button\Back</item>
+            <item name="delete" xsi:type="string">Emipro\Newslettergroup\Block\Adminhtml\Index\Edit\Button\Delete</item>
+            <item name="reset" xsi:type="string">Emipro\Newslettergroup\Block\Adminhtml\Index\Edit\Button\Reset</item>
+            <item name="save" xsi:type="string">Emipro\Newslettergroup\Block\Adminhtml\Index\Edit\Button\Save</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <dataSource name="newslettergroup_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Emipro\Newslettergroup\Model\DataProvider</argument>
+            <argument name="name" xsi:type="string">newslettergroup_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+            <argument name="data" xsi:type="array">
+              <item name="config" xsi:type="array">
+                 <item name="submit_url" xsi:type="url" path="*/*/save"/>
+              </item>
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+    <fieldset name="general_information">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">false</item>
+                <item name="label" xsi:type="string" translate="true">Group Information</item>
+                <item name="sortOrder" xsi:type="number">20</item>
+            </item>
+        </argument>
+        <field name="title">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Title</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">title</item>
+                    <item name="dataScope" xsi:type="string">title</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="customer_groups">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Emipro\Newslettergroup\Model\NewsletterSource\Customer</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Assign to user Group</item>
+                    <item name="notice" xsi:type="string" translate="true">If Newsletter Groups assigned to Customer Groups, then newsletter will be sent to ALL subscribers from selected Customer Groups.</item>
+                    <item name="formElement" xsi:type="string">multiselect</item>
+                    <item name="source" xsi:type="string">customer_groups</item>
+                    <item name="dataScope" xsi:type="string">customer_groups</item>
+                </item>
+            </argument>
+        </field>
+        <field name="store_view">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Cms\Ui\Component\Listing\Column\Cms\Options</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Store View</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">store_view</item>
+                    <item name="dataScope" xsi:type="string">store_view</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="display_on_front">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Emipro\Newslettergroup\Model\NewsletterSource\Displayonfront</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Visibility on Frontend</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">display_on_front</item>
+                    <item name="dataScope" xsi:type="string">display_on_front</item>
+                </item>
+            </argument>
+        </field>
+        <field name="source_website">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Emipro\Newslettergroup\Model\NewsletterSource\SubscriberSource</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Subscriber Source</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">source_website</item>
+                    <item name="dataScope" xsi:type="string">source_website</item>
+                </item>
+            </argument>
+        </field>
+        <field name="notify_email">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">boolean</item>
+                    <item name="formElement" xsi:type="string">checkbox</item>
+                    <item name="prefer" xsi:type="string">toggle</item>
+                    <item name="label" xsi:type="string" translate="true">Send Conformation Email</item>
+                    <item name="valueMap" xsi:type="array">
+                        <item name="true" xsi:type="number">1</item>
+                        <item name="false" xsi:type="number">0</item>
+                    </item>
+                    <item name="valuesForOptions" xsi:type="array">
+                        <item name="boolean" xsi:type="string">boolean</item>
+                    </item>
+                    <item name="default" xsi:type="number">0</item>
+                    <item name="dataScope" xsi:type="string">notify_email</item>
+                </item>
+            </argument>
+        </field>
+        <field name="emails">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Add Subscribers emails</item>
+                    <item name="formElement" xsi:type="string">textarea</item>
+                    <item name="source" xsi:type="string">emails</item>
+                    <item name="dataScope" xsi:type="string">emails</item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+    <fieldset name="subscribers_to_group">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="label" xsi:type="string" translate="true">Add Subscribers to Group</item>
+                <item name="sortOrder" xsi:type="number">30</item>
+            </item>
+        </argument>
+        <container name="subscribers_content">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">40</item>
+                </item>
+            </argument>
+            <htmlContent name="html_content">
+                <argument name="block" xsi:type="object">Emipro\Newslettergroup\Block\Adminhtml\Assignattachment</argument>
+            </htmlContent>
+        </container>
+    </fieldset>
+</form>

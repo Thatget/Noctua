@@ -1,0 +1,88 @@
+<?php
+/**
+ * Start Check for dynamic tab
+ */
+
+$tabData = $block->getTabdata();
+$tabId = $tabData['id'];
+$alias = $tabData['alias'];
+$tab_status = 0;
+$helper=$this->helper('Swissup\Easytabs\Helper\Data');
+$params=$helper->getVisible($tabId);
+$removefrom=$helper->getRemoveFrom($tabId);
+$page = $helper->getPageInfo($params,$removefrom);
+
+$alias = 'compatibility-lists';
+if($page === false):
+    return true;
+endif;
+
+if($this->helper('Swissup\Easytabs\Helper\Data')->getProduct()):
+    return true;
+endif;
+?>
+<?php $childTabs = $helper->getChildTabs($alias); ?>
+<div class="childtab-title-main">
+    <?php foreach ($childTabs as $childtab): ?>
+        <?php $phtml = $this->getLayout()
+            ->createBlock($childtab['widget_block'])
+            ->setTemplate($childtab['widget_template'])
+            ->toHtml();
+        if(trim($phtml) == Null)
+        {
+            continue;
+        }
+        $link = "";
+        $check1 = 0;
+        switch ($childtab['alias']){
+            case "mainboard":
+                $link = "https://ncc.noctua.at/motherboards";
+                $check1 = 1;
+                break;
+            case "case":
+                $link = "https://ncc.noctua.at/cases";
+                $check1 = 2;
+                break;
+            case "cpu":
+                $link = "https://ncc.noctua.at/cpus";
+                $check1 = 3;
+                break;
+            default:
+                $link = "?tab=".$childtab['alias'];
+        }
+        ?>
+        <div class="child-tab-title">
+                <?php if ($check1) : ?>
+            <a class="child data switch"
+                    target="_blank"
+                    href="<?php /* @escapeNotVerified */ echo $link; $tab_status=1; ?>"
+                <?php else: ?>
+            <a class="child data switch checkSwitch"
+
+                    href="?tab=<?php /* @escapeNotVerified */ echo $childtab['alias']; $tab_status=1; ?>"
+                <?php endif; ?>
+               data-toggle="switch"
+               id="tab-label-<?php /* @escapeNotVerified */ echo $childtab['alias'] ?>-title"
+               data-id="tab-label-<?php /* @escapeNotVerified */ echo $childtab['alias'] ?>-title-content"
+               title="<?php /* @escapeNotVerified */ echo $childtab['title'] ;?>"
+               data-url="<?php /* @escapeNotVerified */ echo $childtab['alias'] ;?>">
+                <?php echo __($childtab['title']);?>
+            </a>
+        </div>
+    <?php endforeach?>
+</div>
+<div class="childtab-content-main">
+    <?php foreach ($childTabs as $childtab):
+
+        $phtml = $this->getLayout()
+            ->createBlock($childtab['widget_block'])
+            ->setTemplate($childtab['widget_template'])
+            ->toHtml();
+        if(trim($phtml) == Null)
+        {
+            continue;
+        }
+        ?>
+        <div class="child-tab-content" id="<?php /* @escapeNotVerified */ echo $childtab['alias'] ?>" data-role="child-content"><?php  echo $phtml;?></div>
+    <?php endforeach; ?>
+</div>

@@ -1,0 +1,152 @@
+<?php
+
+    $tabs = [];
+    foreach ($block->getTabs() as $_index => $_tab) {
+
+        $block->getChildBlock($_tab['alias'])->setData("id", $_tab['alias']);
+        if (!($childHtml = $block->getChildHtml($_tab['alias']))
+            || $block->isEmptyString($childHtml)) {
+
+            continue;
+        }
+        $_tab['child_html'] = $childHtml;
+        $_tab['title'] = $block->getTabTitle($_tab);
+
+        $tabs[$_index] = $_tab;
+    }
+$currentUrl= $block->getUrl('*/*/*', ['_current' => true, '_use_rewrite' => true]);
+$curUrlNoParams= $block->getUrl('*/*/*', array('_use_rewrite' => true, '_forced_secure' => true));
+    $isExpanded = ($block->getTabsLayout() == 'expanded');
+    $flag=0;
+    $item = 1;
+/** Change By JM [For display Technologies page in custom page] */
+$tech_id = $this->getRequest()->getParam('tech_id');
+$faq_view = $this->getRequest()->getParam('faq_view');
+
+$helper=$this->helper('Swissup\Easytabs\Helper\Data');
+$customTechUrl = $helper->getCustomTabs($tech_id);
+/** Change By JM [For display Technologies page in custom page] */
+$currentCat = $helper->getCurrentCategory();
+
+?>
+<div class="product info detailed">
+    <div class="product data items <?php echo $block->getTabsLayout();?>" data-mage-init='{"tabs": <?php echo $isExpanded ? '{}' : $block->getInitOptions(); ?>}' id="swissup-easy-tabs">
+        <div id="custom-slider" class="custom-tab-slider">
+            <div id="left_scroll_tabs" class="scroll-arrow">
+                <img src="<?php echo $this->getViewFileUrl('images/left_double_arrow.png'); ?>" alt="">
+            </div>
+            <div class="easytabs-title">
+                <div class="easytabs-title-items">
+                <?php foreach ($tabs as $_index => $_tab) : ?>
+                    <?php
+                        $html = $_tab['child_html'];
+                        $alias = $_tab['alias'];
+                        $label = $_tab['title'];
+                         /* Added By MJ [For remove active class from review and awards tab] [18.05.2019] */
+                        if($alias == 'reviews' || $alias == 'awards')
+                        {
+                            $flag=1;
+                            $active = '';
+                        }
+                       /* End By MJ [For remove active class from review and awards tab] [18.05.2019] */
+                        $href= ($flag==1)?'?tab='.$alias:"";
+                    ?>
+                    <?php
+                    if ($item == 1):
+                        $active = 'active';
+                        $item++;
+                    else:
+                        $active = '';
+                    endif;
+                    ?>
+
+                    <?php if ($_tab['alias'] == 'custom-page-general-tech') {
+                        $alias= $customTechUrl;
+                     ?>
+                    <!-- Change By JM [For display Technologies page in custom page] -->
+                        <div class="data item title" aria-labeledby="tab-label-technologies" data-role="collapsible" id="tab-label-technologies" role="tab">
+                            <a class="data switch" tabindex="-1" title="<?php echo __('Technologies'); ?>" data-toggle="switch" href="?tab=technologies" id="tab-label-technologies-title">
+                                <?php echo __('Technologies'); ?>
+                            </a>
+                        </div>
+                    <!-- Change By JM [For display Technologies page in custom page] -->
+                    <?php } ?>
+                    <div class="data item title <?php echo $active; ?>"
+                        aria-labeledby="tab-label-<?php /* @escapeNotVerified */ echo $alias;?>-title"
+                        <?php if ($isExpanded): ?>
+                            role="tab"
+                        <?php else: ?>
+                            data-role="collapsible"
+                        <?php endif ?>
+                        id="tab-label-<?php /* @escapeNotVerified */ echo $alias;?>">
+                    <?php if ($isExpanded): ?>
+                        <h2 class="title"><?php /* @escapeNotVerified */ echo $label; ?></h2>
+                    <?php else: ?>
+                        <a class="data switch custom-tab-title"
+                           tabindex="-1"
+                           title="<?php /* @escapeNotVerified */ echo $label; ?>"
+                           data-toggle="switch"
+
+                           href="<?php echo $href; $flag=1; ?>"
+                          id="tab-label-<?php /* @escapeNotVerified */ echo $alias;?>-title">
+                            <?php /* @escapeNotVerified */ echo __($label); ?>
+                        </a>
+                    <?php endif ?>
+                    </div>
+               <?php endforeach; ?>
+               <?php if($faq_view):?>
+                         <div class="data item title" aria-labeledby="tab-label-faq_view" data-role="collapsible" id="tab-label-faq_view" role="tab">
+                            <a class="data switch" tabindex="-1" title="<?php echo __('Faq'); ?>" data-toggle="switch" href="?tab=?faq_view=<?php echo $faq_view?>" id="tab-label-faq_view-title">
+                                <?php echo __('Faq'); ?>
+                            </a>
+                        </div>
+                    <?php endif;?>
+                </div>
+            </div>
+            <div id="right_scroll_tabs" class="scroll-arrow">
+                <img src="<?php echo $this->getViewFileUrl('images/duble-arrow.png'); ?>" alt="">
+            </div>
+        </div>
+        <?php foreach ($tabs as $_index => $_tab) : ?>
+            <?php  $html = $_tab['child_html'];
+                $alias = $_tab['alias'];
+                ?>
+            <?php if ($_tab['alias'] == 'custom-page-general-tech') {
+                $alias= $customTechUrl;
+            ?>
+            <!-- Change By JM [For display Technologies page in custom page] -->
+                <div class="data item content" id="technologies" data-role="content">
+                    <?php echo $this->getLayout()->createBlock("SIT\GeneralTechnologiesNew\Block\GeneralTechnology\Technologies")->setTemplate("SIT_GeneralTechnologiesNew::generaltechnology/list.phtml")->setData('custom_page', 'technologies')->toHtml();?>
+                </div>
+            <!-- Change By JM [For display Technologies page in custom page] -->
+            <?php } ?>
+             <div class="data item content" id="<?php /* @escapeNotVerified */ echo $alias; ?>" data-role="content">
+                <?php /* @escapeNotVerified */ echo $html; ?>
+            </div>
+
+        <?php endforeach; ?>
+        <?php if($faq_view):?>
+        <div class="data item content" id="faq_view" data-role="content">
+            <?php if($helper->getCurrentCategory()):
+                      echo $this->getLayout()->createBlock("SIT\ProductFaqNew\Block\ProductFaq\CustomFAQView")->setTemplate("SIT_ProductFaqNew::route/faq_cat_view.phtml")->setData('faq_view', $faq_view)->toHtml();
+            else: ?>
+
+                    <?php echo $this->getLayout()->createBlock("SIT\ProductFaqNew\Block\ProductFaq\CustomFAQView")->setTemplate("SIT_ProductFaqNew::route/faq_view.phtml")->setData('faq_view', $faq_view)->toHtml();?>
+                <?php endif; ?>
+        </div>
+         <?php endif;?>
+    </div>
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "easytabs": {
+                "tabsSelector": "#swissup-easy-tabs",
+                "linksSelector": "[data-action=activate-tab]",
+                "currenturl": "<?php echo $currentUrl?>",
+                "cururlnoparams": "<?php echo $curUrlNoParams?>"
+            }
+        }
+    }
+</script>

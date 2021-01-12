@@ -1,0 +1,49 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [1-3-2019]
+ */
+?>
+<?php
+    $tabData = $block->getTabdata();
+    $tabId = $tabData['id'];
+    $helper=$this->helper('Swissup\Easytabs\Helper\Data');
+    $params=$helper->getVisible($tabId);
+    $removefrom=$helper->getRemoveFrom($tabId);
+    $page = $helper->getPageInfo($params,$removefrom);
+
+    if($page === false):
+        return true;
+    endif;
+
+    $sizeOptions = $block->getFanSearchAttrOptions('size_mm');
+    $connectorOptions = $block->getFanSearchAttrOptions('connector');
+    $voltageOptions = $block->getFanSearchVoltageValue('voltage','fan,line-redux,line-industrial,line-chromax');
+    $fanCollection = $block->getFanSearchProList('fan');
+
+?>
+<div id="sit-ajaxfansearch-category-div" data-bind="scope:'sit-ajaxfansearch-category-div'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+               "components": {
+                    "sit-ajaxfansearch-category-div": {
+                        "component": "SIT_AjaxFanSearch/js/koajaxfansearch",
+                        "template" : "SIT_AjaxFanSearch/koajaxfansearch",
+                        "sizeOptions": <?= /* @escapeNotVerified */ $sizeOptions ?>,
+                        "connectorOptions": <?= /* @escapeNotVerified */ $connectorOptions ?>,
+                        "voltageOptions": <?= /* @escapeNotVerified */ $voltageOptions ?>,
+                        "fanCollection": <?= /* @escapeNotVerified */ $fanCollection ?>
+                        }
+                    }
+                }
+            }
+    }
+    </script>
+</div>

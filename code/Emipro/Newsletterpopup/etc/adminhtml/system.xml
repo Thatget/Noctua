@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [10-05-2019]
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Config/etc/system_file.xsd">
+    <system>
+		<section id="newsletter_popup" translate="label" type="text" sortOrder="140" showInDefault="1" showInWebsite="0" showInStore="0">
+			 <label>Newsletter Popup</label>
+            <tab>Noctua</tab>
+            <resource>Emipro_Newsletterpopup::config_newsletterpopup</resource>
+            <group id="google_recaptcha" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Google reCaptcha</label>
+                <field id="sitekey" translate="label" sortOrder="1" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Your reCaptcha Site key</label>
+                    <comment><![CDATA[Enter Your Site's Google reCaptcha Site Key]]></comment>
+                </field>
+                <field id="secretkey" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Your reCaptcha Secret key</label>
+                    <comment><![CDATA[Enter Your Site's Google reCaptcha Secret Key]]></comment>
+                </field>
+            </group>
+        </section>
+        <!-- Changed by MD for set custom configuration in Customers -> Newsletter -> Subscription Options(Tab)[START][25-06-2019] -->
+        <section id="newsletter">
+            <group id="subscription" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="subscription_source" translate="label comment" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Subscriber Source</label>
+                    <source_model>Emipro\Newslettergroup\Model\NewsletterSource\SubscriberSource</source_model>
+                </field>
+            </group>
+        </section>
+        <!-- Changed by MD for set custom configuration in Customers -> Newsletter -> Subscription Options(Tab)[END][25-06-2019] -->
+	</system>
+</config>

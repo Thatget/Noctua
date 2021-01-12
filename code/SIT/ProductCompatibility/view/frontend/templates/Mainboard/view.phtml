@@ -1,0 +1,52 @@
+<?php
+    $tabData = $block->getTabdata();
+    $tabId = $tabData['id'];
+    $helper=$this->helper('Swissup\Easytabs\Helper\Data');
+    $params=$helper->getVisible($tabId);
+    $page = $helper->getCustomPageInfo($params,$tabId);
+    if($page === false):
+        return true;
+    endif;
+
+    $urlKey = $this->getRequest()->getParam('url_key');
+    $comp_type = $this->getRequest()->getParam('comp_type');
+    $getCompData = $block->getRouteCompatibilityData($comp_type,$urlKey);
+
+    /**
+     * Sort array by product name
+     */
+    $product_name = array_column($getCompData, 'product_name');
+    array_multisort($product_name, SORT_ASC, $getCompData);
+?>
+<div class="mainboard-custom-router-content custom-scroller">
+    <div class="section-inner-presse-page-full">
+        <div class="mainboardcr-inner-container">
+            <div class="mainboardcr-cms-content">
+                <?php
+                    $mainboard_comp = $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('product_compatibility_pretext')->toHtml();
+                    echo substr($mainboard_comp,0,strpos($mainboard_comp,'{{mainboard_compatibility}}'));
+                ?>
+            </div>
+            <h1 class="mainboardcr-table-head"><?php echo str_replace("_", " ", $urlKey);?></h1>
+            <div class="mainboardcr-table">
+                <div class="mainboardcr-table-title">
+                    <span class="pro-mainboardcr-product"><?php echo __('Product');?></span>
+                    <span class="pro-mainboardcr-compatibility"><?php echo __('Compatibility');?></span>
+                    <span class="pro-mainboardcr-comment"><?php echo __('Comment');?></span>
+                </div>
+                <?php foreach($getCompData as $compData){ ?>
+                <div class="mainboardcr-table-data">
+                    <span class="pro-mainboardcr-product"><a href="<?= $compData['product_url']?>"><?= $compData['product_name']?></a></span>
+                    <span class="pro-mainboardcr-compatibility"><img src="<?= $compData['compatiibility']?>"></span>
+                    <span class="pro-mainboardcr-comment"><ul><?= $compData['template_text_comment'].$compData['comp_extra_comment']?></ul></span>
+                </div>
+                <?php }?>
+            </div>
+            <div>
+                <div class="green"><?php echo __('Compatible');?></div>
+                <div class="blue"><?php echo __('Possible Issues (see comment)');?></div>
+                <div class="red"><?php echo __('Incompatible (see comment)');?></div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright © Qsoft. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="VladimirPopov\WebForms\Model\Form">
+        <plugin name="qsoft_remove_@_from_firstname_lastname"
+                type="Qsoft\WebFormsCustom\Plugin\VladimirPopov\WebForms\Model\Form"/>
+    </type>
+   <!-- <type name="VladimirPopov\WebFormsDepend\Model\Form">
+        <plugin name="qsoft_remove_@_from_firstname_lastname"
+                type="Qsoft\WebFormsCustom\Plugin\VladimirPopov\WebFormsDepend\Model\Form"/>
+    </type>-->
+</config>

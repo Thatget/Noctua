@@ -1,0 +1,46 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [1-3-2019]
+ */
+?>
+<?php
+    $sitHelper = $this->helper('SIT\MainAdmin\Helper\Data');
+	$tabData = $block->getTabdata();
+    $tabId = $tabData['id'];
+    $helper=$this->helper('Swissup\Easytabs\Helper\Data');
+    $params=$helper->getVisible($tabId);
+    $removefrom=$helper->getRemoveFrom($tabId);
+    $page = $helper->getProductInfo($params,$removefrom);
+    // $page = $helper->getProductInfo('products');
+	if($page === false){
+	    return true;
+	}
+    $current_product_id = $sitHelper->getCurrentProduct()->getId();
+    $pro_video = $block->getProductVideoIds($current_product_id);
+?>
+<?php if(count($pro_video) > 0) : ?>
+<div id="sit-productvideo-product-div" data-bind="scope:'sit-productvideo-product-div'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+               "components": {
+                    "sit-productvideo-product-div": {
+                        "component": "SIT_ProductVideoNew/js/koproductvideo",
+                        "template" : "SIT_ProductVideoNew/koproductvideo",
+                        "currentProductId" : <?= $current_product_id ?>,
+                        "imgloader":"<?= $block->getViewFileUrl('images/loader-1.gif') ?>"
+                        } 
+                    }
+                }
+            }
+    }
+    </script>
+</div>
+<?php endif; ?>

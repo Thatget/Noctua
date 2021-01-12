@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<config>
+  <settings>
+    <preloader image="images/Img7715.jpg" />
+    <userInterface showZoomButtons="false" showToolTips="false" showHotspotsButton="false" showFullScreenButton="false" showTogglePlayButton="false" showArrows="true" toolbarAlign="center" toolbarBackColor="transparent" toolbarHoverColor="#808285" toolbarForeColor="#A7A9AE" toolbarBackAlpha="0" toolbarAlpha="1" showProgressNumbers="false" showFullScreenToolbar="false" fullScreenBackColor="#FFFFFF" />
+    <control dragSpeed="0.31" doubleClickZooms="true" disableMouseControl="false" showHighresOnFullScreen="true" mouseHoverDrag="false" hideHotspotsOnLoad="false" hideHotspotsOnZoom="true" rowSensitivity="15" dragSensitivity="10" inBrowserFullScreen="false" doubleClickFullscreen="false" zoomSteps="1" zoomSpeed="300" />
+    <rotation firstImage="0" rotate="once" rotatePeriod="2" bounce="false" rotateDirection="-1" forceDirection="false" inertiaRelToDragSpeed="true" inertiaTimeToStop="700" inertiaMaxInterval="120" useInertia="true" flipHorizontalInput="false" flipVerticalInput="false" bounceRows="true" rowsOnSingleIndex="false" flipAxis="false" />
+  </settings>
+  <hotspots>
+    <hotspot id="low" renderMode="0" indicatorImage="hotspot3.svg" margin="10,10,10,10" align="center,right">
+      <spotinfo src="images/spots/noctua_nh_l9a_am4_lp.png" imgWidth="223" />
+    </hotspot>
+    <hotspot id="rzyen" renderMode="0" indicatorImage="hotspot3.svg" margin="10,10,10,10" align="top,right">
+      <spotinfo src="images/spots/noctua_nh_l9a_am4_rzyen.png" imgWidth="223" />
+    </hotspot>
+    <hotspot id="fan" renderMode="0" indicatorImage="hotspot3.svg" margin="10,10,10,10" align="top,left">
+      <spotinfo src="images/spots/noctua_nh_l9a_am4_pf.png" imgWidth="223" />
+    </hotspot>
+    <hotspot id="pcle" renderMode="0" indicatorImage="hotspot3.svg" margin="10,10,10,10" align="center,left">
+      <spotinfo src="images/spots/noctua_nh_l9a_am4_pcle.png" imgWidth="223" />
+    </hotspot>
+    <hotspot id="ram" renderMode="0" indicatorImage="hotspot3.svg" margin="10,10,10,10" align="center,left">
+      <spotinfo src="images/spots/noctua_nh_l9a_am4_ram.png" imgWidth="223" />
+    </hotspot>
+  </hotspots>
+  <images rows="1">
+    <image src="images/Img7715.jpg">
+      <hotspot source="low" offsetX="612.5" offsetY="301" />
+      <hotspot source="rzyen" offsetX="792.5" offsetY="545" />
+    </image>
+    <image src="images/Img7716.jpg">
+      <hotspot source="low" offsetX="546.5" offsetY="301" />
+      <hotspot source="rzyen" offsetX="741.5" offsetY="545" />
+    </image>
+    <image src="images/Img7717.jpg">
+      <hotspot source="low" offsetX="480.5" offsetY="302" />
+      <hotspot source="rzyen" offsetX="680.5" offsetY="546" />
+    </image>
+    <image src="images/Img7718.jpg">
+      <hotspot source="low" offsetX="417.5" offsetY="303" />
+      <hotspot source="rzyen" offsetX="615.5" offsetY="545" />
+    </image>
+    <image src="images/Img7719.jpg">
+      <hotspot source="low" offsetX="373.5" offsetY="303" />
+      <hotspot source="rzyen" offsetX="557.5" offsetY="546" />
+      <hotspot source="ram" offsetX="895.5" offsetY="384" />
+    </image>
+    <image src="images/Img7720.jpg">
+      <hotspot source="rzyen" offsetX="501.5" offsetY="546" />
+      <hotspot source="ram" offsetX="852.5" offsetY="383" />
+    </image>
+    <image src="images/Img7721.jpg">
+      <hotspot source="rzyen" offsetX="442.5" offsetY="545" />
+      <hotspot source="ram" offsetX="802.5" offsetY="384" />
+    </image>
+    <image src="images/Img7722.jpg">
+      <hotspot source="ram" offsetX="750.5" offsetY="384" />
+    </image>
+    <image src="images/Img7723.jpg">
+      <hotspot source="ram" offsetX="689.5" offsetY="383" />
+    </image>
+    <image src="images/Img7724.jpg">
+      <hotspot source="ram" offsetX="622.5" offsetY="383" />
+    </image>
+    <image src="images/Img7725.jpg">
+      <hotspot source="ram" offsetX="540.5" offsetY="382" />
+    </image>
+    <image src="images/Img7726.jpg">
+      <hotspot source="ram" offsetX="486.5" offsetY="383" />
+    </image>
+    <image src="images/Img7727.jpg">
+      <hotspot source="ram" offsetX="431.5" offsetY="382" />
+    </image>
+    <image src="images/Img7728.jpg">
+      <hotspot source="pcle" offsetX="897" offsetY="384" />
+      <hotspot source="ram" offsetX="375.5" offsetY="382" />
+    </image>
+    <image src="images/Img7729.jpg">
+      <hotspot source="pcle" offsetX="853.5" offsetY="384" />
+      <hotspot source="ram" offsetX="337" offsetY="382" />
+    </image>
+    <image src="images/Img7730.jpg">
+      <hotspot source="pcle" offsetX="805.5" offsetY="384" />
+    </image>
+    <image src="images/Img7731.jpg">
+      <hotspot source="pcle" offsetX="750.5" offsetY="384" />
+    </image>
+    <image src="images/Img7732.jpg">
+      <hotspot source="pcle" offsetX="690.5" offsetY="383" />
+    </image>
+    <image src="images/Img7733.jpg">
+      <hotspot source="pcle" offsetX="623.5" offsetY="383" />
+    </image>
+    <image src="images/Img7734.jpg">
+      <hotspot source="pcle" offsetX="562.5" offsetY="382" />
+    </image>
+    <image src="images/Img7735.jpg">
+      <hotspot source="pcle" offsetX="498.5" offsetY="381" />
+    </image>
+    <image src="images/Img7736.jpg">
+      <hotspot source="pcle" offsetX="437.5" offsetY="382" />
+    </image>
+    <image src="images/Img7737.jpg">
+      <hotspot source="pcle" offsetX="390.5" offsetY="381" />
+    </image>
+    <image src="images/Img7738.jpg">
+      <hotspot source="fan" offsetX="869" offsetY="284" />
+      <hotspot source="pcle" offsetX="347" offsetY="382" />
+    </image>
+    <image src="images/Img7739.jpg">
+      <hotspot source="fan" offsetX="823.5" offsetY="284" />
+    </image>
+    <image src="images/Img7740.jpg">
+      <hotspot source="fan" offsetX="761.5" offsetY="283" />
+    </image>
+    <image src="images/Img7741.jpg">
+      <hotspot source="fan" offsetX="696.5" offsetY="282" />
+    </image>
+    <image src="images/Img7742.jpg">
+      <hotspot source="fan" offsetX="631.5" offsetY="282" />
+    </image>
+    <image src="images/Img7743.jpg">
+      <hotspot source="fan" offsetX="559.5" offsetY="281" />
+    </image>
+    <image src="images/Img7744.jpg">
+      <hotspot source="fan" offsetX="490.5" offsetY="282" />
+    </image>
+    <image src="images/Img7745.jpg">
+      <hotspot source="fan" offsetX="435.5" offsetY="282" />
+    </image>
+    <image src="images/Img7746.jpg">
+      <hotspot source="fan" offsetX="375.5" offsetY="282" />
+    </image>
+    <image src="images/Img7747.jpg">
+      <hotspot source="low" offsetX="858.5" offsetY="305" />
+      <hotspot source="fan" offsetX="333" offsetY="282" />
+    </image>
+    <image src="images/Img7748.jpg">
+      <hotspot source="low" offsetX="808.5" offsetY="304" />
+    </image>
+    <image src="images/Img7749.jpg">
+      <hotspot source="low" offsetX="746.5" offsetY="303" />
+    </image>
+    <image src="images/Img7750.jpg">
+      <hotspot source="low" offsetX="685.5" offsetY="302" />
+    </image>
+  </images>
+</config>

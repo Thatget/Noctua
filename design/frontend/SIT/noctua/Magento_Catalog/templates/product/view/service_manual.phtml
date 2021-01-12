@@ -1,0 +1,58 @@
+<?php
+
+$sitHelper = $this->helper('SIT\MainAdmin\Helper\Data');
+/**
+ * Installation Manual (PDF)
+ */
+$manual = \SIT\MainAdmin\Helper\Data::MANUAL_VARIABLE;
+$manualCollection = $block->getServiceManualSheetData($manual);
+/**
+ * Information Sheet (PDF)
+ */
+$infosheet = \SIT\MainAdmin\Helper\Data::INFOSHEET_VARIABLE;
+$infosheetCollection = $block->getServiceManualSheetData($infosheet);
+?>
+<?php if((count($manualCollection) > 0) || (count($infosheetCollection) > 0)): ?>
+<div class="product-service-instruction-content">
+	<div class="service-inner-container">
+	<?php if(count($manualCollection) > 0): ?>
+		<div class="inner-box">
+			<h1><?php echo __('Installation Manual (PDF)'); ?></h1>
+			<div class="inner-box-links">
+			<?php foreach ($manualCollection as $storeCode => $manualData) {
+					if (isset($manualData['manual']) && $storeCode != 'admin' && $storeCode != 'ru') {
+							$filePDF = $sitHelper->getImage('blfa_files/manual/',$manualData['manual']);
+						?>
+							<a href="<?= $filePDF ?>" target="_blank">
+								<?php //$img = $sitHelper->getImage('flags/',$storeCode.'.gif'); ?>
+								<?php $img = $block->getViewFileUrl('MageKey_StoresFlags::flags/'.$storeCode.'.svg'); ?>
+								<img class="service-manual-flag" src="<?= $img; ?>" />
+							</a>
+						<?php
+					}
+				} ?>
+			</div>
+		</div>
+	<?php endif;?>
+	<?php if(count($infosheetCollection) > 0): ?>
+		<div class="inner-box">
+			<h1><?php echo __('Information Sheet (PDF)'); ?></h1>
+			<div class="inner-box-links">
+			<?php foreach ($infosheetCollection as $storeCode => $infosheetData) {
+					if (isset($infosheetData['infosheet']) && $storeCode != 'admin' && $storeCode != 'ru') {
+							$filePDF = $sitHelper->getImage('blfa_files/infosheet/',$infosheetData['infosheet']);
+						?>
+							<a href="<?= $filePDF ?>" target="_blank">
+								<?php //$img = $sitHelper->getImage('flags/',$storeCode.'.gif'); ?>
+								<?php $img = $block->getViewFileUrl('MageKey_StoresFlags::flags/'.$storeCode.'.svg'); ?>
+								<img class="service-manual-flag" src="<?= $img; ?>" />
+							</a>
+						<?php
+					}
+				} ?>
+			</div>
+		</div>
+	<?php endif;?>
+	</div>
+</div>
+<?php endif;?>

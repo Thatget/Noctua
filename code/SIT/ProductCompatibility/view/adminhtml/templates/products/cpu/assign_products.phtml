@@ -1,0 +1,30 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [1-3-2019]
+ */
+?>
+<?php
+$blockGrid = $block->getBlockGrid();
+$gridJsObjectName = $blockGrid->getJsObjectName();
+
+?>
+<?= $block->getGridHtml() ?>
+<input type="hidden" name="productcompatibility_cpu_products" data-form-part="sit_productcompatibility_cpu_form" id="productcompatibility_cpu_products" value=""  />
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "SIT_ProductCompatibility/js/cpu/assign-products": {
+                "selectedProducts":  <?= /* @escapeNotVerified */ $block->getProductsJson() ?>,
+                "gridJsObjectName": <?= /* @escapeNotVerified */ '"' . $gridJsObjectName . '"' ?: '{}' ?>
+            }
+        }
+    }
+</script>
+<script>
+    require('mage/apply/main').apply();
+</script>

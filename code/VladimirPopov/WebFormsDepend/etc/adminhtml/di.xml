@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+   <!-- For Footer Description Field in Webform admin-side[MD][25-04-2019] -->
+   <preference for="VladimirPopov\WebForms\Block\Adminhtml\Form\Edit\Tab\Information" type="VladimirPopov\WebFormsDepend\Block\Adminhtml\Form\Edit\Tab\Information" />
+   <!-- For Custom Field(Express Description) admin-side[MD][27-04-2019]-->
+   <preference for="VladimirPopov\WebForms\Model\Field" type="VladimirPopov\WebFormsDepend\Model\Field" />
+   <!-- For Create Custom 5 Fields admin-side[MD][29-04-2019]-->
+   <preference for="VladimirPopov\WebForms\Controller\Adminhtml\Field\Save" type="VladimirPopov\WebFormsDepend\Controller\Adminhtml\Field\Save" />
+   <!-- For Set CMS Page Status for edit[MD][02-07-2019]-->
+   <preference for="VladimirPopov\WebForms\Controller\Adminhtml\Form\Save" type="VladimirPopov\WebFormsDepend\Controller\Adminhtml\Form\Save" />
+    <!-- For Use Express Delivery & Use In Soap and Newsletter Settings admin-side[MD][30-04-2019] -->
+   <preference for="VladimirPopov\WebForms\Block\Adminhtml\Form\Edit\Tab\Settings" type="VladimirPopov\WebFormsDepend\Block\Adminhtml\Form\Edit\Tab\Settings" />
+</config>
+
+

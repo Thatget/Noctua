@@ -1,0 +1,71 @@
+<?php $hint = htmlspecialchars(trim($this->getField()->getHint())); ?>
+<?php if ($this->getFieldValue()) $hint = false; ?>
+<?php if($this->getField()->getCode()=="express_delivery" ||
+                     $this->getField()->getCode()=="delivery_method" ||
+                     $this->getField()->getCode()=="amount" ||
+                     $this->getField()->getCode()=="payment_confirmed"  ||
+                     $this->getField()->getCode()=="transaction_id"){ ?>
+<input type='hidden' name='<?php echo $this->getFieldName() ?>' id='<?php echo $this->getFieldId() ?>' class="form-input <?php echo $this->getFieldClass() ?>" style='<?php echo $this->getFieldStyle() ?>'
+       placeholder="<?php if ($hint) echo __($hint); else echo __(htmlspecialchars($this->getFieldValue())); ?>"
+       <?php if ($this->getField()->getType() == 'email'){ ?>onkeyup="if(this.value.search(' ')>=0){this.value = this.value.replace(' ','');}"<?php } ?>
+       <?php if ($this->getField()->getDisabled()) { ?> disabled <?php } ?>
+       <?php if ($hint){ ?>onfocus="if (this.placeholder == '<?php echo str_replace("'","\'",$hint) ?>') {this.placeholder = ''; $(this).removeClassName('webforms-fields-hint');}" onblur="if (this.placeholder == '') {this.placeholder = '<?php echo str_replace("'","\'",$hint) ?>'; $(this).addClassName('webforms-fields-hint');}"<?php } ?>/>
+<?php } else {
+       /*Changed by MD for ordernr field's web-form [START][03-05-2019]*/
+       ?>
+       <?php
+       $OrderNr = $this->getRequest()->getParam('ordernr');
+       if($this->getField()->getCode() == 'OrderNr' && $OrderNr != '') {
+       ?>
+              <input type='hidden'  name='orderNum' id='orderNum' value=''/>
+              <input type='text' name='<?php echo $this->getFieldName() ?>' value="<?php echo $OrderNr ?>" id='<?php echo $this->getFieldId() ?>' class="form-input webform-input-text <?php echo $this->getFieldClass() ?> order-number-focus" readonly style='<?php echo $this->getFieldStyle() ?>'
+                     placeholder="<?php if ($hint) echo __($hint); else echo __(htmlspecialchars($this->getFieldValue())); ?>"
+              <?php if ($this->getField()->getType() == 'email'){ ?>onkeyup="if(this.value.search(' ')>=0){this.value = this.value.replace(' ','');}"<?php } ?>
+              <?php if ($this->getField()->getDisabled()) { ?> disabled <?php } ?>
+              <?php if ($hint){ ?>onfocus="if (this.placeholder == '<?php echo str_replace("'","\'",$hint) ?>') {this.placeholder = ''; $(this).removeClassName('webforms-fields-hint');}" onblur="if (this.placeholder == '') {this.placeholder = '<?php echo str_replace("'","\'",$hint) ?>'; $(this).addClassName('webforms-fields-hint');}"<?php } ?>/>
+
+              <!-- Changed by MD for check Order Number exist or not[START][03-05-2019] -->
+              <?php
+                 echo '<script>
+                          require(["jquery", "jquery/ui"], function($) {
+                            var orderNumData = "'.$OrderNr.'";
+                            checkOrderData(orderNumData);
+                          });
+                      </script>';
+              ?>
+              <span class="order_error"><img src="<?php echo $this->getViewFileUrl('VladimirPopov_WebFormsDepend::images/r1.png'); ?>"><?php echo __("Please verify the number you entered."); ?></span>
+              <span class="order_img"><img src="<?php echo $this->getViewFileUrl('VladimirPopov_WebFormsDepend::images/g1.png'); ?>"></span>
+              <!-- Changed by MD for check Order Number exist or not[END][03-05-2019] -->
+       <?php } elseif($this->getField()->getCode() == 'OrderNr' && $OrderNr == '') {
+       ?>     <input type='hidden'  name='orderNum' id='orderNum' value=''/>
+              <input type='text' name='<?php echo $this->getFieldName() ?>' value="<?php echo $OrderNr ?>" id='<?php echo $this->getFieldId() ?>' class="order-number webform-input-text order-number-focus form-input <?php echo $this->getFieldClass() ?>" onfocusout="checkOrderData(this.value)" style='<?php echo $this->getFieldStyle() ?>'
+                     placeholder="<?php if ($hint) echo __($hint); else echo __(htmlspecialchars($this->getFieldValue())); ?>"
+              <?php if ($this->getField()->getType() == 'email'){ ?>onkeyup="if(this.value.search(' ')>=0){this.value = this.value.replace(' ','');}"<?php } ?>
+              <?php if ($this->getField()->getDisabled()) { ?> disabled <?php } ?>
+              <?php if ($hint){ ?>onfocus="if (this.placeholder == '<?php echo str_replace("'","\'",$hint) ?>') {this.placeholder = ''; $(this).removeClassName('webforms-fields-hint');}" onblur="if (this.placeholder == '') {this.placeholder = '<?php echo str_replace("'","\'",$hint) ?>'; $(this).addClassName('webforms-fields-hint');}"<?php } ?>/>
+              <!-- Changed by MD for check Order Number exist or not[START][03-05-2019] -->
+               <span class="order_error"><img src="<?php echo $this->getViewFileUrl('VladimirPopov_WebFormsDepend::images/r1.png'); ?>"><?php echo __("Please verify the number you entered."); ?></span>
+              <span class="order_img"><img src="<?php echo $this->getViewFileUrl('VladimirPopov_WebFormsDepend::images/g1.png'); ?>"></span>
+              <!-- Changed by MD for check Order Number exist or not[END][03-05-2019] -->
+       <?php }
+       elseif($this->getField()->getType() == 'vat'){ ?>
+        <input type='text' name='<?php echo $this->getFieldName() ?>' id='<?php echo $this->getFieldId() ?>' class="vat-number webform-input-text vat-number-focus form-input <?php echo $this->getFieldClass() ?>" onfocusout="checkVatNumber(this,this.value)" style='<?php echo $this->getFieldStyle() ?>'
+                     placeholder="<?php if ($hint) echo __($hint); else echo __(htmlspecialchars($this->getFieldValue())); ?>"
+              <?php if ($this->getField()->getType() == 'vat'){ ?>onkeyup="if(this.value.search(' ')>=0){this.value = this.value.replace(' ','');}"<?php } ?>
+              <?php if ($this->getField()->getDisabled()) { ?> disabled <?php } ?>
+              <?php if ($hint){ ?>onfocus="if (this.placeholder == '<?php echo str_replace("'","\'",$hint) ?>') {this.placeholder = ''; $(this).removeClassName('webforms-fields-hint');}" onblur="if (this.placeholder == '') {this.placeholder = '<?php echo str_replace("'","\'",$hint) ?>'; $(this).addClassName('webforms-fields-hint');}"<?php } ?>/>
+        <span class="vat_error" id="vat_error_<?php echo $this->getFieldId() ?>"><img src="<?php echo $this->getViewFileUrl('VladimirPopov_WebFormsDepend::images/r1.png'); ?>">
+        </span>
+        <span class="vat_error_message" id="vat_error_message_<?php echo $this->getFieldId() ?>"><?php echo __("Please verify the number you entered."); ?></span>
+        <span class="vat_img" id="vat_img_<?php echo $this->getFieldId() ?>"><img src="<?php echo $this->getViewFileUrl('VladimirPopov_WebFormsDepend::images/g1.png'); ?>"></span>
+       <?php }
+       else { ?>
+              <input type='text' name='<?php echo $this->getFieldName() ?>' id='<?php echo $this->getFieldId() ?>' class="form-input webform-input-text <?php echo $this->getFieldClass() ?>" style='<?php echo $this->getFieldStyle() ?>'
+              placeholder="<?php if ($hint) echo __($hint); else echo __(htmlspecialchars($this->getFieldValue())); ?>"
+              <?php if ($this->getField()->getType() == 'email'){ ?>onkeyup="if(this.value.search(' ')>=0){this.value = this.value.replace(' ','');}"<?php } ?>
+              <?php if ($this->getField()->getDisabled()) { ?> disabled <?php } ?>
+              <?php if ($hint){ ?>onfocus="if (this.placeholder == '<?php echo str_replace("'","\'",$hint) ?>') {this.placeholder = ''; $(this).removeClassName('webforms-fields-hint');}" onblur="if (this.placeholder == '') {this.placeholder = '<?php echo str_replace("'","\'",$hint) ?>'; $(this).addClassName('webforms-fields-hint');}"<?php } ?>/>
+       <?php }
+       /*Changed by MD for ordernr field's web-form [END][03-05-2019]*/
+       ?>
+<?php } ?>

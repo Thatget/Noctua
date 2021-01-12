@@ -1,0 +1,126 @@
+<?php
+	$data = $block->getManualData();
+	$sitHelper = $this->helper('SIT\MainAdmin\Helper\Data');
+	$defaultManu = '';
+?>
+<!-- Start product-manual-container -->
+<div class="product-manual-container">
+
+	<?php foreach ($data as $catName => $value) { ?>
+		<?php $i = 0; ?>
+		<!-- Start manual-inner-section -->
+		<div class="manual-inner-section">
+
+			<!-- Start manual-box -->
+			<div class="manual-box">
+
+				<div class="line">
+				</div>
+
+				<!-- Start row-container-even -->
+				<div class="row-container-even">
+					<div class="left-column">
+						<span class="manual-heading"><?= $catName; ?></span>
+					</div>
+					<div class="right-column">
+						<span class="manual-heading"><?= __('Languages (PDF)'); ?></span>
+					</div>
+				</div>
+				<!-- End row-container-even -->
+				<?php
+				foreach ($value as $keyData => $proName) {
+					if (isset($proName['name'])) {
+						if($i % 2 == 0){
+							?>
+							<!-- Start row-container-odd -->
+							<div class="row-container-odd">
+								<div class="left-column">
+									<span class="manual-content"><a href="#"><?= $proName['name']; ?></a></span>
+								</div>
+								<div class="right-column">
+									<?php
+									foreach ($proName as $storeCode => $manualData) {
+										if (isset($manualData['manual']) && $storeCode != 'admin') {
+											if ($storeCode == 'en') {
+												$defaultManu = $manualData['manual'];
+												if($manualData['manual'] == $defaultManu && $storeCode == 'en') {
+													$filePDF = $sitHelper->getImage('blfa_files/manual/',$manualData['manual']);
+												?>
+													<a href="<?= $filePDF; ?>">
+														<?php
+														$img = $block->getViewFileUrl('MageKey_StoresFlags::flags/'.$storeCode.'.svg'); ?>
+														<img class="service-manual-flag" src="<?= $img; ?>" />
+													</a>
+												<?php
+												}
+											}
+											if($manualData['manual'] != $defaultManu && $storeCode != 'en') {
+													$filePDF = $sitHelper->getImage('blfa_files/manual/',$manualData['manual']);
+											?>
+												<a href="<?= $filePDF ?>">
+													<?php $img = $block->getViewFileUrl('MageKey_StoresFlags::flags/'.$storeCode.'.svg'); ?>
+														<img class="service-manual-flag" src="<?= $img; ?>" />
+												</a>
+											<?php
+											}
+										}
+									}
+									?>
+								</div>
+							</div>
+							<!-- End row-container-odd -->
+						<?php
+						}
+						else
+						{?>
+							<!-- Start row-container-even -->
+							<div class="row-container-even">
+								<div class="left-column">
+									<span class="manual-content"><a href="#"><?= $proName['name']; ?></a></span>
+								</div>
+								<div class="right-column">
+									<?php
+									foreach ($proName as $storeCode => $manualData) {
+										if (isset($manualData['manual']) && $storeCode != 'admin') {
+											if ($storeCode == 'en') {
+												$defaultManu = $manualData['manual'];
+												if($manualData['manual'] == $defaultManu && $storeCode == 'en') {
+													$filePDF = $sitHelper->getImage('blfa_files/manual/',$manualData['manual']);
+												?>
+													<a href="<?= $filePDF; ?>">
+														<?php $img = $block->getViewFileUrl('MageKey_StoresFlags::flags/'.$storeCode.'.svg'); ?>
+														<img class="service-manual-flag" src="<?= $img; ?>" />
+													</a>
+												<?php
+												}
+											}
+											if($manualData['manual'] != $defaultManu && $storeCode != 'en') {
+													$filePDF = $sitHelper->getImage('blfa_files/manual/',$manualData['manual']);
+											?>
+												<a href="<?= $filePDF; ?>">
+													<?php $img = $block->getViewFileUrl('MageKey_StoresFlags::flags/'.$storeCode.'.svg'); ?>
+														<img class="service-manual-flag" src="<?= $img; ?>" />
+												</a>
+											<?php
+											}
+										}
+									}
+									?>
+								</div>
+							</div>
+							<!-- End row-container-even -->
+					<?php
+						}
+					}
+					$i++;
+				}
+				?>
+			</div>
+			<!-- End manual-box -->
+		</div>
+		<!-- End manual-inner-section -->
+<?php
+	}
+	?>
+</div>
+<!-- End product-manual-container -->

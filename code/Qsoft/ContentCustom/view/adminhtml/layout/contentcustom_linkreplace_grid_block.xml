@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 RokanThemes.com. All rights reserved.
+
+ * @author RokanThemes Team <contact@rokanthemes.com>
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="contentcustom.linkreplace.container">
+            <block class="Magento\Backend\Block\Widget\Grid" name="contentcustom.linkreplace.grid" as="grid">
+                <arguments>
+                    <argument name="id" xsi:type="string">LinkReplaceGrid</argument>
+                    <argument name="dataSource" xsi:type="object">Qsoft\ContentCustom\Model\ResourceModel\LinkReplace\Collection</argument>
+                    <argument name="default_sort" xsi:type="string">link_id</argument>
+                    <argument name="default_dir" xsi:type="string">asc</argument>
+                    <argument name="use_ajax" xsi:type="string">1</argument>
+                </arguments>
+                <block class="Magento\Backend\Block\Widget\Grid\Massaction" name="contentcustom.linkreplace.grid.massaction" as="grid.massaction">
+                    <arguments>
+                        <argument name="massaction_id_field" xsi:type="string">link_id</argument>
+                        <argument name="form_field_name" xsi:type="string">link_id</argument>
+                        <argument name="use_select_all" xsi:type="string">1</argument>
+                        <argument name="options" xsi:type="array">
+                            <item name="delete" xsi:type="array">
+                                <item name="label" xsi:type="string" translate="true">Delete</item>
+                                <item name="url" xsi:type="string">*/*/delete</item>
+                            </item>
+                        </argument>
+                    </arguments>
+                </block>
+                <block class="Magento\Backend\Block\Widget\Grid\ColumnSet" name="contentcustom.linkreplace.grid.columnSet" as="grid.columnSet">
+                    <arguments>
+                        <argument name="id" xsi:type="string">columnSet</argument>
+                        <argument name="rowUrl" xsi:type="array">
+                            <item name="path" xsi:type="string">*/*/edit</item>
+                            <item name="extraParamsTemplate" xsi:type="array">
+                                <item name="link_id" xsi:type="string">getId</item>
+                            </item>
+                        </argument>
+                    </arguments>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="id">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">ID</argument>
+                            <argument name="index" xsi:type="string">link_id</argument>
+                            <argument name="header_css_class" xsi:type="string">col-id</argument>
+                            <argument name="column_css_class" xsi:type="string">col-id</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="link_search">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Link Search</argument>
+                            <argument name="index" xsi:type="string">link_search</argument>
+                            <argument name="header_css_class" xsi:type="string">col-title</argument>
+                            <argument name="column_css_class" xsi:type="string">col-title</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="link_replace">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Link Replace</argument>
+                            <argument name="index" xsi:type="string">link_replace</argument>
+                            <argument name="header_css_class" xsi:type="string">col-title</argument>
+                            <argument name="column_css_class" xsi:type="string">col-title</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column\Multistore" as="store_id">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Store View</argument>
+                            <argument name="index" xsi:type="string">store_id</argument>
+                            <argument name="type" xsi:type="string">store</argument>
+                            <argument name="store_all" xsi:type="string">1</argument>
+                            <argument name="store_view" xsi:type="string">1</argument>
+                            <argument name="sortable" xsi:type="string">0</argument>
+                            <argument name="column_css_class" xsi:type="string">col-store</argument>
+                            <argument name="header_css_class" xsi:type="string">col-store</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="created_at">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Created</argument>
+                            <argument name="index" xsi:type="string">created_at</argument>
+                            <argument name="type" xsi:type="string">datetime</argument>
+                            <argument name="header_css_class" xsi:type="string">col-first-name</argument>
+                            <argument name="column_css_class" xsi:type="string">col-first-name</argument>
+                        </arguments>
+                    </block>
+                </block>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

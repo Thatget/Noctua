@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magestore, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <fieldset name="main_fieldset">
+        <field name="use_default_faq_que_config" component="Mageworld_ProductFaqNewCustom/js/components/use-default-config" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="value" xsi:type="string">1</item>
+                    <item name="valueFromConfig" xsi:type="object">Mageworld\ProductFaqNewCustom\Model\Source\Adminhtml\Faq\FaqQueConfiguration</item>
+                    <item name="keyInConfiguration" xsi:type="string">faq_que</item>
+                    <item name="sortOrder" xsi:type="number">11</item>
+                </item>
+            </argument>
+            <settings>
+                <links>
+                    <link name="linkedValue">${ $.provider }:${ $.parentScope }.faq_que</link>
+                </links>
+                <exports>
+                    <link name="checked">${$.parentName}.faq_que:disabled</link>
+                </exports>
+            </settings>
+            <formElements>
+                <checkbox class="Mageworld\ProductFaqNewCustom\Ui\Component\Form\Element\UseDefaultConfig">
+                    <settings>
+                        <description translate="true">Use Default Config</description>
+                        <valueMap>
+                            <map name="false" xsi:type="string">0</map>
+                            <map name="true" xsi:type="string">1</map>
+                        </valueMap>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <field name="use_default_faq_ans_config" component="Mageworld_ProductFaqNewCustom/js/components/use-default-config" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="value" xsi:type="string">1</item>
+                    <item name="valueFromConfig" xsi:type="object">Mageworld\ProductFaqNewCustom\Model\Source\Adminhtml\Faq\FaqAnsConfiguration</item>
+                    <item name="keyInConfiguration" xsi:type="string">faq_ans</item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                </item>
+            </argument>
+            <settings>
+                <links>
+                    <link name="linkedValue">${ $.provider }:${ $.parentScope }.faq_ans</link>
+                </links>
+                <exports>
+                    <link name="checked">${$.parentName}.faq_ans:disabled</link>
+                </exports>
+            </settings>
+            <formElements>
+                <checkbox class="Mageworld\ProductFaqNewCustom\Ui\Component\Form\Element\UseDefaultConfig">
+                    <settings>
+                        <description translate="true">Use Default Config</description>
+                        <valueMap>
+                            <map name="false" xsi:type="string">0</map>
+                            <map name="true" xsi:type="string">1</map>
+                        </valueMap>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+    </fieldset>
+</form>

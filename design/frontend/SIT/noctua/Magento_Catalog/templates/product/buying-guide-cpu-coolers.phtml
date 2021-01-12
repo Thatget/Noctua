@@ -1,0 +1,36 @@
+<?php
+/**
+ * Start Check for dynamic tab
+ */
+$tabData = $block->getTabdata();
+$tabId = $tabData['id'];
+$alias = $tabData['alias'];
+$helper=$this->helper('Swissup\Easytabs\Helper\Data');
+$params=$helper->getVisible($tabId);
+$removefrom=$helper->getRemoveFrom($tabId);
+$page = $helper->getPageInfo($params,$removefrom);
+
+if($page === false):
+    return true;
+endif;
+
+if($this->helper('Swissup\Easytabs\Helper\Data')->getProduct()):
+	return true;
+endif;
+?>
+<span class="sit-buying-guide-cpu-coolers-data" data-bind="scope:'sit-buying-guide-cpu-coolers'"></span>
+<script type="text/x-magento-init">
+{
+    "*": {
+        "Magento_Ui/js/core/app": {
+           "components": {
+                "sit-buying-guide-cpu-coolers": {
+                    "component":"SIT_ProductCompatibility/js/category/view/buyinggueidecpucoolers",
+                    "controllerUrl": "<?= $block->getUrl('sit_productcompatibility/category/buyingguidecpucoolers');?>"
+                }
+            }
+        }
+    }
+}
+</script>
+

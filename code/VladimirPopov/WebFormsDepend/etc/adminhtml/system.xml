@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="magemecom" translate="label" sortOrder="500">
+            <label>MageMe.com</label>
+        </tab>
+        <section id="webforms" translate="label" type="text" sortOrder="1110" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>WebForms Pro M2</label>
+            <tab>magemecom</tab>
+            <resource>VladimirPopov_WebForms::settings</resource>
+            <!-- Changed by MD for Paypal config[START][02-05-2019] -->
+            <group id="expressdelivery" translate="label comment" type="text" sortOrder="120" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>Express Delivery</label>
+                <field id="emailpaypal" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Email Associated with PayPal Merchant Account</label>
+                </field>
+                <field id="paypal_paymentmode" translate="label comment" type="select" sortOrder="20" showInDefault="1"
+                       showInWebsite="1" showInStore="0">
+                    <label>Sandbox Mode</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <!-- Changed by MD for Paypal config[END][02-05-2019] -->
+        </section>
+    </system>
+</config>

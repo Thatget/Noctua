@@ -1,0 +1,24 @@
+<?php
+/**
+ * Start Check for dynamic tab
+ */
+$tabData = $block->getTabdata();
+$tabId = $tabData['id'];
+$helper=$this->helper('Swissup\Easytabs\Helper\Data');
+$params=$helper->getVisible($tabId);
+$removefrom=$helper->getRemoveFrom($tabId);
+$page = $helper->getPageInfo($params,$removefrom);
+
+if($page === false):
+    return true;
+endif;
+
+if($this->helper('Swissup\Easytabs\Helper\Data')->getProduct()):
+	return true;
+endif;
+?>
+<?php
+	$sitHelper = $this->helper('SIT\MainAdmin\Helper\Data');
+	$cmsPageData = $sitHelper->getCmsPageData('buying-guide-fans');
+	echo $sitHelper->getCmsFilterContent($cmsPageData->getContent());
+?>

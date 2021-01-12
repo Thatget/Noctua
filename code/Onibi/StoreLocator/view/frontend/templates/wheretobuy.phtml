@@ -1,0 +1,72 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [1-3-2019]
+ */
+?>
+<?php
+    $helper = $this->helper('Swissup\Easytabs\Helper\Data');
+	$page = $helper->getPageInfo('where-to-buy');
+	if($page === false) {
+	    return true;
+	}
+	$currentPage="";
+	$buyercountryUrlParam="";
+	$sellercountryUrlParam="";
+	$sellerprovinceUrlParam="";
+	$buyerprovinceUrlParam="";
+	$limitUrlParam="";
+
+	if ($this->getRequest()->getParam("p")) {
+		$currentPage = $this->getRequest()->getParam("p");
+	}
+	if ($this->getRequest()->getParam("buyercountry")) {
+		$buyercountryUrlParam = $this->getRequest()->getParam("buyercountry");
+	}
+	if ($this->getRequest()->getParam("sellercountry")) {
+		$sellercountryUrlParam = $this->getRequest()->getParam("sellercountry");
+	}
+	if ($this->getRequest()->getParam("sellerprovince")) {
+		$sellerprovinceUrlParam = $this->getRequest()->getParam("sellerprovince");
+	}
+	if ($this->getRequest()->getParam("buyerprovince")) {
+		$buyerprovinceUrlParam = $this->getRequest()->getParam("buyerprovince");
+	}
+	if ($this->getRequest()->getParam("limit")) {
+		$limitUrlParam = $this->getRequest()->getParam("limit");
+	}
+	$whereToBuyPreText = json_encode($block->getStaticContent());
+	$seller_txt = __('If you\'d like to get in touch with our distribution partner in %1, please write an e-mail to sales@noctua.at so that we can forward you the respective contact information.');
+	$sellerText = json_encode($seller_txt);
+?>
+<div data-bind="scope: 'wheretobuy'">
+	<!-- ko template: getTemplate()  -->
+	<!-- /ko  -->
+</div>
+<script type="text/x-magento-init">
+{
+	"*":{
+		"Magento_Ui/js/core/app": {
+			"components": {
+				"wheretobuy":{
+					"component":"Onibi_StoreLocator/js/wheretobuy",
+					"base_url":"<?= $block->getBaseUrl();?>",
+					"media_url":"<?= $block->getMediaUrl();?>",
+					"buyercountry":"<?= $buyercountryUrlParam;?>",
+					"sellercountry":"<?= $sellercountryUrlParam;?>",
+					"buyerprovince":"<?= $buyerprovinceUrlParam;?>",
+					"sellerprovince":"<?= $sellerprovinceUrlParam;?>",
+					"currentpage":"<?= $currentPage?>",
+					"limit":"<?= $limitUrlParam?>",
+					"whereToBuyPreText": <?= /* @escapeNotVerified */ $whereToBuyPreText ?>,
+					"sellerText":<?= /* @escapeNotVerified */ $sellerText ?>
+				}
+			}
+		}
+	}
+}
+</script>

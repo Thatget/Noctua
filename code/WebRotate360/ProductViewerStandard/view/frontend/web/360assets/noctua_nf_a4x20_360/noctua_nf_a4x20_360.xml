@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<config>
+  <settings>
+    <preloader image="images/Img5942.jpg" />
+    <userInterface showZoomButtons="true" showToolTips="false" showHotspotsButton="true" showFullScreenButton="false" showTogglePlayButton="false" showArrows="true" toolbarAlign="center" toolbarBackColor="transparent" toolbarHoverColor="#808285" toolbarForeColor="#A7A9AE" toolbarBackAlpha="0" toolbarAlpha="1" showProgressNumbers="true" showFullScreenToolbar="false" fullScreenBackColor="#FFFFFF" />
+    <control dragSpeed="0.13" doubleClickZooms="true" disableMouseControl="false" showHighresOnFullScreen="true" mouseHoverDrag="false" hideHotspotsOnLoad="false" hideHotspotsOnZoom="true" rowSensitivity="15" dragSensitivity="10" inBrowserFullScreen="false" doubleClickFullscreen="false" />
+    <rotation firstImage="0" rotate="false" rotatePeriod="7" bounce="false" rotateDirection="-1" forceDirection="false" inertiaRelToDragSpeed="true" inertiaTimeToStop="700" inertiaMaxInterval="120" useInertia="true" flipHorizontalInput="false" flipVerticalInput="false" bounceRows="true" />
+  </settings>
+  <hotspots>
+    <hotspot id="integratedantivibrationpads" renderMode="0" indicatorImage="hotspot3.svg" margin="0,0,0,0" align="bottom,right">
+      <spotinfo src="images/spots/noctua_nf_a12x15_iavp.png" imgWidth="273" />
+    </hotspot>
+    <hotspot id="flowaccelerationchannels" renderMode="0" indicatorImage="hotspot3.svg" margin="0,0,0,0" align="bottom,right">
+      <spotinfo src="images/spots/noctua_nf_a4x20_fac.png" imgWidth="268" />
+    </hotspot>
+    <hotspot id="steppedinletdesign" renderMode="0" indicatorImage="hotspot3.svg" margin="0,0,0,0" align="center,left">
+      <spotinfo src="images/spots/noctua_nf_a12x15_sid.png" imgWidth="267" />
+    </hotspot>
+    <hotspot id="innersurfacemicostructure" renderMode="0" indicatorImage="hotspot3.svg" margin="0,0,0,0" align="bottom,left">
+      <spotinfo src="images/spots/noctua_nf_a4x20_isms.png" imgWidth="279" />
+    </hotspot>
+    <hotspot id="sso2" renderMode="0" indicatorImage="hotspot3.svg" margin="0,0,0,0" align="center,left">
+      <spotinfo src="images/spots/noctua_nf_a4x20_sso2.png" imgWidth="285" />
+    </hotspot>
+  </hotspots>
+  <images rows="1">
+    <image src="images/Img5942.jpg">
+      <hotspot source="integratedantivibrationpads" offsetX="854" offsetY="214" />
+      <hotspot source="flowaccelerationchannels" offsetX="624" offsetY="577" />
+    </image>
+    <image src="images/Img5943.jpg">
+      <hotspot source="integratedantivibrationpads" offsetX="831" offsetY="213" />
+      <hotspot source="flowaccelerationchannels" offsetX="619" offsetY="577" />
+    </image>
+    <image src="images/Img5944.jpg">
+      <hotspot source="integratedantivibrationpads" offsetX="795" offsetY="213" />
+      <hotspot source="flowaccelerationchannels" offsetX="614" offsetY="577" />
+    </image>
+    <image src="images/Img5945.jpg">
+      <hotspot source="integratedantivibrationpads" offsetX="756" offsetY="213" />
+      <hotspot source="flowaccelerationchannels" offsetX="606" offsetY="577" />
+    </image>
+    <image src="images/Img5946.jpg">
+      <hotspot source="integratedantivibrationpads" offsetX="704" offsetY="213" />
+    </image>
+    <image src="images/Img5947.jpg" />
+    <image src="images/Img5948.jpg" />
+    <image src="images/Img5949.jpg" />
+    <image src="images/Img5950.jpg" />
+    <image src="images/Img5951.jpg" />
+    <image src="images/Img5952.jpg" />
+    <image src="images/Img5953.jpg" />
+    <image src="images/Img5954.jpg" />
+    <image src="images/Img5955.jpg" />
+    <image src="images/Img5956.jpg">
+      <hotspot source="sso2" offsetX="678" offsetY="389" />
+    </image>
+    <image src="images/Img5957.jpg">
+      <hotspot source="sso2" offsetX="660" offsetY="389" />
+    </image>
+    <image src="images/Img5958.jpg">
+      <hotspot source="sso2" offsetX="644" offsetY="388" />
+    </image>
+    <image src="images/Img5959.jpg">
+      <hotspot source="sso2" offsetX="627" offsetY="388" />
+    </image>
+    <image src="images/Img5960.jpg">
+      <hotspot source="sso2" offsetX="610" offsetY="387" />
+    </image>
+    <image src="images/Img5961.jpg">
+      <hotspot source="innersurfacemicostructure" offsetX="486" offsetY="580" />
+      <hotspot source="sso2" offsetX="589" offsetY="388" />
+    </image>
+    <image src="images/Img5962.jpg">
+      <hotspot source="innersurfacemicostructure" offsetX="495" offsetY="580" />
+      <hotspot source="sso2" offsetX="570" offsetY="388" />
+    </image>
+    <image src="images/Img5963.jpg">
+      <hotspot source="innersurfacemicostructure" offsetX="508" offsetY="580" />
+      <hotspot source="sso2" offsetX="558" offsetY="387" />
+    </image>
+    <image src="images/Img5964.jpg">
+      <hotspot source="innersurfacemicostructure" offsetX="520" offsetY="580" />
+      <hotspot source="sso2" offsetX="541" offsetY="388" />
+    </image>
+    <image src="images/Img5965.jpg">
+      <hotspot source="innersurfacemicostructure" offsetX="532" offsetY="580" />
+    </image>
+    <image src="images/Img5966.jpg">
+      <hotspot source="innersurfacemicostructure" offsetX="543" offsetY="580" />
+    </image>
+    <image src="images/Img5967.jpg" />
+    <image src="images/Img5968.jpg" />
+    <image src="images/Img5969.jpg" />
+    <image src="images/Img5970.jpg">
+      <hotspot source="steppedinletdesign" offsetX="766" offsetY="401" />
+    </image>
+    <image src="images/Img5971.jpg">
+      <hotspot source="steppedinletdesign" offsetX="800" offsetY="400" />
+    </image>
+    <image src="images/Img5972.jpg">
+      <hotspot source="steppedinletdesign" offsetX="830" offsetY="401" />
+    </image>
+    <image src="images/Img5973.jpg">
+      <hotspot source="flowaccelerationchannels" offsetX="667" offsetY="579" />
+      <hotspot source="steppedinletdesign" offsetX="849" offsetY="401" />
+    </image>
+    <image src="images/Img5974.jpg">
+      <hotspot source="flowaccelerationchannels" offsetX="661" offsetY="579" />
+      <hotspot source="steppedinletdesign" offsetX="863" offsetY="401" />
+    </image>
+    <image src="images/Img5975.jpg">
+      <hotspot source="integratedantivibrationpads" offsetX="884" offsetY="216" />
+      <hotspot source="flowaccelerationchannels" offsetX="657" offsetY="579" />
+      <hotspot source="steppedinletdesign" offsetX="874" offsetY="402" />
+    </image>
+    <image src="images/Img5976.jpg">
+      <hotspot source="integratedantivibrationpads" offsetX="885" offsetY="216" />
+      <hotspot source="flowaccelerationchannels" offsetX="652" offsetY="579" />
+      <hotspot source="steppedinletdesign" offsetX="875" offsetY="402" />
+    </image>
+    <image src="images/Img5977.jpg">
+      <hotspot source="integratedantivibrationpads" offsetX="876" offsetY="215" />
+      <hotspot source="flowaccelerationchannels" offsetX="640" offsetY="578" />
+      <hotspot source="steppedinletdesign" offsetX="869" offsetY="401" />
+    </image>
+  </images>
+</config>

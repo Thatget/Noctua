@@ -1,0 +1,64 @@
+﻿<config>
+  <settings>
+    <preloader image="images/Img4889.jpg" />
+    <userInterface showZoomButtons="true" showToolTips="false" showHotspotsButton="true" showFullScreenButton="true" showTogglePlayButton="true" showArrows="true" toolbarAlign="center" toolbarBackColor="transparent" toolbarHoverColor="#808285" toolbarForeColor="#A7A9AE" toolbarBackAlpha="0" toolbarAlpha="1" showProgressNumbers="true" showFullScreenToolbar="false" fullScreenBackColor="#FFFFFF" />
+    <control dragSpeed="0.12" maxZoom="200" maxZoomFullScreen="200" fullScreenStretch="100" doubleClickZooms="true" disableMouseControl="false" showHighresOnFullScreen="false" mouseHoverDrag="false" hideHotspotsOnLoad="false" hideHotspotsOnZoom="false" rowSensitivity="15" dragSensitivity="10" inBrowserFullScreen="true" doubleClickFullscreen="false" />
+    <rotation firstImage="0" rotate="false" rotatePeriod="7" bounce="false" rotateDirection="-1" forceDirection="false" inertiaRelToDragSpeed="true" inertiaTimeToStop="700" inertiaMaxInterval="120" useInertia="true" flipHorizontalInput="false" flipVerticalInput="false" bounceRows="true" />
+  </settings>
+  <hotspots>
+	<hotspot id="flow" renderMode="0" indicatorImage="circ-cross-thick-blue.svg">
+      <spotinfo src="images/spots/fac.png" imgWidth="300" imgNoScale="true" />
+    </hotspot>
+  </hotspots>
+  <images rows="1" highresWidth="1000" highresHeight="790">
+    <image src="images/Img4889.jpg" />
+    <image src="images/Img4890.jpg" />
+    <image src="images/Img4891.jpg">
+      <hotspot source="flow" offsetX="183" offsetY="159" />
+    </image>
+    <image src="images/Img4892.jpg">
+      <hotspot source="flow" offsetX="188" offsetY="159" />
+    </image>
+    <image src="images/Img4893.jpg">
+      <hotspot source="flow" offsetX="197" offsetY="160" />
+    </image>
+    <image src="images/Img4894.jpg">
+      <hotspot source="flow" offsetX="210" offsetY="161" />
+    </image>
+    <image src="images/Img4895.jpg">
+      <hotspot source="flow" offsetX="224" offsetY="162" />
+    </image>
+    <image src="images/Img4896.jpg">
+      <hotspot source="flow" offsetX="238" offsetY="163" />
+    </image>
+    <image src="images/Img4897.jpg" />
+    <image src="images/Img4898.jpg" />
+    <image src="images/Img4899.jpg" />
+    <image src="images/Img4900.jpg" />
+    <image src="images/Img4901.jpg" />
+    <image src="images/Img4902.jpg" />
+    <image src="images/Img4903.jpg" />
+    <image src="images/Img4904.jpg" />
+    <image src="images/Img4905.jpg" />
+	<image src="images/Img4906.jpg" />
+	<image src="images/Img4907.jpg" />
+	<image src="images/Img4908.jpg" />
+	<image src="images/Img4909.jpg" />
+	<image src="images/Img4910.jpg" />
+	<image src="images/Img4911.jpg" />
+    <image src="images/Img4912.jpg" />
+    <image src="images/Img4913.jpg" />
+    <image src="images/Img4914.jpg" />
+    <image src="images/Img4915.jpg" />
+    <image src="images/Img4916.jpg" />
+    <image src="images/Img4917.jpg" />
+    <image src="images/Img4918.jpg" />
+    <image src="images/Img4919.jpg" />
+    <image src="images/Img4920.jpg" />
+    <image src="images/Img4921.jpg" />
+    <image src="images/Img4922.jpg" />
+    <image src="images/Img4923.jpg" />
+    <image src="images/Img4924.jpg" />
+    <image src="images/Img4925.jpg" />
+  </images>
+</config>

@@ -1,0 +1,200 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [1-3-2019]
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">sit_productvideonew_productvideo_form.sit_productvideonew_productvideo_form_data_source</item>
+            <item name="deps" xsi:type="string">sit_productvideonew_productvideo_form.sit_productvideonew_productvideo_form_data_source</item>
+        </item>
+        <item name="config" xsi:type="array">
+            <item name="dataScope" xsi:type="string">data</item>
+            <item name="namespace" xsi:type="string">sit_productvideonew_productvideo_form</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+        <item name="label" xsi:type="string" translate="true">ProductVideo Form</item>
+        <item name="buttons" xsi:type="array">
+            <item name="back" xsi:type="string">SIT\ProductVideoNew\Block\Adminhtml\ProductVideo\Edit\BackButton</item>
+            <item name="reset" xsi:type="string">SIT\ProductVideoNew\Block\Adminhtml\ProductVideo\Edit\ResetButton</item>
+            <item name="delete" xsi:type="string">SIT\ProductVideoNew\Block\Adminhtml\ProductVideo\Edit\DeleteButton</item>
+            <item name="duplicate" xsi:type="string">SIT\ProductVideoNew\Block\Adminhtml\ProductVideo\Edit\DuplicateButton</item>
+            <item name="save" xsi:type="string">SIT\ProductVideoNew\Block\Adminhtml\ProductVideo\Edit\SaveButton</item>
+            <item name="save_and_continue" xsi:type="string">SIT\ProductVideoNew\Block\Adminhtml\ProductVideo\Edit\SaveAndContinueButton</item>
+        </item>
+    </argument>
+    <dataSource name="sit_productvideonew_productvideo_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">SIT\ProductVideoNew\Ui\Component\Form\ProductVideo\DataProvider</argument>
+            <argument name="name" xsi:type="string">sit_productvideonew_productvideo_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">entity_id</argument>
+            <argument name="requestFieldName" xsi:type="string">entity_id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="submit_url" xsi:type="url" path="*/*/save"/>
+                </item>
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+    <fieldset name="main_fieldset">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">Product Video Information</item>
+            </item>
+        </argument>
+        <field name="status">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">0</item>
+                    <item name="dataType" xsi:type="string">boolean</item>
+                    <item name="formElement" xsi:type="string">checkbox</item>
+                    <item name="prefer" xsi:type="string">toggle</item>
+                    <item name="label" xsi:type="string" translate="true">Enabled</item>
+                    <item name="valueMap" xsi:type="array">
+                        <item name="true" xsi:type="number">1</item>
+                        <item name="false" xsi:type="number">0</item>
+                    </item>
+                    <item name="valuesForOptions" xsi:type="array">
+                        <item name="boolean" xsi:type="string">boolean</item>
+                    </item>
+                    <item name="default" xsi:type="number">1</item>
+                    <item name="dataScope" xsi:type="string">status</item>
+                </item>
+            </argument>
+        </field>
+         <field name="video_title">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                     <item name="sortOrder" xsi:type="number">10</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Title</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">video_title</item>
+                    <item name="dataScope" xsi:type="string">video_title</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="video_link">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">40</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Url</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">video_link</item>
+                    <item name="dataScope" xsi:type="string">video_link</item>
+                    <item name="notice" xsi:type="string">Youtube Video Embed URL.</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="validate-url" xsi:type="boolean">true</item>
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="video_link_cn">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">45</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">China Alternative Url</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">video_link_cn</item>
+                    <item name="dataScope" xsi:type="string">video_link_cn</item>
+                    <item name="notice" xsi:type="string">Link Video Embed URL For China.</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="validate-url" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="video_reviewer_url">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">50</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Reviewer Url</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">video_reviewer_url</item>
+                    <item name="dataScope" xsi:type="string">video_reviewer_url</item>
+                </item>
+            </argument>
+        </field>
+        <field name="video_reviewer_url_cn">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">55</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">China Alternative Reviewer Url</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">video_reviewer_url_cn</item>
+                    <item name="dataScope" xsi:type="string">video_reviewer_url_cn</item>
+                </item>
+            </argument>
+        </field>
+        <field name="video_thumbnail_cn">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">57</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">China Alternative Video Thumbnail Url</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">video_thumbnail_cn</item>
+                    <item name="dataScope" xsi:type="string">video_thumbnail_cn</item>
+                </item>
+            </argument>
+        </field>
+        <field name="video_language" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">video_language</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Language</label>
+                <dataScope>video_language</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="SIT\ProductVideoNew\Model\Language"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+    </fieldset>
+    <fieldset name="assign_to_product">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">Associated Products</item>
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="sortOrder" xsi:type="number">20</item>
+            </item>
+        </argument>
+        <container name="assign_products_container" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">160</item>
+                </item>
+            </argument>
+            <htmlContent name="html_content">
+                <argument name="block" xsi:type="object">SIT\ProductVideoNew\Block\Adminhtml\AssignProducts</argument>
+            </htmlContent>
+        </container>
+    </fieldset>
+</form>

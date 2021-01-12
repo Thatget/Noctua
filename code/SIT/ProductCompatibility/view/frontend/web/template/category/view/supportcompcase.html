@@ -1,0 +1,66 @@
+<div class="show-all-methods">
+	<div class="image" ></div>
+	<div class="method-content">
+		<span class="motherboard-note" >
+			Please select a case manufacturer according to the required socket, from the list below.
+		</span>
+		<span class="socket-name maincomp-all-data comp-all-data complist-case-name casecomp-all-data">
+			<a href="javascript:void(0)" data-bind="click: getAllManufacturer" id="casecomp_all"> Show all Chassis</a>
+		</span>
+	</div>
+</div>
+
+<div class="complist-case-manufacturer" data-bind="css:{hide_category_view_comp_case: caseList().length <= 0}">
+	<div class="complist-case-title">
+		<div class="complist-manu-title" data-bind="i18n: 'Manufacturer'"></div>
+		<div class="complist-model-title" data-bind="i18n: 'Model'"></div>
+	</div>
+	<!-- ko foreach: caseList -->
+		<!-- ko if:is_show == 1 -->
+		<div class="complist-case-models">
+			<div class="complist-case-name" data-bind="attr:{'data-id':'manuf_'+comp_manufacture}">
+				<a href="javascript:void(0)" data-bind="i18n: $data.comp_manufacture_value,attr:{id: '#manuf_'+comp_manufacture},event:{'click': $parent.getManufacturer}"></a>
+			</div>
+			<div class="complist-case-model">
+				<!-- ko foreach: $data.comp_manufacture_manufacture -->
+				<!-- ko if: max_cooler_height != null -->
+					<!-- ko if: $index() != 0 -->
+						<span> - </span>
+					<!-- /ko -->
+					<a href="javascript:void(0)" data-bind="i18n: comp_model_value,attr:{id: '#manuf_'+$parent.comp_manufacture+'_model_'+comp_model},click: function(data, event) { $parents[1].getModel($parent.comp_manufacture,$data);}"></a>
+					<!-- ko if: ($parentContext.$index()+1) == $parents[1].caseList().length -->
+						<span data-bind="text:$parents[1].loadData()"></span>
+					<!-- /ko -->
+				<!-- /ko -->
+				<!-- /ko -->
+			</div>
+		</div>
+		<!-- /ko -->
+	<!-- /ko -->
+	<span class="complist-case-name casecomp-all-data comp-all-data" style="margin: 12px 0px;">
+			<!--<a href="javascript:void(0)" data-bind="click: getAllManufacturer" id="casecomp_all"> Show all Chassis</a>-->
+	</span>
+</div>
+<div style="clear:both"></div>
+<div class="support-casecomp-border"></div>
+<div class="complist-case-inner-main" data-bind="css:{hide_category_view_comp_case: caseList().length <= 0}">
+<!-- ko foreach: {data: caseGrid, as: 'row'} -->
+	<h1 class="case-head" data-bind="i18n: $data.comp_manufacture_value,attr:{id: 'manuf_'+$data.comp_manufacture}"></h1>
+	<div class="complist-case-contents">
+		<div class="main-case-comp heading border-bottom">
+			<div class="listcase-comp-model" data-bind="i18n: 'Model'"></div>
+			<div class="case-complist-max-height" data-bind="i18n: 'Max. Cooler Height'"></div>
+		</div>
+		<!-- ko foreach: row.comp_manufacture_manufacture -->
+		<!-- ko if: max_cooler_height != null -->
+		<div class="main-case-comp" data-bind="attr:{id: 'manuf_'+row.comp_manufacture+'_model_'+comp_model}">
+			<div class="listcase-comp-model">
+				<a href="javascript:void(0)" data-bind="i18n: comp_model_value,attr:{href: url_key}"></a>
+			</div>
+			<div class="case-complist-max-height" data-bind="i18n: max_cooler_height+'mm'"></div>
+		</div>
+		<!-- /ko -->
+		<!-- /ko -->
+	</div>
+<!-- /ko -->
+</div>

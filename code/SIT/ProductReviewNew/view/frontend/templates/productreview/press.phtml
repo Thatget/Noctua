@@ -1,0 +1,51 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [1-3-2019]
+ */
+	$tabData = $block->getTabdata();
+    $tabId = $tabData['id'];
+    $helper=$this->helper('Swissup\Easytabs\Helper\Data');
+    $params=$helper->getVisible($tabId);
+    $page = $helper->getCmsPageInfo($params,$tabId);
+    if($page === false):
+        return true;
+    endif;
+
+    $categoryUrlParam="";
+    $productUrlParam="";
+    if ($this->getRequest()->getParam("cat")) {
+		$categoryUrlParam = $this->getRequest()->getParam("cat");
+		$categoryUrlParam = str_replace("-"," ",$categoryUrlParam);
+		$categoryUrlParam = str_replace("_","&",$categoryUrlParam);
+	}
+	if ($this->getRequest()->getParam("pro")) {
+		$productUrlParam = $this->getRequest()->getParam("pro");
+		$productUrlParam = str_replace("_"," ",$productUrlParam);
+	}
+?>
+<div data-bind="scope: 'sitPress'">
+	<!-- ko template: getTemplate()  -->
+	<!-- /ko  -->
+</div>
+
+<script type="text/x-magento-init">
+{
+	"*":{
+		"Magento_Ui/js/core/app":{
+			"components": {
+				"sitPress":{
+					"component":"SIT_ProductReviewNew/js/kopress",
+					"controllerUrl":"<?= $block->getUrl('productreviewnew/productreview/press');?>",
+					"categoryUrlParam":"<?= $categoryUrlParam?>",
+					"productUrlParam":"<?= $productUrlParam?>"
+				}
+			}
+		}
+	}
+}
+</script>

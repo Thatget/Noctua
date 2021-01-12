@@ -1,0 +1,42 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [1-3-2019]
+ */
+?>
+
+<div class="complist-case-cooler custom-scroller">
+	<div class="section-inner-presse-page-full">
+		<div class="complist-case-pretext">
+			<?php
+				$case_comp = $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('case_compatibility_pretext')->toHtml();
+				echo substr($case_comp,0,strpos($case_comp,'{{case_compatibility}}'));
+			?>
+		</div>
+		<!-- ko scope: 'sitCompCategoryViewCComp' -->
+			<!-- ko template: getTemplate()  -->
+			<!-- /ko  -->
+		<!-- /ko  -->
+		<div class="complist-case-bottom">
+			<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('comp_case_bottom_text')->toHtml(); ?>
+		</div>
+	</div>
+</div>
+<script type="text/x-magento-init">
+{
+	"*":{
+		"Magento_Ui/js/core/app":{
+			"components": {
+				"sitCompCategoryViewCComp":{
+					"component":"SIT_ProductCompatibility/js/category/view/supportcompcase",
+					"controllerUrl":"<?= $block->getUrl('sit_productcompatibility/category/compcase');?>"
+				}
+			}
+		}
+	}
+}
+</script>

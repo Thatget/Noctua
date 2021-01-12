@@ -1,0 +1,16 @@
+<?php
+$productId = $this->getRequest()->getParam('id');
+$data = [];
+if ($productId > 0) {
+	$data = $block->getProductSlider($productId);
+}
+if (!empty($data)) {
+?>
+<div><b><?php echo __("Banner Title");?></b></div>
+<div>
+	<span><?php echo $data[0];?></span>
+	<a href="<?php echo $data[1];?>" target='_blank'><?php echo __('Edit')?></a>
+</div>
+<?php } else {
+	echo __('Banner Not found');
+} ?>

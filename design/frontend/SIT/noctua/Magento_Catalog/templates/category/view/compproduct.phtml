@@ -1,0 +1,38 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [1-3-2019]
+ */
+?>
+<?php
+    $page = $this->helper('Swissup\Easytabs\Helper\Data')->getPageInfo('category','reviews,awards,fan,products');
+    if($page === false):
+        return true;
+    endif;
+    if($this->helper('Swissup\Easytabs\Helper\Data')->getProduct()):
+        return true;
+	endif;
+?>
+<div data-bind="scope: 'sitCompProduct'">
+	<!-- ko template: getTemplate()  -->
+	<!-- /ko  -->
+</div>
+
+<script type="text/x-magento-init">
+{
+	"*":{
+		"Magento_Ui/js/core/app":{
+			"components": {
+				"sitCompProduct":{
+					"component":"SIT_ProductCompatibility/js/category/view/compproduct",
+					"controllerUrl":"<?= $block->getUrl('sit_productcompatibility/category/compproduct');?>"
+				}
+			}
+		}
+	}
+}
+</script>

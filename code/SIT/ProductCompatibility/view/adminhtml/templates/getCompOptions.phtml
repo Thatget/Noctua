@@ -1,0 +1,167 @@
+<?php
+	$compSocketOpt = $block->getAttrOptions('comp_socket');
+	$compManufactureOpt = $block->getAttrOptions('comp_manufacture');
+	$compModelOpt = $block->getAttrOptions('comp_model');
+	$compSeriesOpt = $block->getAttrOptions('comp_series');
+	$compValueOpt = $block->getAttrOptions('comp_value');
+
+?>
+<!-- Duplicate Modal Popup : MD [Start] -->
+<div id="popup-modal" style="display: none">
+	<form id="create-duplicate-form-<%- entityid %>" method="get" action="<?= $block->getUrl('*/*/duplicate') ?>">
+	    <div class="modal-body">
+	        <div class="bootbox-body">
+	            <table align="center">
+	                <tr><td>How Many Times&nbsp</td><td><input type="text" name="howmany" value="1"></td></tr>
+	                <tr><td>&nbsp</td><td>&nbsp</td></tr>
+	                <tr><td>With Product&nbsp</td><td><input type="checkbox" name="withproduct" checked></td></tr>
+	                <tr><td>&nbsp</td><td>&nbsp</td></tr>
+	                <tr><td><button type="submit" class="btn btn-primary"><span>Duplicate</span></button></td><td><button type="reset" class="btn btn-default"><span>Reset</span></button>
+	                </td></tr>
+	            </table>
+	            <input type="hidden" name="entity_id" value="<?= $this->getRequest()->getParam('entity_id') ?>">
+	            <input type="hidden" name="edit_duplicate" value="1">
+	        </div>
+	    </div>
+	    <div class="modal-footer">
+	        <span class="error"></span>
+	        <span class="clear"></span>
+	    </div>
+	</form>
+</div>
+<!-- Duplicate Modal Popup : MD [End] -->
+<script type="text/javascript">
+require(['mage/url','jquery', 'jquery/ui'], function(url,$) {
+	var baseUrl = '<?php /* @escapeNotVerified */ echo $block->getAdminBaseUrl();?>';
+	var comp_socket_opt = [
+		<?php
+			foreach ($compSocketOpt as $socketattr) {
+				$socketLabel = $socketattr['value'];
+				echo "'".$socketLabel."',";
+			}
+		?>
+	];
+	var comp_manufacture_opt = [
+		<?php
+			foreach ($compManufactureOpt as $manufattr) {
+				$manufLabel = $manufattr['value'];
+				echo "'".$manufLabel."',";
+			}
+		?>
+	];
+	var comp_model_opt = [
+		<?php
+			foreach ($compModelOpt as $modelattr) {
+				$modelLabel = $modelattr['value'];
+				echo "'".$modelLabel."',";
+			}
+		?>
+	];
+	var comp_series_opt = [
+		<?php
+			foreach ($compSeriesOpt as $seriesattr) {
+				$seriesLabel = $seriesattr['value'];
+				echo "'".$seriesLabel."',";
+			}
+		?>
+	];
+	var comp_value_opt = [
+		<?php
+			foreach ($compValueOpt as $valueattr) {
+				$valueLabel = $valueattr['value'];
+				echo "'".$valueLabel."',";
+			}
+		?>
+	];
+
+    $(document).ready(function () {
+    	/**
+    	 * For Comp Socket
+    	 */
+       $(document).on('keyup',"input[name='comp_socket']",function () {
+            $("input[name='comp_socket']").autocomplete({
+                source: comp_socket_opt,
+                delay: 500,
+                minLength: 0,
+                messages: {
+			        noResults: '',
+			        results: function() {}
+			    }
+			});
+		});
+		/**
+    	 * For Comp Manufacture
+    	 */
+    	$(document).on('keyup',"input[name='comp_manufacture']",function () {
+            $("input[name='comp_manufacture']").autocomplete({
+                source: comp_manufacture_opt,
+                delay: 500,
+                minLength: 0,
+                messages: {
+			        noResults: '',
+			        results: function() {}
+			    }
+			});
+		});
+		/**
+    	 * For Comp Model
+    	 */
+    	$(document).on('keyup',"input[name='comp_model']",function () {
+            $("input[name='comp_model']").autocomplete({
+                source: comp_model_opt,
+                delay: 500,
+                minLength: 0,
+                messages: {
+			        noResults: '',
+			        results: function() {}
+			    }
+			});
+		});
+		/**
+    	 * For Comp Series
+    	 */
+    	$(document).on('keyup',"input[name='comp_series']",function () {
+            $("input[name='comp_series']").autocomplete({
+                source: comp_series_opt,
+                delay: 500,
+                minLength: 0,
+                messages: {
+			        noResults: '',
+			        results: function() {}
+			    }
+			});
+		});
+		/**
+    	 * For Comp Series
+    	 */
+    	$(document).on('keyup',"input[name='comp_value']",function () {
+            $("input[name='comp_value']").autocomplete({
+                source: comp_value_opt,
+                delay: 500,
+                minLength: 0,
+                messages: {
+			        noResults: '',
+			        results: function() {}
+			    }
+			});
+		});
+    });
+	return url.setBaseUrl('<?php /* @escapeNotVerified */ echo $block->getAdminBaseUrl();?>');
+});
+</script>
+<!-- Changed by MD for Duplicate Modal Popup[START][11-06-2019] -->
+<script>
+	require(['jquery','Magento_Ui/js/modal/modal'],function($,modal) {
+		var options = {
+			type: 'popup',
+			responsive: true,
+			innerScroll: true,
+			buttons:false
+        };
+		var popup = modal(options, $('#popup-modal'));
+		$(".btn-duplicate").on("click", function(){
+			$('#popup-modal').modal('openModal');
+		});
+	});
+</script>
+<!-- Changed by MD for Duplicate Modal Popup[END][11-06-2019] -->

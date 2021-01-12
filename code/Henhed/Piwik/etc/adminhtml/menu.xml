@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [1-3-2019]
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>    	
+		<add id="Henhed_Piwik::piwik" title="Piwik" module="Henhed_Piwik" sortOrder="600" parent="SIT_MainAdmin::view" resource="Henhed_Piwik::piwik" />
+        <add id="Henhed_Piwik::piwik_iframe" title="Piwik iFrame" module="Henhed_Piwik" sortOrder="240" parent="Henhed_Piwik::piwik" action="piwikanalytics/index/index" resource="Henhed_Piwik::piwik_iframe"/>
+    </menu>
+</config>

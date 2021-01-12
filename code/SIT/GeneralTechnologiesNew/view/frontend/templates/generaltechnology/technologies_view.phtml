@@ -1,0 +1,37 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [1-3-2019]
+ */
+
+    $tabData = $block->getTabdata();
+    $tabId = $tabData['id'];
+    $helper=$this->helper('Swissup\Easytabs\Helper\Data');
+    $params=$helper->getVisible($tabId);
+    $decode_params = json_decode($params);
+    array_push($decode_params,"technologies");
+    $decode_params = json_encode($decode_params);
+    $page = $helper->getCustomPageInfo($decode_params,$tabId);
+    if($page === false):
+        return true;
+    endif;
+    $techCollection = $block->getTechnologiesDetails();
+    foreach ($techCollection as $key => $value) {
+    	if($value['tech_id'] == $block->getCurrentPageId()){
+    	?>
+    		<div class="general-news-continer">
+    			<h2 class="news-title">
+    				<?= $value['tech_title'] ?>
+    			</h2>
+    			<div class="general-news-desc">
+    				<?= $block->getHtmlContentData($value['tech_desc']); ?>
+    			</div>
+    		</div>
+    	<?php
+	}
+}
+?>

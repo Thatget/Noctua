@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [1-3-2019]
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="SIT_ProductTechNew::producttechnology" title="Manage Product Technologies" module="SIT_ProductTechNew" sortOrder="10" parent="SIT_MainAdmin::view" action="sit_producttechnew/producttechnology" resource="SIT_ProductTechNew::producttechnology"/>
+    </menu>
+</config>

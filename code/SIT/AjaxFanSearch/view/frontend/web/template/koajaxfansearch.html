@@ -1,0 +1,124 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [1-3-2019]
+ */
+-->
+<div>
+<div class="filter-main">
+    <div class="fan-filter-container">
+        <!-- ko if: fanSizeOptionsData -->
+        <div class="fan-filert-inner size">
+            <select class="filter-select size_select" id="fan-size-select" data-bind="event: {change: getFanSizeData}">
+                <option data-bind="attr: { value:-1, 'data_text':'size_mm'},i18n:'- - Size - -'"></option>
+                <!-- ko foreach: fanSizeOptionsArray -->
+                <!-- ko if: value != "" && label != "" -->
+                <option data-bind="attr: { value:value, 'data_text':data_text},text:label "></option>
+                <!-- /ko -->
+                <!-- /ko -->
+            </select>
+        </div>
+        <!-- /ko -->
+        <!-- ko if: fanConnectorOptionsData -->
+        <div class="fan-filert-inner connector" >
+            <select class="filter-select connector_select" data-bind="event: {change: getFanConnectorData}">
+            	<option data-bind="attr: { value:-1, 'data_text':'connector'},i18n:'- - Connector - -'"></option>
+            	<!-- ko foreach: fanConnectorOptionsArray -->
+                <!-- ko if: value != "" && label != "" -->
+                <option data-bind="attr: { value:value, 'data_text':data_text},text:label "></option>
+                <!-- /ko -->
+                <!-- /ko -->
+            </select>
+        </div>
+        <!-- /ko -->
+        <!-- ko if: voltageOptionsData -->
+        <div class="fan-filert-inner voltage" >
+            <select class="filter-select voltage_select" data-bind="event: {change: getFanVoltageData}">
+            	<option data-bind="attr: { value:-1, 'data_text':'voltage'},i18n:'- - Operating voltage - -'"></option>
+            	<!-- ko foreach: fanVoltageOptionsArray -->
+                <!-- ko if: value != "" && label != "" -->
+                <option data-bind="attr: { value:value, 'data_text':data_text},text:label "></option>
+                <!-- /ko -->
+                <!-- /ko -->
+            </select>
+        </div>
+        <!-- /ko -->
+    </div>
+</div>
+
+    <div id="fan_products_contents" class="custom-scroller-fan" afterRender="addCustomScroller">
+        <div class="section-inner-presse-page-full fan-page-main">
+            <div class="fan-page-content">
+                <!-- ko foreach: { data: fanCollectionArray().collection, as: 'mainArray' } -->
+                <div class="fan-item">
+                    <div class="fan-item-top">
+                        <div class="mm-sizer"><span data-bind="text:$parent.fanCollectionArray().group_title[Object.keys(mainArray)]"></span></div>
+                        <div class="fan-image-main">
+                            <div class="fan-image">
+                                <img data-bind="attr : {'src':$parent.fanCollectionArray().group_img[Object.keys(mainArray)]}"/>
+                            </div>
+                            <div class="fan-title-main">
+                                <div class="product" data-bind="i18n:'PRODUCT'"></div>
+                                <div class="product-data-title">
+                                    <div class="fan-item-title measure" data-bind="i18n:'mm'"></div>
+                                    <div class="fan-item-title" data-bind="i18n:'RPM'"></div>
+                                    <div class="fan-item-title" data-bind="i18n:'dB/A'"></div>
+                                    <div class="fan-item-title"><a class="dotted_link" data-bind="attr : {'href':$parent.fanCollectionArray().faq_link }, i18n:'m³/h'"></a></div>
+                                    <div class="fan-item-title"><span data-bind="i18n:'mm H'"></span><sub data-bind="i18n:'2'"></sub><span data-bind="i18n:'O'"></span></div>
+                                    <div class="fan-item-title"><img data-bind="attr : {'src':$parent.fanCollectionArray().group_pin_img[Object.keys(mainArray)]}" /></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fan-item-bottom">
+                        <div class="fan-product-details">
+                                <!-- ko if: (mainArray.hasOwnProperty(Object.keys(mainArray))) -->
+                                    <!-- ko foreach: { data: mainArray[Object.keys(mainArray)], as: 'sub_attribute_array' } -->
+                                        <!-- ko foreach: {data: Object.keys(sub_attribute_array), as: '_propkey'} -->
+                                        <div class="fan-product-sub-block">
+                                            <div class="sizer-bottom-img sit_left-block">
+                                                <img data-bind="attr : {'src':$parents[2].fanCollectionArray().group_small_img[Object.keys(mainArray)][_propkey]}" />
+                                            </div>
+                                            <div class="sit_right-block">
+                                            <!-- ko foreach: { data: sub_attribute_array[_propkey], as: 'attribute_value' } -->
+                                                <div class="fan-details">
+                                                    <div class="product"><a data-bind="attr : {href:attribute_value.product_url},text:attribute_value.name"></a></div>
+                                                    <div class="product-data">
+                                                        <div class="product-details measure" data-bind="text:attribute_value.size_text"></div>
+                                                        <div class="product-details" data-bind="text:attribute_value.rotational_speed_10per"></div>
+                                                        <div class="product-details" data-bind="text:attribute_value.acoustical_noise"></div>
+                                                        <div class="product-details" data-bind="text:attribute_value.airflow"></div>
+                                                        <div class="product-details" data-bind="text:attribute_value.static_pressure"></div>
+                                                        <div class="product-details" data-bind="text:attribute_value.connector_text"></div>
+                                                    </div>
+                                                </div>
+                                            <!-- /ko -->
+                                            </div>
+                                        </div>
+                                        <!-- /ko -->
+                                    <!-- /ko -->
+                                <!-- /ko -->
+                        </div>
+                    </div>
+                </div>
+                <!-- ko if: $parent.fanCollectionArray().group_title[Object.keys(mainArray)] == '120mm' -->
+                <!-- ko if: $parent.fanCollectionArray().right_fan_link -->
+                <a class="right_fan_link" data-bind="attr:{'href':$parent.fanCollectionArray().right_fan_link}, i18n:'Which Noctua 120mm fan is right for me?'"></a>
+                <!-- /ko -->
+                <!-- /ko -->
+                <!-- /ko -->
+                <!-- /ko -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ko if: fanCollectionArray().collection.length == 0 -->
+<div class="no-records-found">
+    <div class='no-record-message' data-bind="text: $t('No fan product records available.')"></div>
+</div>
+<!-- /ko -->

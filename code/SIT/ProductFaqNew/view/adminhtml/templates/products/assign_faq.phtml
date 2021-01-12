@@ -1,0 +1,20 @@
+<?php
+$blockGrid = $block->getBlockGrid();
+$gridJsObjectName = $blockGrid->getJsObjectName();
+
+?>
+<?= $block->getGridHtml() ?>
+<input type="hidden" name="faq_product" data-form-part="product_form" id="faq_product" value=""  />
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "SIT_ProductFaqNew/js/assign-faq": {
+                "selectedProducts":  <?= /* @escapeNotVerified */ $block->getProductsJson() ?>,
+                "gridJsObjectName": <?= /* @escapeNotVerified */ '"' . $gridJsObjectName . '"' ?: '{}' ?>
+            }
+        }
+    }
+</script>
+<script>
+    require('mage/apply/main').apply();
+</script>

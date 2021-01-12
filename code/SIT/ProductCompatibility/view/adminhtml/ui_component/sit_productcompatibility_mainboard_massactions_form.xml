@@ -1,0 +1,291 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : MD [01-06-2019]
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">sit_productcompatibility_mainboard_massactions_form.sit_productcompatibility_mainboard_massactions_form_data_source</item>
+            <item name="deps" xsi:type="string">sit_productcompatibility_mainboard_massactions_form.sit_productcompatibility_mainboard_massactions_form_data_source</item>
+        </item>
+        <item name="config" xsi:type="array">
+            <item name="dataScope" xsi:type="string">data</item>
+            <item name="namespace" xsi:type="string">sit_productcompatibility_mainboard_massactions_form</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+        <item name="buttons" xsi:type="array">
+            <item name="back" xsi:type="string">SIT\ProductCompatibility\Block\Adminhtml\Mainboard\Edit\BackButton</item>
+            <item name="save" xsi:type="string">SIT\ProductCompatibility\Block\Adminhtml\MassAction\Edit\UpdateCompButton</item>
+        </item>
+    </argument>
+    <dataSource name="sit_productcompatibility_mainboard_massactions_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">SIT\ProductCompatibility\Ui\Component\Form\Mainboard\DataProvider</argument>
+            <argument name="name" xsi:type="string">sit_productcompatibility_mainboard_massactions_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">entity_id</argument>
+            <argument name="requestFieldName" xsi:type="string">entity_id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="submit_url" xsi:type="url" path="*/massaction/massActions/comptype/Mainboard"/>
+                    <item name="validate_url" xsi:type="url" path="*/*/validate"/>
+                </item>
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+    <fieldset name="main_fieldset">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">Mainboard Mass Actions</item>
+            </item>
+        </argument>
+        <field name="mass_actions">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">SIT\ProductCompatibility\Model\Config\Source\MassActionsList</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="label" xsi:type="string" translate="true">Actions</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="component" xsi:type="string">SIT_ProductCompatibility/js/form/element/options</item>
+                    <item name="source" xsi:type="string">mass_actions</item>
+                    <item name="dataScope" xsi:type="string">mass_actions</item>
+                </item>
+            </argument>
+        </field>
+        <field name="status">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">boolean</item>
+                    <item name="formElement" xsi:type="string">checkbox</item>
+                    <item name="prefer" xsi:type="string">toggle</item>
+                    <item name="label" xsi:type="string" translate="true">Enabled</item>
+                    <item name="valueMap" xsi:type="array">
+                        <item name="true" xsi:type="number">1</item>
+                        <item name="false" xsi:type="number">0</item>
+                    </item>
+                    <item name="valuesForOptions" xsi:type="array">
+                        <item name="boolean" xsi:type="string">boolean</item>
+                    </item>
+                    <item name="default" xsi:type="number">1</item>
+                    <item name="dataScope" xsi:type="string">status</item>
+                </item>
+            </argument>
+        </field>
+        <field name="comp_socket" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">comp_socket</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">false</rule>
+                </validation>
+                <dataType>int</dataType>
+                <label translate="true">Socket</label>
+                <dataScope>comp_socket</dataScope>
+                 <imports>
+                    <link name="disabled">${ $.provider}:data.do_we_hide_it</link>
+                </imports>
+            </settings>
+        </field>
+        <field name="comp_manufacture">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">int</item>
+                    <item name="label" xsi:type="string" translate="true">Manufacturer</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">comp_manufacture</item>
+                    <item name="dataScope" xsi:type="string">comp_manufacture</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">false</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="comp_model">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">int</item>
+                    <item name="label" xsi:type="string" translate="true">Model</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">comp_model</item>
+                    <item name="dataScope" xsi:type="string">comp_model</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">false</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="comp_value">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">SIT\ProductCompatibility\Model\Config\Source\CompValueList</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="label" xsi:type="string" translate="true">Change Compatibility</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">comp_value</item>
+                    <item name="dataScope" xsi:type="string">comp_value</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">false</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+         <field name="comp_type">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">SIT\ProductCompatibility\Model\Config\Source\ProductCompList</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="label" xsi:type="string" translate="true">Change Type</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">comp_type</item>
+                    <item name="dataScope" xsi:type="string">comp_type</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">false</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="assign_products">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">SIT\ProductCompatibility\Model\Config\Source\ProductNameList</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="label" xsi:type="string" translate="true">Change Products</item>
+                    <item name="formElement" xsi:type="string">multiselect</item>
+                    <item name="source" xsi:type="string">assign_products</item>
+                    <item name="dataScope" xsi:type="string">assign_products</item>
+                </item>
+            </argument>
+        </field>
+        <field name="change_temp">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">boolean</item>
+                    <item name="formElement" xsi:type="string">checkbox</item>
+                    <item name="prefer" xsi:type="string">toggle</item>
+                    <item name="label" xsi:type="string" translate="true">Change Templates</item>
+                    <item name="valueMap" xsi:type="array">
+                        <item name="true" xsi:type="number">1</item>
+                        <item name="false" xsi:type="number">0</item>
+                    </item>
+                    <item name="valuesForOptions" xsi:type="array">
+                        <item name="boolean" xsi:type="string">boolean</item>
+                    </item>
+                    <item name="default" xsi:type="number">0</item>
+                    <item name="dataScope" xsi:type="string">change_temp</item>
+                </item>
+            </argument>
+        </field>
+        <field name="template_text_1">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">SIT\ProductCompatibility\Model\Config\Source\GetTemplate</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">int</item>
+                    <item name="label" xsi:type="string" translate="true">Select Template Text 1</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">template_text_1</item>
+                    <item name="dataScope" xsi:type="string">template_text_1</item>
+                </item>
+            </argument>
+        </field>
+        <field name="template_text_2">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">SIT\ProductCompatibility\Model\Config\Source\GetTemplate</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">int</item>
+                    <item name="label" xsi:type="string" translate="true">Select Template Text 2</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">template_text_2</item>
+                    <item name="dataScope" xsi:type="string">template_text_2</item>
+                </item>
+            </argument>
+        </field>
+        <field name="template_text_3">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">SIT\ProductCompatibility\Model\Config\Source\GetTemplate</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">int</item>
+                    <item name="label" xsi:type="string" translate="true">Select Template Text 3</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">template_text_3</item>
+                    <item name="dataScope" xsi:type="string">template_text_3</item>
+                </item>
+            </argument>
+        </field>
+        <field name="template_text_4">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">SIT\ProductCompatibility\Model\Config\Source\GetTemplate</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">int</item>
+                    <item name="label" xsi:type="string" translate="true">Select Template Text 4</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">template_text_4</item>
+                    <item name="dataScope" xsi:type="string">template_text_4</item>
+                </item>
+            </argument>
+        </field>
+        <field name="duplicate">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">boolean</item>
+                    <item name="formElement" xsi:type="string">checkbox</item>
+                    <item name="prefer" xsi:type="string">toggle</item>
+                    <item name="label" xsi:type="string" translate="true">With Products</item>
+                    <item name="valueMap" xsi:type="array">
+                        <item name="true" xsi:type="number">1</item>
+                        <item name="false" xsi:type="number">0</item>
+                    </item>
+                    <item name="valuesForOptions" xsi:type="array">
+                        <item name="boolean" xsi:type="string">boolean</item>
+                    </item>
+                    <item name="default" xsi:type="number">1</item>
+                    <item name="dataScope" xsi:type="string">duplicate</item>
+                </item>
+            </argument>
+        </field>
+        <field name="how_many">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">int</item>
+                    <item name="label" xsi:type="string" translate="true">How Many Times</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">how_many</item>
+                    <item name="dataScope" xsi:type="string">how_many</item>
+                    <item name="default" xsi:type="number">1</item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+    <fieldset name="mainboard_comp">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">Mainboard Compatibility</item>
+                <item name="collapsible" xsi:type="boolean">false</item>
+                <item name="sortOrder" xsi:type="number">20</item>
+            </item>
+        </argument>
+        <container name="mainboard_comp_container" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">160</item>
+                </item>
+            </argument>
+            <htmlContent name="html_content">
+                <argument name="block" xsi:type="object">SIT\ProductCompatibility\Block\Adminhtml\MassAction\MassActionCompGrid</argument>
+            </htmlContent>
+        </container>
+    </fieldset>
+</form>

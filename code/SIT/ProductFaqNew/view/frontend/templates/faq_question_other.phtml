@@ -1,0 +1,21 @@
+<?php
+$faq_list = $block->getFAQList();
+$helper = $this->helper('SIT\MainAdmin\Helper\Data');
+?>
+<div class="categories-content">
+	<?php
+		if(count($faq_list) > 0)
+		{
+			foreach ($faq_list as $key => $value) { ?>
+				<div class="faq_que_ans">
+					<div class="faq_que"><div class="faq_que_toggle_plus"></div><a href="javascript:void(0)" id="<?= $value->getId(); ?>"><?= $value->getFaqQue(); ?></a></div>
+					<div class="faq_ans" id="ans_<?= $value->getId(); ?>"><?= $helper->getCmsFilterContent($value->getFaqAns()); ?></div>
+				</div>
+			<?php }
+		} else { ?>
+			<div class="faq_que_ans">
+				<div class="faq_que"><?php echo __("No Record Found"); ?></div>
+			</div>
+		<?php }
+	?>
+</div>

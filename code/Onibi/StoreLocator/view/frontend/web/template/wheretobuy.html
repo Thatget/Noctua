@@ -1,0 +1,179 @@
+<div class="whereto-container form" data-bind="css:{hide_show_filters: totalPage() < 1}">
+    <div class="whereto-filter-option">
+        <!-- Start For filter page range -->
+        <div class="whereto-filter-page-range">
+            <div class="whereto-filter-page-range-content">
+                <!-- Move to first page -->
+                <span class="toolbar-page-title" data-bind="i18n: 'PAGE '"></span>
+                <button data-bind="css:{disabled: Page() <= 1},click: changePageTo('first') ">
+                        <span aria-hidden="true" class="pagerFirst"></span>
+                </button>
+
+                <!-- Move to previous page -->
+                <button data-bind="click: changePageBy(-1), css:{disabled: Page() <= 1}">
+                    <span aria-hidden="true" class="singlepagerPrev"></span>
+                </button>
+
+                <!-- Current page -->
+                <button class="where-current" data-bind="text: Page() ">
+                </button>
+                <span class="toolbar-page-slash" data-bind='i18n:"//"'></span>
+
+                <!-- Total Number of pages -->
+                <button class="where-total" data-bind="text: totalPage()">
+                </button>
+
+                <!-- Move to next page -->
+                <button data-bind="css:{disabled: totalPage() == Page()},click: changePageBy(1)">
+                   <span aria-hidden="true" class="singlepagerNext"></span>
+                </button>
+
+                <!-- Move to last page -->
+                <button data-bind="css:{disabled: totalPage() == Page()},click: changePageTo('last')">
+                    <span class="pagerLast"></span>
+                </button>
+            </div>
+        </div>
+        <!-- //Over For filter page range -->
+        <div class="whereto-filter-page">
+            <!-- Per page size -->
+            <span data-bind="i18n: 'Per Page:'"></span>
+            <select id="per_page" data-bind="options: sizePerPage, value: Pagination().PerPage">
+            </select>
+        </div>
+    </div>
+</div>
+<div class="section-inner-presse-page-full where-to-buy">
+    <div class="whereto-pre-text" data-bind="html:whereToBuyPreTextVar"></div>
+    <!-- Start For filter container -->
+    <div class="whereto-filter-container">
+        <div class="whereto-filter-after-page">
+            <div class="whereto-filter-product">
+                <!-- For product filter -->
+                <div class="where-div"><span class="where-span" data-bind="i18n: 'Do you want to buy Noctua products?'"></span></div>
+                <div class="whereto-select-product">
+                    <select id="buyer_country" data-bind="value: selectedBuyersCountry,event:{change:filterBuyerData}">
+                        <option data-bind="attr: {value: '-1'},i18n: '- - Country/Region - -'"></option>
+                        <!-- ko foreach: buyersCountry -->
+                            <option data-bind="attr: {value: countryCode},text: countryLabel"></option>
+                        <!-- /ko -->
+                    </select>
+                </div>
+            </div>
+
+            <div class="whereto-filter-language">
+                <div class="where-div"><span class="where-span" data-bind="i18n: 'Do you want to sell Noctua products?'"></span></div>
+                <div class="whereto-select-product">
+                    <select id="seller_country" data-bind="value: selectedSellerCountry,event:{change:filterSellerData}">
+                        <option data-bind="attr: {value: '-1'},i18n: '- - Country/Region - -'"></option>
+                        <!-- ko foreach: buyersCountry -->
+                            <option data-bind="attr: {value: countryCode},text: countryLabel"></option>
+                        <!-- /ko -->
+                    </select>
+                </div>
+            </div>
+        </div>
+        <!-- ko if: buyersProvinces().length > 0 || sellerProvinces().length > 0   -->
+        <div class="whereto-filter-after-page for-provinces">
+            <!-- ko if: buyersProvinces().length > 0 -->
+            <div class="whereto-filter-product buyer-provinces" data-bind="css:{hide_show_filters: buyersProvinces().length < 1}">
+                <select id="buyer_Provinces" data-bind="value: selectedBuyersProvinces,event:{change:filterBuyerProvincesData}">
+                    <option data-bind="attr: {value: -1},i18n: '- - All Provinces - -'"></option>
+                    <!-- ko foreach: buyersProvinces -->
+                        <option data-bind="attr: {value: code},text: name"></option>
+                    <!-- /ko -->
+                </select>
+            </div>
+            <!-- /ko -->
+
+            <!-- ko if: sellerProvinces().length > 0 -->
+            <div class="whereto-filter-language seller-provinces" data-bind="css:{hide_show_filters: sellerProvinces().length < 1}">
+                <select id="seller_Provinces" data-bind="value: selectedSellerProvinces,event:{change:filterSellerProvincesData}">
+                    <option data-bind="attr: {value: -1},i18n: '- - All Provinces - -'"></option>
+                    <!-- ko foreach: sellerProvinces -->
+                        <option data-bind="attr: {value: code},text: name"></option>
+                    <!-- /ko -->
+                </select>
+            </div>
+            <!-- /ko -->
+        </div>
+        <!-- /ko -->
+    </div>
+    <div class="seller_footer_text_border"></div>
+    <div data-bind="foreach: Pagination().PaginatedArray">
+        <div class="where-section-container">
+            <div class="whereto-img">
+                <!-- ko if:store_href == null -->
+                <!-- ko if:image != null -->
+                <a data-bind="attr: {href: 'http://'+store_url,target: '_blank'}"><img data-bind="attr: {src :$parent.mediaUrl() + image}"/></a>
+                <!-- /ko -->
+                <!-- /ko -->
+                <!-- ko ifnot:store_href == null -->
+                <!-- ko if:image != null -->
+                <a data-bind="attr: {href: 'http://'+store_href,target: '_blank'}"><img data-bind="attr: {src :$parent.mediaUrl() + image}"/></a>
+                <!-- /ko -->
+                <!-- /ko -->
+            </div>
+            <div class="where-description">
+                <div class="whereto-product-name">
+                    <span data-bind="text: name"></span>
+                </div>
+                 <div class="whereto-details">
+                    <!-- ko if:address != '' && address != null -->
+                    <div data-bind="html: address"></div>
+                    <!-- /ko -->
+                    <!-- ko if:zipcode != '' && zipcode != null -->
+                    <div>
+                        <span data-bind="i18n: zipcode"></span>
+                    </div>
+                    <!-- /ko -->
+                    <!-- ko if:city != '' && city != null -->
+                    <div>
+                        <span data-bind="i18n: city"></span>
+                    </div>
+                    <!-- /ko -->
+                    <!-- ko if:country_name != '' -->
+                    <div>
+                        <span data-bind="i18n: country_name"></span>
+                    </div>
+                    <!-- /ko -->
+                    <!-- ko if:region_name != '' -->
+                    <div>
+                        <span data-bind="i18n: region_name"></span>
+                    </div>
+                    <!-- /ko -->
+                    <!-- ko if:phone != '' && phone != null -->
+                    <div>
+                        <span data-bind="i18n: 'Phone : ' + phone"></span>
+                    </div>
+                    <!-- /ko -->
+                    <!-- ko if:fax != '' && fax != null-->
+                    <div>
+                        <span data-bind="i18n: 'Fax : ' + fax"></span>
+                    </div>
+                    <!-- /ko -->
+                    <!-- ko if:store_email != '' && store_email != null -->
+                    <div>
+                        <span data-bind="i18n: 'Email : ' + store_email"></span>
+                    </div>
+                    <!-- /ko -->
+                    <!-- ko if:store_url != '' && store_url != null -->
+                    <div>
+                        <!-- ko if:store_href == null -->
+                        <a data-bind="attr: {href: 'http://'+store_url,target: '_blank'}"><span data-bind="i18n: 'Website : ' + store_url"></span></a>
+                        <!-- /ko -->
+                        <!-- ko ifnot:store_href == null -->
+                        <a data-bind="attr: {href: 'http://'+store_href,target: '_blank'}"><span data-bind="i18n: 'Website : ' + store_url"></span></a>
+                        <!-- /ko -->
+                    </div>
+                    <!-- /ko -->
+                </div>
+            </div>
+            <div class="line-separator"></div>
+        </div>
+    </div>
+    <!-- ko if:Pagination().PaginatedArray.length == 0 -->
+    <div class="seller_footer_text" data-bind="text:sellerFooterText()"></div>
+    <!-- /ko -->
+</div>
+

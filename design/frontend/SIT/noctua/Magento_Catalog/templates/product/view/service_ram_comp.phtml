@@ -1,0 +1,46 @@
+<?php
+	$sitHelper = $this->helper('SIT\MainAdmin\Helper\Data');
+	$currentProduct = $sitHelper->getCurrentProduct();
+	$currentProductId = $currentProduct->getId();
+	$gridType = 'RAM';
+	$sitProdHelper = $this->helper('SIT\ProductCompatibility\Helper\Data');
+	$collectionSize = $sitProdHelper->getCollectionSize($gridType,$currentProductId);
+	$prod_comp_block = $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('ram_compatibility_pretext')->toHtml();
+	$ram_description = '';
+	if($currentProduct->getResource()->getAttribute('ram_compatibility_pretext')){
+		$ram_description = $currentProduct->getResource()->getAttribute('ram_compatibility_pretext')->getFrontend()->getValue($currentProduct);
+	}
+	if ($collectionSize > 0):
+?>
+<div class="product-service-ram-content custom-scroller">
+	<div class="ram-inner-container">
+		<div class="ram-cms-content">
+			<?php			
+				echo str_replace("{{ram_compatibility}}",$sitHelper->getCmsFilterContent(trim($ram_description)),$sitHelper->getCmsFilterContent(trim($prod_comp_block)));
+			?>
+		</div>
+		<!-- ko scope: 'sitCompProductViewCompRam' -->
+			<!-- ko template: getTemplate()  -->
+			<!-- /ko  -->
+		<!-- /ko  -->
+		<!-- <div class="ram-bottom-content">
+			<?php //echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('comp_ram_bottom_text')->toHtml(); ?>
+		</div> -->
+	</div>
+</div>
+<script type="text/x-magento-init">
+{
+	"*":{
+		"Magento_Ui/js/core/app":{
+			"components": {
+				"sitCompProductViewCompRam":{
+					"component":"SIT_ProductCompatibility/js/product/view/compram",
+					"controllerUrl":"<?= $block->getUrl('sit_productcompatibility/products/compram');?>",
+					"currentProductId":<?= $currentProductId; ?>
+				}
+			}
+		}
+	}
+}
+</script>
+<?php endif;?>

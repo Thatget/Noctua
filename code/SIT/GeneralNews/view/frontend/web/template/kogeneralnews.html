@@ -1,0 +1,102 @@
+<div class="sit-generalnews-container form" data-bind="css:{hide_navigation: totalPage() <= 0}">
+    <div class="sit-generalnews-filter-option">
+        <div class="sit-generalnews-filter-page-range">
+            <div class="sit-generalnews-filter-page-range-content">
+                <!-- Move to first page -->
+                <span class="toolbar-page-title" data-bind="i18n: 'PAGE '"></span>
+                <button data-bind="css:{disabled: Page() <= 1},click: changePageTo('first') ">
+                        <span aria-hidden="true" class="pagerFirst"></span>
+                </button>
+
+                <!-- Move to previous page -->
+                <button data-bind="click: changePageBy(-1), css:{disabled: Page() <= 1}">
+                    <span aria-hidden="true" class="singlepagerPrev"></span>
+                </button>
+
+                <!-- Current page -->
+                <button data-bind="text: Page() ">
+                </button>
+                <span class="toolbar-page-slash" data-bind='i18n:"//"'></span>
+
+                <!-- Total Number of pages -->
+                <button data-bind="text: totalPage()">
+                </button>
+
+                <!-- Move to next page -->
+                <button data-bind="css:{disabled: totalPage() == Page()},click: changePageBy(1)">
+                   <span aria-hidden="true" class="singlepagerNext"></span>
+                </button>
+
+                <!-- Move to last page -->
+                <button data-bind="css:{disabled: totalPage() == Page()},click: changePageTo('last')">
+                    <span class="pagerLast"></span>
+                </button>
+            </div>
+        </div>
+        <div class="sit-generalnews-filter-page">
+            <!-- Per page size -->
+            <span data-bind="i18n: 'Per Page:'"></span>
+            <select id="per_page" data-bind="options: sizePerPage, value: Pagination().PerPage">
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="section_news_list">
+    <!-- ko foreach: Pagination().PaginatedArray -->
+    <div class="news_list_date" data-bind="i18n: created_at"></div>
+    <div class="news_list_title">
+        <a class="news_list_title_link" data-bind="attr:{href: news_url}">
+            <h2 class="news_list_h2_title" data-bind="i18n: news_title"></h2>
+        </a>
+    </div>
+    <div class="news_list_short_desc">
+        <div data-bind="html: news_shortdesc"></div>
+        <a class="news_list_arrow_anchor" data-bind="attr:{href: news_url}">
+            <img class="news_list_arrow_img" data-bind="attr:{src: arrow_img}" />
+        </a>
+    </div>
+    <!-- /ko -->
+</div>
+<div class="sit-generalnews-container form" data-bind="css:{hide_navigation: totalPage() <= 0}">
+    <div class="sit-generalnews-filter-option">
+        <div class="sit-generalnews-filter-page-range">
+            <div class="sit-generalnews-filter-page-range-content">
+                <!-- Move to first page -->
+                <span class="toolbar-page-title" data-bind="i18n: 'PAGE '"></span>
+                <button data-bind="css:{disabled: Page() <= 1},click: changePageTo('first') ">
+                        <span aria-hidden="true" class="pagerFirst"></span>
+                </button>
+
+                <!-- Move to previous page -->
+                <button data-bind="click: changePageBy(-1), css:{disabled: Page() <= 1}">
+                    <span aria-hidden="true" class="singlepagerPrev"></span>
+                </button>
+
+                <!-- Current page -->
+                <button data-bind="text: Page() ">
+                </button>
+                <span class="toolbar-page-slash" data-bind='i18n:"//"'></span>
+                <!-- Total Number of pages -->
+                <button data-bind="text: totalPage()">
+                </button>
+
+                <!-- Move to next page -->
+                <button data-bind="css:{disabled: totalPage() == Page()},click: changePageBy(1)">
+                   <span aria-hidden="true" class="singlepagerNext"></span>
+                </button>
+
+                <!-- Move to last page -->
+                <button data-bind="css:{disabled: totalPage() == Page()},click: changePageTo('last')">
+                    <span class="pagerLast"></span>
+                </button>
+            </div>
+        </div>
+        <div class="sit-generalnews-filter-page">
+            <!-- Per page size -->
+           <span data-bind="i18n: 'Per Page:'"></span>
+            <select id="per_page" data-bind="options: sizePerPage, value: Pagination().PerPage">
+            </select>
+        </div>
+    </div>
+</div>

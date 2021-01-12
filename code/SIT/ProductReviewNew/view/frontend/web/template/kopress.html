@@ -1,0 +1,61 @@
+<div class="press-filter-main"  data-bind="css:{hide_navigation: pressCollection().length <= 0}">
+    <div class="press-filter-inner">
+    	<div class="press-filter-block">
+	        <div class="press-filter-label"><span data-bind="i18n: 'Filter'"></span></div>
+	        <div class="press-filert-inner-select">
+	            <select class="press-filter-select" id="product_filter" data-bind="value:selectedProduct, event:{change:applyProductFilter}">
+	               	<option value="" data-bind="i18n:'- - Product - -'"></option>
+					<!-- ko foreach: productFilter -->
+	               	<option data-bind="attr: {label:label,value:value},text: label"></option>
+	               	<!-- /ko -->
+	            </select>
+	        </div>
+        </div>
+        <div class="press-filter-block">
+	        <div class="press-filter-label"><span data-bind="i18n: 'Filter'"></span></div>
+	        <div class="press-filert-inner-select">
+	            <select class="press-filter-select" id="category_filter" data-bind="value:selectedCategory, event:{change:applyCategoryFilter}">
+	                <option value="" data-bind="i18n:'- - Category - -'"></option>
+	                <!-- ko foreach: categoryFilter -->
+	               		<option data-bind="attr: {label:label,value:value},text: label"></option>
+	               	<!-- /ko -->
+	            </select>
+	        </div>
+	    </div>
+    </div>
+</div>
+<div class="section-inner-presse-page press-image">
+	<!-- ko foreach: {data: pressCollection, as: '_data'} -->
+	<div class="press-images-title-name" data-bind="text: _data.category"></div>
+	<!-- ko foreach: {data: Object.keys(product), as: '_propkey'} -->
+		<!-- <span data-bind="text: _propkey"></span> -->
+		<div class="press-main">
+			<div class="press-image-title">
+				<div class="press-images-title-name" data-bind="text: _data.product[_propkey][Object.keys(_data.product[_propkey])[0]].name"></div>
+			</div>
+			<div class="press-image-block">
+				<div class="press-image-inner-block">
+					<!-- ko foreach: {data: Object.keys(_data.product[_propkey][Object.keys(_data.product[_propkey])[0]]), as: 'images'} -->
+						<!-- ko if: images != 'name' -->
+						<div class="press-images-items">
+							<img data-bind="attr:{src:_data.product[_propkey][Object.keys(_data.product[_propkey])[0]][images].thumbs, alt: _data.product[_propkey][Object.keys(_data.product[_propkey])[0]].name}" />
+	                    	<div class="press-link-parent">
+	                    		<!-- ko if: _data.product[_propkey][Object.keys(_data.product[_propkey])[0]][images].hasOwnProperty('jpg') -->
+	                    			<a class="press-link-left" data-bind="attr: {href:_data.product[_propkey][Object.keys(_data.product[_propkey])[0]][images].jpg}" target="_blank">JPG</a>
+	                    		<!-- /ko -->
+	                    		<!-- ko if: _data.product[_propkey][Object.keys(_data.product[_propkey])[0]][images].hasOwnProperty('png') -->
+	                    			<!-- ko if: _data.product[_propkey][Object.keys(_data.product[_propkey])[0]][images].hasOwnProperty('jpg') -->
+	                    				<span class="separator-sign"> | </span>
+	                    			<!-- /ko -->
+	                            	<a class="press-link-right" data-bind="attr: {href:_data.product[_propkey][Object.keys(_data.product[_propkey])[0]][images].png}" target="_blank">PNG</a>
+	                    		<!-- /ko -->
+	                        </div>
+		                </div>
+                    	<!-- /ko -->
+                    <!-- /ko -->
+	           </div>
+			</div>
+		</div>
+	<!-- /ko -->
+	<!-- /ko -->
+</div>

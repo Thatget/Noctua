@@ -1,0 +1,131 @@
+<?php
+$videoBlock = $this->getLayout()->createBlock('SIT\Mainpagevideo\Block\Mainpagevideo\Mainpagevideo');
+$generalNewsBlock = $this->getLayout()->createBlock('SIT\GeneralNews\Block\GeneralNews\GeneralNews');
+$reviewBlock = $this->getLayout()->createBlock('SIT\ProductReviewNew\Block\ProductReview\View');
+$videoCollection = $videoBlock->getMainVideoData();
+$newsCollection = $generalNewsBlock->MainNewsArray();
+$homeProductCollection = $generalNewsBlock->HomeProductArray();
+$reviewCollection = $reviewBlock->getHomePageReviewData();
+$helper = $this->helper('SIT\MainAdmin\Helper\Data');
+$mediaUrl = $helper->getPubMedia();
+$merchendiseImg = $mediaUrl . 'merchendise/image';
+?>
+<div class="homepage-main-continer">
+  <!-- Left Section -->
+  <div class="left-section">
+
+    <!-- News div 1 -->
+    <div class="news-section">
+      <div class="label-head"><?= __('NEWS'); ?></div>
+      <div class="news-date"><?= $generalNewsBlock->changeDateFormat($newsCollection[0]['created_at']) ?></div>
+      <a href="<?= $newsCollection[0]['url_key'] ?>"><?= $newsCollection[0]['news_title'] ?></a>
+        <a href="<?= $newsCollection[0]['url_key'] ?>">
+            <div class="news-desc"><?= $generalNewsBlock->getFilterableCMSData($newsCollection[0]['news_shortdesc']) ?></div>
+        </a>
+    </div>
+    <!-- End News div 1 -->
+
+    <!-- Home Product div 1 -->
+    <div class="product-section">
+      <div class="line"></div>
+      <div class="product-title"><?= __('NEW'); ?></div>
+      <div class="product-title-main"><a href="<?= $homeProductCollection[0]['url'] ?>"><?= $homeProductCollection[0]['name'] ?></a></div>
+      <div class="product-img-main">
+        <a href="<?= $homeProductCollection[0]['url'] ?>">
+          <img class="product-img" src="<?= $homeProductCollection[0]['image'] ?>" alt="<?= $homeProductCollection[0]['name'] ?>">
+        </a>
+      </div>
+      <div class="product-desc">
+        <?= $homeProductCollection[0]['feature_1_en'] ?>
+      </div>
+    </div>
+    <!-- End Home Product div 1 -->
+    <!-- News div 2 -->
+    <div class="news-section">
+      <div class="label-head"><?= __('NEWS'); ?></div>
+      <div class="news-date"><?= $generalNewsBlock->changeDateFormat($newsCollection[1]['created_at']) ?></div>
+      <a href="<?= $newsCollection[1]['url_key'] ?>"><?= $newsCollection[1]['news_title'] ?></a>
+      <div class="news-desc"><?= $generalNewsBlock->getFilterableCMSData($newsCollection[1]['news_shortdesc']) ?></div>
+    </div>
+    <!-- End News div 2 -->
+
+    <!-- Home Product div 2 -->
+    <div class="product-section">
+      <div class="line"></div>
+      <div class="product-title"><?= __('NEW'); ?></div>
+      <div class="product-title-main"><a href="<?= $homeProductCollection[1]['url'] ?>"><?= $homeProductCollection[1]['name'] ?></a></div>
+      <div class="product-img-main">
+        <a href="<?= $homeProductCollection[1]['url'] ?>">
+          <img class="product-img" src="<?= $homeProductCollection[1]['image'] ?>" alt="<?= $homeProductCollection[1]['name'] ?>">
+        </a>
+      </div>
+      <div class="product-desc">
+        <?= $homeProductCollection[1]['feature_1_en'] ?>
+      </div>
+    </div>
+    <!-- End Home Product div 2 -->
+      <?php if(count($videoCollection) > 0) : ?>
+        <div class="video-container" data-bind="scope:'sit-mainvideo-home-div'">
+              <!-- ko foreach: mainVideoCollArray() -->
+                <div class="video-box">
+                    <div class="video-title" data-bind="text:main_video_title"></div>
+                    <!-- ko if: new_label != null -->
+                    <div class="product-title merchandise" data-bind="text:new_label"></div>
+                    <!-- /ko -->
+                    <!-- ko if: merchendise_image != null -->
+                    <div class="video-frame merchendiseImg">
+                        <a data-bind="attr: { href:main_video_url }" target="_blank">
+                            <img class="merchendise-img" data-bind="attr: { src:merchendise_image, alt: main_video_title }" />
+                        </a>
+                    </div>
+                    <!-- /ko -->
+                    <!-- ko if: merchendise_image == null -->
+                    <div class="video-frame">
+                        <iframe data-bind="attr: { src:main_video_url, 'data-src':main_video_url}" width="325" height="230" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <!-- /ko -->
+              </div>
+              <!-- /ko -->
+              <script type="text/x-magento-init">
+                {
+                    "*": {
+                        "Magento_Ui/js/core/app": {
+                           "components": {
+                                "sit-mainvideo-home-div": {
+                                    "component": "SIT_Mainpagevideo/js/komainvideo",
+                                    "collectionJson": <?= $videoBlock->getCollectionJson(); ?>
+                                    }
+                                }
+                            }
+                        }
+                }
+                </script>
+        </div>
+      <?php endif; ?>
+  <!-- End Left section -->
+  </div>
+  <!-- Right section -->
+  <div class="right-section">
+    <div class="review-container">
+      <div class="review-header"><?= __('Latest Reviews'); ?></div>
+      <?php $id = 1;
+      if ($reviewCollection) { ?>
+        <?php foreach ($reviewCollection as $key => $value) : ?>
+          <div class="review-main-div">
+            <div class="review-label"><a href="<?= $this->getBaseUrl() ?>reviews#review<?php echo $id ?>"><?= $value->getPname() ?></a>
+
+              <span class="more-details">
+                <span class="more-details-text"><?= __('etc.'); ?></span>
+                <span class="more-icon"></span>
+              </span>
+            </div>
+            <div class="date-path"><?= $reviewBlock->changeDateFormat($value->getCreatedAt()) ?><?= __("&nbsp;") ?><?= __("//") ?><?= __("&nbsp;") ?><?= $value->getReviewWebsite() ?></div>
+            <div class="review-desc"><?= $value->getReviewShortDesc() ?></div>
+          </div>
+          <?php $id++ ?>
+      <?php endforeach;
+      } ?>
+    </div>
+  </div>
+  <!-- End Right section -->
+</div>

@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<config>
+  <settings>
+    <preloader image="images/Img7512.jpg" />
+    <userInterface showZoomButtons="false" showToolTips="false" showHotspotsButton="false" showFullScreenButton="false" showTogglePlayButton="false" showArrows="true" toolbarAlign="center" toolbarBackColor="transparent" toolbarHoverColor="#808285" toolbarForeColor="#A7A9AE" toolbarBackAlpha="0" toolbarAlpha="1" showProgressNumbers="true" showFullScreenToolbar="false" fullScreenBackColor="#FFFFFF" />
+    <control dragSpeed="0.3" doubleClickZooms="false" disableMouseControl="false" showHighresOnFullScreen="true" mouseHoverDrag="false" hideHotspotsOnLoad="false" hideHotspotsOnZoom="true" rowSensitivity="15" dragSensitivity="10" inBrowserFullScreen="false" doubleClickFullscreen="false" zoomSteps="1" zoomSpeed="300" />
+    <rotation firstImage="0" rotate="once" rotatePeriod="2" bounce="false" rotateDirection="-1" forceDirection="false" inertiaRelToDragSpeed="true" inertiaTimeToStop="700" inertiaMaxInterval="120" useInertia="true" flipHorizontalInput="false" flipVerticalInput="false" bounceRows="true" rowsOnSingleIndex="false" flipAxis="false" />
+  </settings>
+  <hotspots>
+    <hotspot id="hcm" renderMode="0" indicatorImage="hotspot3.svg" margin="0,0,0,0" align="bottom,right">
+      <spotinfo src="images/spots/noctua_l12s_hcm.png" imgWidth="223" />
+    </hotspot>
+    <hotspot id="lpm" renderMode="0" indicatorImage="hotspot3.svg" margin="0,0,0,0" align="center,left">
+      <spotinfo src="images/spots/noctua_l12s_lpm.png" imgWidth="223" />
+    </hotspot>
+    <hotspot id="pwm" renderMode="0" indicatorImage="hotspot3.svg" margin="0,0,0,0" align="center,left">
+      <spotinfo src="images/spots/noctua_l12s_lna.png" imgWidth="223" />
+    </hotspot>
+    <hotspot id="spot4" renderMode="0" indicatorImage="hotspot3.svg" margin="0,0,0,0" align="center,left">
+      <spotinfo src="images/spots/noctua_l12s_pf.png" imgWidth="223" />
+    </hotspot>
+    <hotspot id="sf" renderMode="0" indicatorImage="hotspot3.svg" margin="0,0,0,0" align="top,center">
+      <spotinfo src="images/spots/noctua_l12s_sfms.png" imgWidth="244" />
+    </hotspot>
+  </hotspots>
+  <images rows="1">
+    <image src="images/Img7512.jpg">
+      <hotspot source="spot4" offsetX="615.5" offsetY="432" />
+    </image>
+    <image src="images/Img7513.jpg">
+      <hotspot source="spot4" offsetX="538.5" offsetY="432" />
+    </image>
+    <image src="images/Img7514.jpg">
+      <hotspot source="spot4" offsetX="459.5" offsetY="431" />
+    </image>
+    <image src="images/Img7515.jpg">
+      <hotspot source="spot4" offsetX="384.5" offsetY="431" />
+    </image>
+    <image src="images/Img7516.jpg">
+      <hotspot source="pwm" offsetX="829.5" offsetY="433" />
+      <hotspot source="spot4" offsetX="320.5" offsetY="431" />
+      <hotspot source="sf" offsetX="715" offsetY="636" />
+    </image>
+    <image src="images/Img7517.jpg">
+      <hotspot source="pwm" offsetX="775.5" offsetY="434" />
+      <hotspot source="spot4" offsetX="265" offsetY="432" />
+      <hotspot source="sf" offsetX="699" offsetY="636" />
+    </image>
+    <image src="images/Img7518.jpg">
+      <hotspot source="pwm" offsetX="715.5" offsetY="435" />
+      <hotspot source="sf" offsetX="675" offsetY="638" />
+    </image>
+    <image src="images/Img7523.jpg">
+      <hotspot source="pwm" offsetX="655.5" offsetY="435" />
+      <hotspot source="sf" offsetX="657" offsetY="638" />
+    </image>
+    <image src="images/Img7524.jpg">
+      <hotspot source="pwm" offsetX="587.5" offsetY="434" />
+      <hotspot source="sf" offsetX="641" offsetY="638" />
+    </image>
+    <image src="images/Img7525.jpg">
+      <hotspot source="pwm" offsetX="509.5" offsetY="435" />
+      <hotspot source="sf" offsetX="613" offsetY="640" />
+    </image>
+    <image src="images/Img7526.jpg">
+      <hotspot source="pwm" offsetX="449.5" offsetY="435" />
+      <hotspot source="sf" offsetX="587" offsetY="642" />
+    </image>
+    <image src="images/Img7527.jpg">
+      <hotspot source="pwm" offsetX="390.5" offsetY="435" />
+      <hotspot source="sf" offsetX="565" offsetY="642" />
+    </image>
+    <image src="images/Img7528.jpg">
+      <hotspot source="pwm" offsetX="343" offsetY="436" />
+      <hotspot source="sf" offsetX="551" offsetY="642" />
+    </image>
+    <image src="images/Img7529.jpg">
+      <hotspot source="sf" offsetX="531" offsetY="640" />
+    </image>
+    <image src="images/Img7530.jpg">
+      <hotspot source="sf" offsetX="519" offsetY="638" />
+    </image>
+    <image src="images/Img7531.jpg" />
+    <image src="images/Img7532.jpg" />
+    <image src="images/Img7533.jpg" />
+    <image src="images/Img7534.jpg" />
+    <image src="images/Img7535.jpg" />
+    <image src="images/Img7536.jpg" />
+    <image src="images/Img7537.jpg" />
+    <image src="images/Img7538.jpg" />
+    <image src="images/Img7539.jpg">
+      <hotspot source="hcm" offsetX="927" offsetY="202" />
+      <hotspot source="lpm" offsetX="906.5" offsetY="420" />
+    </image>
+    <image src="images/Img7540.jpg">
+      <hotspot source="hcm" offsetX="885" offsetY="204" />
+      <hotspot source="lpm" offsetX="873.5" offsetY="420" />
+    </image>
+    <image src="images/Img7541.jpg">
+      <hotspot source="hcm" offsetX="833" offsetY="202" />
+      <hotspot source="lpm" offsetX="824.5" offsetY="419" />
+    </image>
+    <image src="images/Img7542.jpg">
+      <hotspot source="hcm" offsetX="771" offsetY="202" />
+      <hotspot source="lpm" offsetX="771.5" offsetY="418" />
+    </image>
+    <image src="images/Img7543.jpg">
+      <hotspot source="hcm" offsetX="695.5" offsetY="201" />
+      <hotspot source="lpm" offsetX="702.5" offsetY="419" />
+    </image>
+    <image src="images/Img7544.jpg">
+      <hotspot source="hcm" offsetX="635" offsetY="202" />
+      <hotspot source="lpm" offsetX="646.5" offsetY="419" />
+    </image>
+    <image src="images/Img7545.jpg">
+      <hotspot source="hcm" offsetX="569" offsetY="204" />
+      <hotspot source="lpm" offsetX="578.5" offsetY="419" />
+    </image>
+    <image src="images/Img7546.jpg">
+      <hotspot source="hcm" offsetX="491" offsetY="204" />
+      <hotspot source="lpm" offsetX="510.5" offsetY="420" />
+    </image>
+    <image src="images/Img7547.jpg">
+      <hotspot source="hcm" offsetX="423" offsetY="204" />
+      <hotspot source="lpm" offsetX="448.5" offsetY="421" />
+      <hotspot source="spot4" offsetX="967" offsetY="432" />
+    </image>
+    <image src="images/Img7548.jpg">
+      <hotspot source="spot4" offsetX="919.5" offsetY="433" />
+    </image>
+    <image src="images/Img7549.jpg">
+      <hotspot source="spot4" offsetX="855.5" offsetY="434" />
+    </image>
+    <image src="images/Img7550.jpg">
+      <hotspot source="spot4" offsetX="783.5" offsetY="433" />
+    </image>
+    <image src="images/Img7551.jpg">
+      <hotspot source="spot4" offsetX="699.5" offsetY="433" />
+    </image>
+  </images>
+</config>

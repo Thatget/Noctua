@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [1-3-2019]
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">sit_productcompatibility_import_form.sit_productcompatibility_import_form_data_source</item>
+            <item name="deps" xsi:type="string">sit_productcompatibility_import_form.sit_productcompatibility_import_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Import Compatibilities</item>
+        <item name="spinner" xsi:type="string">comps_information</item>
+        <item name="buttons" xsi:type="array">
+            <item name="reset" xsi:type="string">SIT\ProductCompatibility\Block\Adminhtml\Mainboard\Edit\ResetButton</item>
+            <item name="downloadcsv" xsi:type="string">SIT\ProductCompatibility\Block\Adminhtml\Import\Edit\DownloadCsvButton</item>
+            <item name="save" xsi:type="string">SIT\ProductCompatibility\Block\Adminhtml\Import\Edit\ImportButton</item>
+        </item>
+        <item name="config" xsi:type="array">
+            <item name="dataScope" xsi:type="string">data</item>
+            <item name="namespace" xsi:type="string">sit_productcompatibility_import_form</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <dataSource name="importexporttest_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">SIT\ProductCompatibility\Ui\Component\Form\Mainboard\DataProvider</argument>
+            <argument name="name" xsi:type="string">sit_productcompatibility_import_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">entity_id</argument>
+            <argument name="requestFieldName" xsi:type="string">entity_id</argument>
+            <argument name="data" xsi:type="array">
+              <item name="config" xsi:type="array">
+                 <item name="submit_url" xsi:type="url" path="*/*/importdata"/>
+              </item>
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+    <fieldset name="comp_import">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">false</item>
+                <item name="label" xsi:type="string" translate="true">Import Compatibilities</item>
+                <item name="sortOrder" xsi:type="number">20</item>
+            </item>
+        </argument>
+        <field name="comptype">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">SIT\ProductCompatibility\Model\Config\Source\ProductCompList</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="label" xsi:type="string" translate="true">Product Compatibilities</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">comptype</item>
+                    <item name="dataScope" xsi:type="string">comptype</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">false</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="csv_import">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="source" xsi:type="string">Index</item>
+                    <item name="label" xsi:type="string" translate="true">Add File To Import</item>
+                    <item name="notice" xsi:type="string" translate="true">Only CSV files are allowed.</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="formElement" xsi:type="string">fileUploader</item>
+                    <item name="elementTmpl" xsi:type="string">ui/form/element/uploader/uploader</item>
+                    <item name="previewTmpl" xsi:type="string">SIT_ProductCompatibility/file-preview</item>
+                    <item name="required" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="number">40</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="uploaderConfig" xsi:type="array">
+                        <item name="url" xsi:type="url" path="*/*/upload"/>
+                    </item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+</form>

@@ -1,0 +1,9 @@
+<script type="text/javascript">
+    require([
+        'mage/url'
+    ], function(url) {
+    	var baseUrl = '<?php /* @escapeNotVerified */ echo $block->getAdminBaseUrl();?>';
+        return url.setBaseUrl('<?php /* @escapeNotVerified */ echo $block->getAdminBaseUrl();?>');
+    });
+</script>
+<?php

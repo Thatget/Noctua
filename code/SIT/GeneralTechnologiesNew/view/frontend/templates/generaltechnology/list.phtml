@@ -1,0 +1,41 @@
+<?php
+    /** Change By JM [For display Technologies page in custom page] */
+    $customPage = $block->getCustomPage();
+    if (!$customPage) {
+        $page = $this->helper('Swissup\Easytabs\Helper\Data')->getPageInfo('technologies');
+        if($page === false):
+            return true;
+        endif;
+    }
+    /** Change By JM [For display Technologies page in custom page] */
+
+    $technologiesCollection = $block->getTechnologiesDetails();
+    $double_arrow_blue = $block->getSkinUrl();
+    $baseUrl = $block->getBaseUrl();
+    $mediaPath = $this->helper('SIT\MainAdmin\Helper\Data');
+ ?>
+<div class="section-inner-presse-page technologies">
+    <?php foreach ($technologiesCollection as $key => $techData) :?>
+        <div class="product-box-data">
+            <div class="product-details-data">
+                <div class="feature-main-box">
+                    <div class="feature-main-box-left-img">
+                        <a title="Read More" href="<?= $baseUrl.$techData['tech_url_key']; ?>">
+                            <img src="<?= $techData['tech_image'] ?>" alt="Ultimate Reliability">
+                        </a>
+                    </div>
+                    <div class="feature-main-box-right">
+                        <h1><?= $techData['tech_title']; ?></h1>
+                        <div class="feature-right-box-content">
+                            <?php echo $techData['tech_short_desc']; ?>
+                            <a title="Read More" href="<?= $baseUrl.$techData['tech_url_key']; ?>">
+    							<img src="<?= $double_arrow_blue; ?>" alt="Read More">
+    						</a>
+                        </div>
+                        <div style="clear:both"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endforeach; ?>
+</div>

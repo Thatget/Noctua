@@ -1,0 +1,14 @@
+<div class="comp-product-main">
+	<div class="section-inner-presse-page-full">
+	<!-- ko foreach: productList -->
+		<div class="comp-product">
+		<!-- ko foreach: $data-->
+			<!-- ko if: $index() == 0-->
+				<h2 data-bind="i18n: $data.category"></h2>
+			<!-- /ko -->
+			<a class="pro-link" data-bind="attr:{href: $data.url_key,target:$data.target},i18n: $data.name"></a>
+		<!-- /ko -->
+		</div>
+	<!-- /ko -->
+	</div>
+</div>

@@ -1,0 +1,128 @@
+<?php
+$helper = $this->helper('SIT\MainAdmin\Helper\Data');
+$mediaUrl = $helper->getPubMedia();
+?>
+<div class="webform-label-express-check-container">
+    <input class="webform-express-check" type='checkbox' name='chk_express'
+           id='chk_express' readonly="true"/>
+    <label for='chk_express' id="lbl_express" class="lbl-express pull-left" name="lbl_express"><?php echo __("Express Delivery - Please select country") ?></label>
+    <span id="lbl_express_text" style="display:none;" class="lbl-express pull-left express_new_text webform-express-label"></span>
+    <br/>
+    <div id="div_country_price"  class="dv_country_price form-row div-price-box-input" name="div_country_price" style="display:none;">
+    	<br/>
+    </div>
+</div>
+
+<script>
+require(['jquery', 'jquery/ui'], function($) {
+    $("#chk_express").prop("disabled", true);
+    $("input[name='chk_express']").change(function() {
+        if ($("input[name='chk_express']").is(':checked')) {
+            if (window.location.href.indexOf("/de/") > -1) {
+                $(".form_button").css("width", "181px");
+            } else {
+                $(".form_button").css("width", "125px");
+            }
+            $("#sp_form_button").text("<?php echo __('Pay and submit')?>");
+            $("#div_country_price").css("display", "block");
+            $("#rdo_shipping").attr("checked", true);
+            $('#rdo_shipping').trigger('change');
+        } else {
+            if (window.location.href.indexOf("/de/") > -1) {
+                $(".form_button").css("width", "125px");
+            }
+            $("#sp_form_button").text("<?php echo __('Submit')?>");
+            $("#rdo_shipping").attr("checked", false);
+            $("#div_country_price").css("display", "none");
+            $("#field_" + window.Express_Delivery + " input").attr("value", 'No');
+            $("#field_" + window.Delivery_Method + " input").attr("value", 'none');
+            $("#field_" + window.Delivery_Amount + " input").attr("value", '0');
+            $("#field_" + window.Payment_Confirmed + " input").attr("value", 'No');
+            $("#field_" + window.Transaction_Id + " input").attr("value", '0');
+            $("#amount").attr("value", '0');
+        }
+    });
+
+    $(".webform-field-country-select").change(function() {
+        country_code = $(this).val();
+        $.ajax({
+            url: "<?php echo $this->getUrl("webformapi/country/price"); ?>",
+            type: "post",
+            data: {
+                country: country_code
+            },
+            success: function(price) {
+                $("#chk_express").attr("checked", false);
+                $("#div_country_price").css("display", "none");
+                if (price.localeCompare("0.00") == -1) {
+                    $("#chk_express").prop("checked", false);
+                    $("#chk_express").attr("readonly", "true");
+                    $("#chk_express").prop("disabled", true);
+                    $("#lbl_express").text("<?php echo __("Express Delivery - Not available for selected country")?>");
+                    $("#lbl_express_text").css("display", "none");
+                    $("#lbl_express_text").html("");
+                    $("#btn_paypal").css("display", "none");
+                } else {
+                    if ($(".webform-field-country-select").val() != "") {
+                        $("input[name='chk_express']").removeAttr("readonly");
+                        $("#chk_express").prop("disabled", false);
+                        $("#lbl_express_text").css("display", "block");
+                        $("#lbl_express_text").html("<?php echo __("Same day shipping until 14:00 MEZ") ?>");
+                        $("#lbl_express").text("<?php echo __("Do you want an express delivery ?") ?>");
+                        $("#btn_paypal").attr("price", price);
+
+                    } else {
+                        $("input[name='chk_express']").removeAttr("readonly");
+                        $("#chk_express").prop("disabled", true);
+                        $("#lbl_express").text("<?php echo __("Express Delivery - Please select country")?>");
+                        $("#lbl_express_text").css("display", "none");
+                        $("#lbl_express_text").html("");
+                        $("#btn_paypal").css("display", "none");
+                    }
+                }
+            }
+        });
+
+        $.ajax({
+            url: "<?php echo $this->getUrl("webformapi/country/country"); ?>",
+            type: "post",
+            data: {
+                country: country_code
+            },
+            success: function(country_data) {
+                var data = $.parseJSON(country_data);
+                var radioHTML = "";
+                $("#div_country_price").html("");
+                $.each(data, function(key, value) {
+                    if (value.price != "0.00") {
+                        radioHTML = "<input onChange='setShipPrice(this.value," + value.price + ")' type='radio' name='rdo_shipping' id='rdo_shipping' value='" + value.delivery_type + "'" + "  " + ">";
+
+                        radioHTML += "<div class='express_delivery_image_div webform-express-img'><img class='express_delivery_image' src='" + "<?php echo $mediaUrl; ?>" + value.ship_icon + "' name='ship_icon'/></div><div class='express_delivery_duration webform-express-duration'><span>" + value.delivery_duration + " " + "<?php echo __('days')?></span></div><div class = 'express_delivery_price webform-express-price'><span> €" + value.price + "</span></div><br/>";
+                        $("#div_country_price").append(radioHTML);
+                    } else {
+                        $("#sp_form_button").text('Submit');
+                        $("#div_country_price").css("display", "none");
+
+
+                    }
+                });
+            }
+        });
+    });
+
+    $('.webforms-fields-express_delivery input[type="checkbox"]').click(function() {
+        if ($(".webforms-fields-express_delivery input[type='checkbox']").is(':checked') == true) {
+            $("#btn_paypal").css("display", "block");
+        } else {
+            $("#btn_paypal").css("display", "none");
+        }
+    });
+});
+function setShipPrice(value, price) {
+    jQuery("#field_" + window.Express_Delivery + " input").attr("value", 'Yes');
+    jQuery("#field_" + window.Delivery_Method + " input").attr("value", value);
+    jQuery("#field_" + window.Delivery_Amount + " input").attr("value", price);
+    jQuery("#field_" + window.Payment_Confirmed + " input").attr("value", 'No');
+    jQuery("#field_" + window.Transaction_Id + " input").attr("value", '0');
+}
+</script>

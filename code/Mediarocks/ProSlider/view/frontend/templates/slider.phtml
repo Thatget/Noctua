@@ -1,0 +1,71 @@
+<!-- /**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [14.03.2019]
+ */ -->
+<?php
+/* Added By MJ [For get current page type and display slider] */
+$pageAction = $block->getPageAction();
+$imageHelper=$this->helper('SIT\MainAdmin\Helper\Data');
+$params = null;
+$params = $this->getRequest()->getParam('id');
+$data = $block->getSlider($pageAction,$params);
+$counter = 0;
+?>
+<div class="skitter skitter-large" data-mage-init='{ "mediarocks": {} }'>
+	<ul>
+		<?php
+		/**
+		 * Static image load when there is  no images set.
+		 * Changes done by NG
+		 */
+		if(!isset($data['slides'])){
+			$data['slides'][0]['image']="proslider/bfb71ded1e83f5916bbc94a182ad51f7.jpg";
+			$data['slides'][0]['is_active']="1";
+			$data['slides'][0]['slide_name']="missing image page";
+			$data['slides'][0]['is_show_title_in_slide']="1";
+			
+		}
+
+		//if(isset($data['slides'])){
+			$image_link = $block->getBaseUrl();
+			foreach ($data['slides'] as $key => $value) {
+				$base_url = $image_link;
+				if(isset($value['image']) && $value['is_active'] == 1){
+					$img_url[] = $imageHelper->getImage("",$value['image']);
+					?>
+					<li>
+						<a href="<?= (isset($value['image_link'])) ? $image_link .= unserialize($value['image_link']) : "";?>">
+							<img class="circles" src="<?= $img_url[$counter]; ?>"/>
+						</a>
+						<?php
+						if($value['is_show_title_in_slide'] == 1 && isset($value['title'])){
+						?>
+							<div class="label_text">
+								<p><?= __($value['title']); ?></p>
+							</div>
+						<?php
+						}else{
+						?>
+							<div class="label_text">
+								<p style="display: none;"></p>
+							</div>
+						<?php
+						}
+						?>
+					</li>
+				<?php
+					$image_link = $base_url;
+					$counter++;
+				}
+			}
+	//	}
+		?>
+	</ul>
+</div>
+<?
+/* End By MJ [For get current page type and display slider]*/
+?>

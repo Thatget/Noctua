@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Config/etc/system_file.xsd">
+    <system>
+		<tab id="Noctua" translate="label" sortOrder="380">
+            <label>Noctua</label>
+        </tab>
+		<section id="generaltechnology" translate="label" type="text" sortOrder="140" showInDefault="1" showInWebsite="0" showInStore="0">
+			 <label>General Technologies</label>
+            <tab>Noctua</tab>
+            <resource>SIT_GeneralTechnologiesNew::config_generaltechnology</resource>
+            <group id="generaltechnology" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>General Technologies</label>
+                <field id="breadcrumbs" translate="label" sortOrder="1" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use Breadcrumbs</label>
+                    <source_model>SIT\GeneralTechnologiesNew\Model\Config\Source\Breadcrumbs</source_model>
+                </field>
+                <field id="url_prefix" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>URL Prefix</label>
+                    <comment><![CDATA[Leave empty for no prefix]]></comment>
+                </field>
+                <field id="url_suffix" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>URL Suffix</label>
+                    <comment><![CDATA[What goes after the dot. Leave empty for no suffix.]]></comment>
+                </field>
+            </group>
+        </section>
+	</system>
+</config>

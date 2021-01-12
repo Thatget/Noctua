@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [1-3-2019]
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">sit_productcompatibility_fans_listing.sit_productcompatibility_fans_listing_data_source</item>
+            <item name="deps" xsi:type="string">sit_productcompatibility_fans_listing.sit_productcompatibility_fans_listing_data_source</item>
+        </item>
+        <item name="spinner" xsi:type="string">sit_productcompatibility_fans_columns</item>
+        <item name="buttons" xsi:type="array">
+            <item name="add" xsi:type="array">
+                <item name="name" xsi:type="string">add</item>
+                <item name="label" xsi:type="string" translate="true">Add Product Compatibility Case / Fans</item>
+                <item name="class" xsi:type="string">primary</item>
+                <item name="url" xsi:type="string">*/*/add/comptype/fans</item>
+            </item>
+            <item name="unused" xsi:type="array">
+                    <item name="name" xsi:type="string">unused</item>
+                    <item name="label" xsi:type="string" translate="true">Display Unused</item>
+                    <item name="class" xsi:type="string">primary</item>
+                    <item name="url" xsi:type="string">*/*/fansUnused/comptype/Case/unused/unusedfans</item>
+            </item>
+            <item name="duplicatecomp" xsi:type="array">
+                <item name="name" xsi:type="string">duplicatecomp</item>
+                <item name="label" xsi:type="string" translate="true">Display Duplicate</item>
+                <item name="class" xsi:type="string">primary</item>
+                <item name="url" xsi:type="string">*/*/fansDuplicate/comptype/Case/duplicatefans/duplicatecase</item>
+            </item>
+        </item>
+    </argument>
+    <dataSource name="sit_productcompatibility_fans_listing_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">SIT\ProductCompatibility\Ui\Component\Listing\Fans\DataProvider</argument>
+            <argument name="name" xsi:type="string">sit_productcompatibility_fans_listing_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">entity_id</argument>
+            <argument name="requestFieldName" xsi:type="string">entity_id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="update_url" xsi:type="url" path="mui/index/render/comptype/Case"/>
+                </item>
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+    <container name="listing_top">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="template" xsi:type="string">ui/grid/toolbar</item>
+            </item>
+        </argument>
+        <bookmark name="bookmarks" class="\SIT\ProductCompatibility\Ui\Component\Listing\Column\Bookmark">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/controls/bookmarks/bookmarks</item>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="saveUrl" xsi:type="url" path="mui/bookmark/save"/>
+                        <item name="deleteUrl" xsi:type="url" path="mui/bookmark/delete"/>
+                        <item name="namespace" xsi:type="string">sit_productcompatibility_fans_listing</item>
+                    </item>
+                </item>
+            </argument>
+        </bookmark>
+        <columnsControls name="columns_controls"/>
+        <component name="columns_controls">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="columnsData" xsi:type="array">
+                        <item name="provider" xsi:type="string">sit_productcompatibility_fans_listing.sit_productcompatibility_fans_listing.sit_productcompatibility_fans_columns</item>
+                    </item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/controls/columns</item>
+                    <item name="displayArea" xsi:type="string">dataGridActions</item>
+                </item>
+            </argument>
+        </component>
+        <!-- Export CSV and XML button [START] -->
+         <exportButton class="Magento\Ui\Component\ExportButton">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="options" xsi:type="array">
+                        <item name="cvs" xsi:type="array">
+                            <item name="value" xsi:type="string">csv</item>
+                            <item name="label" xsi:type="string" translate="true">CSV</item>
+                            <item name="url" xsi:type="string">*/*/gridToCsv/comptype/Case</item>
+                        </item>
+                        <item name="xml" xsi:type="array">
+                            <item name="value" xsi:type="string">xml</item>
+                            <item name="label" xsi:type="string" translate="true">Excel XML</item>
+                            <item name="url" xsi:type="string">*/*/gridToXml/comptype/Case</item>
+                        </item>
+                        <item name="xls" xsi:type="array">
+                            <item name="value" xsi:type="string">xls</item>
+                            <item name="label" xsi:type="string" translate="true">Excel XLS</item>
+                            <item name="url" xsi:type="string">*/*/gridToXls/comptype/Case</item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+        </exportButton>
+        <!-- Export CSV and XML button [END]-->
+        <filterSearch name="fulltext">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="provider" xsi:type="string">sit_productcompatibility_fans_listing.sit_productcompatibility_fans_listing_data_source</item>
+                    <item name="chipsProvider" xsi:type="string">sit_productcompatibility_fans_listing.sit_productcompatibility_fans_listing.listing_top.listing_filters_chips</item>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="provider" xsi:type="string">sit_productcompatibility_fans_listing.sit_productcompatibility_fans_listing.listing_top.bookmarks</item>
+                        <item name="namespace" xsi:type="string">current.search</item>
+                    </item>
+                </item>
+            </argument>
+        </filterSearch>
+        <filters name="listing_filters">
+            <!-- filter and display product name in grid -->
+            <filterSelect name="product_name" provider="${ $.parentName }" component="Magento_Ui/js/form/element/ui-select" template="ui/grid/filters/elements/ui-select">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="filterOptions" xsi:type="boolean">true</item>
+                        <item name="columnsProvider" xsi:type="string">sit_productcompatibility_fans_listing.sit_productcompatibility_fans_listing.sit_productcompatibility_fans_columns</item>
+                        <item name="storageConfig" xsi:type="array">
+                            <item name="provider" xsi:type="string">sit_productcompatibility_fans_listing.sit_productcompatibility_fans_listing.listing_top.bookmarks</item>
+                            <item name="namespace" xsi:type="string">current.filters</item>
+                        </item>
+                        <item name="childDefaults" xsi:type="array">
+                            <item name="provider" xsi:type="string">sit_productcompatibility_fans_listing.sit_productcompatibility_fans_listing.listing_top.listing_filters</item>
+                            <item name="imports" xsi:type="array">
+                                <item name="visible" xsi:type="string">sit_productcompatibility_fans_listing.sit_productcompatibility_fans_listing.sit_productcompatibility_fans_columns.${ $.index }:visible</item>
+                            </item>
+                        </item>
+                    </item>
+                </argument>
+                <settings>
+                    <options class="SIT\ProductCompatibility\Model\Config\Source\ProductNameList"/>
+                    <caption translate="true">Select...</caption>
+                    <label translate="true">Product</label>
+                    <dataScope>product_name</dataScope>
+                    <imports>
+                        <link name="visible">componentType = column, index = ${ $.index }:visible</link>
+                    </imports>
+                </settings>
+            </filterSelect>
+            <!-- filter and display product name in grid -->
+            <!-- <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="columnsProvider" xsi:type="string">sit_productcompatibility_fans_listing.sit_productcompatibility_fans_listing.sit_productcompatibility_fans_columns</item>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="provider" xsi:type="string">sit_productcompatibility_fans_listing.sit_productcompatibility_fans_listing.listing_top.bookmarks</item>
+                        <item name="namespace" xsi:type="string">current.filters</item>
+                    </item>
+                    <item name="childDefaults" xsi:type="array">
+                        <item name="provider" xsi:type="string">sit_productcompatibility_fans_listing.sit_productcompatibility_fans_listing.listing_top.listing_filters</item>
+                        <item name="imports" xsi:type="array">
+                            <item name="visible" xsi:type="string">sit_productcompatibility_fans_listing.sit_productcompatibility_fans_listing.sit_productcompatibility_fans_columns.${ $.index }:visible</item>
+                        </item>
+                    </item>
+                </item>
+            </argument> -->
+        </filters>
+        <massaction name="listing_massaction">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="selectProvider" xsi:type="string">sit_productcompatibility_fans_listing.sit_productcompatibility_fans_listing.sit_productcompatibility_fans_columns.ids</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/tree-massactions</item>
+                    <item name="indexField" xsi:type="string">entity_id</item>
+                </item>
+            </argument>
+           <!-- Delete[START] -->
+            <action name="delete">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">delete</item>
+                        <item name="label" xsi:type="string" translate="true">Delete</item>
+                        <item name="url" xsi:type="url" path="*/*/massDelete"/>
+                        <item name="confirm" xsi:type="array">
+                            <item name="title" xsi:type="string" translate="true">Delete items</item>
+                            <item name="message" xsi:type="string" translate="true">Are you sure you wan't to delete selected items?</item>
+                        </item>
+                    </item>
+                </argument>
+            </action>
+            <!-- Delete[END] -->
+            <!-- Change Status[START] -->
+            <action name="change_status">
+               <argument name="data" xsi:type="array">
+                   <item name="config" xsi:type="array">
+                       <item name="type" xsi:type="string">change_status</item>
+                       <item name="label" xsi:type="string" translate="true">Change Status</item>
+                   </item>
+               </argument>
+               <argument name="actions" xsi:type="configurableObject">
+                   <argument name="class" xsi:type="string">
+                    SIT\ProductCompatibility\Ui\Component\MassAction\Status\Options</argument>
+                   <argument name="data" xsi:type="array">
+                       <item name="urlPath" xsi:type="string">*/*/massStatus</item>
+                       <item name="paramName" xsi:type="string">status</item>
+                       <item name="confirm" xsi:type="array">
+                            <item name="title" xsi:type="string" translate="true">Update items status</item>
+                            <item name="message" xsi:type="string" translate="true">Are you sure you wan't to update selected items status?</item>
+                        </item>
+                   </argument>
+               </argument>
+           </action>
+          <!-- Change Status[END] -->
+          <!-- Custom Actions[START] -->
+          <action name="custom_actions">
+              <argument name="data" xsi:type="array">
+                  <item name="config" xsi:type="array">
+                      <item name="type" xsi:type="string">custom_actions</item>
+                      <item name="label" xsi:type="string" translate="true">Custom Actions</item>
+                      <item name="url" xsi:type="url" path="*/*/massActions/comptype/Case"/>
+                  </item>
+              </argument>
+          </action>
+          <!-- Custom Actions[END] -->
+        </massaction>
+        <paging name="listing_paging">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="provider" xsi:type="string">sit_productcompatibility_fans_listing.sit_productcompatibility_fans_listing.listing_top.bookmarks</item>
+                        <item name="namespace" xsi:type="string">current.paging</item>
+                    </item>
+                    <item name="selectProvider" xsi:type="string">sit_productcompatibility_fans_listing.sit_productcompatibility_fans_listing.sit_productcompatibility_fans_columns.ids</item>
+                </item>
+            </argument>
+        </paging>
+    </container>
+    <columns name="sit_productcompatibility_fans_columns">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="storageConfig" xsi:type="array">
+                    <item name="provider" xsi:type="string">sit_productcompatibility_fans_listing.sit_productcompatibility_fans_listing.listing_top.bookmarks</item>
+                    <item name="namespace" xsi:type="string">current</item>
+                </item>
+                <item name="editorConfig" xsi:type="array">
+                    <item name="selectProvider" xsi:type="string">sit_productcompatibility_fans_listing.sit_productcompatibility_fans_listing.sit_productcompatibility_fans_columns.ids</item>
+                    <item name="enabled" xsi:type="boolean">false</item>
+                    <item name="indexField" xsi:type="string">entity_id</item>
+                    <item name="clientConfig" xsi:type="array">
+                        <item name="saveUrl" xsi:type="url" path="*/*/inlineEdit"/>
+                        <item name="validateBeforeSave" xsi:type="boolean">false</item>
+                    </item>
+                </item>
+                <item name="childDefaults" xsi:type="array">
+                    <item name="fieldAction" xsi:type="array">
+                        <item name="provider" xsi:type="string">sit_productcompatibility_fans_listing.sit_productcompatibility_fans_listing.sit_productcompatibility_fans_columns_editor</item>
+                        <item name="target" xsi:type="string">startEdit</item>
+                        <item name="params" xsi:type="array">
+                            <item name="0" xsi:type="string">${ $.$data.rowIndex }</item>
+                            <item name="1" xsi:type="boolean">true</item>
+                        </item>
+                    </item>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="provider" xsi:type="string">sit_productcompatibility_fans_listing.sit_productcompatibility_fans_listing.listing_top.bookmarks</item>
+                        <item name="root" xsi:type="string">columns.${ $.index }</item>
+                        <item name="namespace" xsi:type="string">current.${ $.storageConfig.root }</item>
+                    </item>
+                </item>
+            </item>
+        </argument>
+        <selectionsColumn name="ids">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="resizeEnabled" xsi:type="boolean">false</item>
+                    <item name="resizeDefaultWidth" xsi:type="string">55</item>
+                    <item name="indexField" xsi:type="string">entity_id</item>
+                </item>
+            </argument>
+        </selectionsColumn>
+        <column name="entity_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="sorting" xsi:type="string">asc</item>
+                    <item name="label" xsi:type="string" translate="true">Id</item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                </item>
+            </argument>
+        </column>
+        <column name="comp_manufacture" class="SIT\ProductCompatibility\Ui\Component\Listing\Column\GetMainboardCols">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">SIT\ProductCompatibility\Model\Config\Source\CompManufactureList</item>
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Manufacturer</item>
+                    <item name="sortOrder" xsi:type="number">40</item>
+                </item>
+            </argument>
+        </column>
+        <column name="comp_model">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">SIT\ProductCompatibility\Model\Config\Source\CompModelList</item>
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Model</item>
+                    <item name="sortOrder" xsi:type="number">50</item>
+                </item>
+            </argument>
+        </column>
+        <column name="comp_value">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">SIT\ProductCompatibility\Model\Config\Source\CompValueList</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">select</item>
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="label" xsi:type="string" translate="true">Compatibility</item>
+                    <item name="sortOrder" xsi:type="number">60</item>
+                </item>
+            </argument>
+        </column>
+        <column name="status">
+            <argument name="data" xsi:type="array">
+               <item name="options" xsi:type="array">
+                    <item name="0" xsi:type="array">
+                        <item name="label" xsi:type="string">Enabled</item>
+                        <item name="value" xsi:type="string">1</item>
+                    </item>
+                    <item name="1" xsi:type="array">
+                        <item name="label" xsi:type="string">Disabled</item>
+                        <item name="value" xsi:type="string">0</item>
+                    </item>
+                </item>
+               <item name="config" xsi:type="array">
+                   <item name="editor" xsi:type="string">select</item>
+                   <item name="filter" xsi:type="string">select</item>
+                   <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                   <item name="dataType" xsi:type="string">select</item>
+                   <item name="label" xsi:type="string" translate="true">Status</item>
+                   <item name="sortOrder" xsi:type="number">70</item>
+               </item>
+            </argument>
+        </column>
+        <column name="product_name" class="SIT\ProductCompatibility\Ui\Component\Listing\Column\GetProductName">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Products</item>
+                    <item name="sortOrder" xsi:type="number">80</item>
+                </item>
+            </argument>
+        </column>
+        <column name="template_text" class="SIT\ProductCompatibility\Ui\Component\Listing\Column\GetTemplateText">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">SIT\ProductCompatibility\Model\Config\Source\GetTemplate</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">select</item>
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="label" xsi:type="string" translate="true">Template Text</item>
+                    <item name="sortOrder" xsi:type="number">90</item>
+                </item>
+            </argument>
+        </column>
+        <actionsColumn name="actions" class="SIT\ProductCompatibility\Ui\Component\Listing\Column\CaseFansActions">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="indexField" xsi:type="string">entity_id</item>
+                    <item name="sortOrder" xsi:type="number">100</item>
+                </item>
+            </argument>
+        </actionsColumn>
+        <actionsColumn name="duplicate" class="SIT\ProductCompatibility\Ui\Component\Listing\Column\CaseFansDuplicateActions">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">SIT_ProductCompatibility/js/grid/columns/duplicate</item>
+                    <item name="indexField" xsi:type="string">entity_id</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                    <item name="label" xsi:type="string" translate="true">Duplicate</item>
+                    <item name="sortOrder" xsi:type="number">110</item>
+                </item>
+            </argument>
+        </actionsColumn>
+    </columns>
+</listing>

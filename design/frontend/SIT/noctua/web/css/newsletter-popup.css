@@ -1,0 +1,418 @@
+form{
+    z-index: 9;
+}
+.focus{
+    background: rgba(0,0,0,0.7);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 10;
+    bottom: 0;
+}
+.popup-close-button{
+    float: right;
+    position: absolute;
+    bottom: 15px;
+    font-size: 15px;
+    cursor: pointer;
+    background: #551805;
+    padding: 5px;
+    color: #fff;
+    top: 0;
+    right: 10px;
+    max-height: 20px;
+    text-decoration: none;
+}
+.popup-close-button:after {
+    content: '\2715';
+}
+.popup-header {
+    height: 25px;
+    margin: 15px 0 0 0;
+    text-align: center;
+}
+.popup-header span{
+    font-family: sans-serif;
+    font-size: large;
+    font-weight: 600;
+    color: #551805;
+}
+.noctua-popup hr{
+    border: 0;
+    border-top: 2px solid #e6e6e6;
+    margin: 5px 0 20px 0;
+}
+
+.popup-container .row{
+    padding: 0px 0px 15px 0;
+}
+.row label{
+    width: 28%;
+    float: left;
+    font-family: sans-serif;
+    font-size: 13px;
+    color: gray;
+    padding: 5px 0 5px 0;
+}
+.row .textbox,
+.row .dropdown{
+    width: 52%;
+    height: 30px;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    min-height: 25px;
+    background: #eee;
+}
+.row .dropdown{
+    padding-left: 0px;
+}
+.terms .checkbox{
+    float: left;
+    margin: 2px 3px 0 0px;
+    clear: both;
+}
+.popup-terms .gdpr_label {
+    position: relative;
+    float: right;
+    width: 92%;
+}
+.popup-terms{
+    margin: 5px 0 5px;
+    font-size: 12px;
+    font-weight: 400;
+    color: #696868;
+    position: relative;
+    float: left;
+    text-align: justify;
+    width: 100%;
+}
+.popup-terms a {
+    color: #451807;
+    text-decoration: none;
+    border-bottom: 1px dotted #000;
+    font-weight: bold;
+}
+.captcha-error {
+    display: none;
+    font-size: 12px;
+    color: red;
+    float: right;
+    width: 70%;
+    margin-bottom: 6px;
+}
+.rc-anchor{
+    border-radius: 0;
+    border:2px solid #d3d3d3;
+}
+.row .terms button{
+    background: #551805;
+    color: #fff;
+    padding: 6px 20px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    border-radius: 0;
+    margin: 2% 0;
+}
+.tool-tip{
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+    background: #551805;
+    padding: 0;
+    margin: 0px 5px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.tool-tip:after {
+    content: '?';
+    font-weight: bold;
+    color: #fff;
+    font-size: 13px;
+    height: 15px;
+    width: 10px;
+    padding: 5px 8px;
+    margin: 0;
+    display: block;
+}
+.tooltip-content {
+    background: #1c1c1c;
+    color: #fff;
+    width: 356px;
+    position: absolute;
+    right: 12%;
+    text-align: justify;
+    top: 5%;
+    padding: 7px;
+    border-radius: 5px;
+    font-size: 12px;
+    display:none;
+}
+.tooltip-content:hover{
+    display: inline-block;
+}
+.tool-tip:hover ~ .tooltip-content{
+    display: block;
+}
+.tooltip-content::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 90%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #1c1c1c transparent transparent transparent;
+}
+.popup-container .row{
+    padding: 0px 0px 10px 0;
+}
+.field-error, div.mage-error[generated] {
+    position: absolute;
+    display: -webkit-box;
+    left: 30%;
+    margin: 0;
+}
+.error{
+    display: -webkit-box;
+    left: 30%;
+    margin: 0;
+    display: none;
+    color:red;
+}
+.noctua-popup{
+    top: 50%;
+    transform: translateY(-50%);
+    background: #fff;
+    width: 60%;
+    padding: 15px;
+    max-width: 600px;
+    line-height: normal;
+    overflow-x: hidden;
+    margin: 0 auto;
+    position: fixed;
+    left: 0;
+    right: 0;
+    transition: all ease 0.5s;
+    border-radius: 5px;
+    z-index: 9;
+}
+.tool-tip:hover + .tooltip-content {
+    display: inline-block;
+}
+.newsletter-popup-label em{
+    margin-right: 3px;
+}
+.sit-captcha-div, .ept-captcha-div {
+    padding: 3% 0;
+}
+.div-state{
+    display: none;
+}
+.popup-header a#close:hover, .popup-header a#close:visited {
+    color: #fff;
+}
+div#error-country,
+div#error-email,
+div#error-state{
+    margin-left: 28%;
+    margin-top: 5px;
+}
+span.captcha-error {
+    width: 72%;
+}
+@media (min-width: 319px) and (max-width: 479px) {
+    .row .terms button{
+        font-weight: 300;
+    }
+    .popup-terms{
+        font-size: 11px;
+    }
+    .popup-close-button{
+        font-size: 14px;
+        padding: 3px;
+    }
+    .noctua-popup hr{
+        margin: 5px 0 10px 0;
+    }
+    .popup-terms .gdpr_label{
+        width: 92%;
+    }
+    .row .textbox{
+        font-size: 12px;
+        width: 72%;
+        height: 25px;
+    }
+    .row .dropdown{
+        width: 58%;
+        height: 25px;
+        font-size: 12px;
+        padding: 0;
+    }
+    .popup-header span{
+        font-size: 15px;
+    }
+    .popup-container .row{
+        padding: 0px 0px 8px 0;
+    }
+    .noctua-popup{
+        width: 90%;
+        padding: 10px;
+        height: auto;
+    }
+    .row .terms {
+        padding-top: 0;
+        line-height: 1.3;
+    }
+    .tool-tip{
+        position: static;
+    }
+    .popup-header{
+        height: 20px;
+        margin: 0;
+    }
+    .tool-tip:hover + .tooltip-content {
+        right: 10px;
+        top: 20px;
+        width: 90%;
+        font-size: 10px;
+        line-height: 1;
+        padding: 5px;
+    }
+    div#error-terms,
+    div#error-acknowledge {
+        margin-left: 8%;
+    }
+    span.captcha-error {
+        width: 100%;
+    }
+}
+@media (min-width: 480px) and (max-width: 639px) {
+    .popup-terms .gdpr_label{
+        float: none;
+        width: 100%;
+    }
+    .row .terms button,.sit-captcha-div, .ept-captcha-div{
+        margin: 5px 0;
+    }
+    .sit-captcha-div, .ept-captcha-div{
+        padding: 5px 0;
+    }
+    .row label,.row .textbox,.row .dropdown{
+        width: 100%;
+        font-size: 12px;
+        padding: 0;
+    }
+    .row .dropdown{
+        width: 85%;
+        padding: 0;
+    }
+    .popup-header{
+        margin: 0;
+    }
+    .noctua-popup{
+        width: 90%;
+        height: auto;
+        overflow-y: scroll;
+    }
+    .tool-tip{
+        top: 25%;
+    }
+    .row .terms {
+        width: 100%;
+    }
+    .tool-tip:hover + .tooltip-content {
+        right: 10px;
+        top: 30px;
+    }
+    div#error-country,
+    div#error-email,
+    div#error-state{
+        margin-left: 0;
+    }
+}
+
+@media (min-width: 640px) and (max-width: 767px) {
+    span.captcha-error {
+        width: 100%;
+    }
+    div#error-country,
+    div#error-email,
+    div#error-state{
+        margin-left: 0;
+    }
+    .popup-terms .gdpr_label{
+        float: none;
+        width: 100%;
+    }
+    .row .terms button,.sit-captcha-div, .ept-captcha-div{
+        margin: 5px 0;
+    }
+    .sit-captcha-div, .ept-captcha-div{
+        padding: 5px 0;
+    }
+    .row label,.row .textbox{
+        width: 100%;
+        padding: 0;
+    }
+    .row .dropdown{
+        width: 92%;
+    }
+    .popup-header{
+        margin: 0;
+    }
+    .noctua-popup{
+        width: 80%;
+        height: auto;
+        overflow-y: hidden;
+    }
+    .tool-tip{
+        top: 25%;
+    }
+    .row .terms {
+        width: 100%;
+    }
+    .tooltip-content{
+        width: 80%;
+        right: 5px;
+        top: 40px;
+    }
+    .tool-tip:hover + .tooltip-content {
+        right: 10px;
+        top: 30px;
+    }
+}
+@media screen and (min-width: 768px) {
+    .noctua-popup{
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    .row .terms button{
+        margin: 10px 0;
+    }
+    .popup-header{
+        margin: 0;
+    }
+    .popup .terms{
+        margin: 5px 0 5px;
+    }
+    .row .terms {
+        width: 52%;
+        margin-left: 28%;
+        position: relative;
+        padding: 0;
+        display: inline-block;
+    }
+
+    .tool-tip:after{
+        font-size: 14px;
+    }
+}
+@media screen and (max-width: 480px) {
+    .tooltip-content {
+        right: 0;
+        top: 30px;
+        width: 95%;
+        z-index: 2;
+    }
+}

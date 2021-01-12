@@ -1,0 +1,83 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [1-3-2019]
+ */
+?>
+<?php
+    $fullActionName = $this->getRequest()->getFullActionName();
+    $productList = '{}';
+    $searchProductIdArray = [];
+    $baseURL = $this->helper('SIT\MainAdmin\Helper\Data')->getBaseUrl();
+    $current_category_key = '{}';
+    $cur_cat_id = '{}';
+    if ($fullActionName == 'catalogsearch_result_index') {
+        $_productCollection = $block->getLoadedProductCollection();
+        $productList = $this->helper('SIT\MainAdmin\Helper\Data')->getProductNameList($_productCollection, $fullActionName);
+        $productListArray = json_decode($productList, true);
+        foreach ($productListArray as $key => $value) {
+            $searchProductIdArray[] = $value['id'];
+        }
+        $current_category_key = json_encode("catalogsearch");
+        $cur_cat_id = json_encode("0");
+    } else {
+        $tabData = $block->getTabdata();
+        $tabId = $tabData['id'];
+        $helper=$this->helper('Swissup\Easytabs\Helper\Data');
+        $params=$helper->getVisible($tabId);
+        $removefrom=$helper->getRemoveFrom($tabId);
+        $page = $helper->getPageInfo($params,$removefrom);
+
+        if($page === false):
+            return true;
+        endif;
+        if($helper->getProduct()):
+            return true;
+        endif;
+        $current_category = $helper->getCurrentCategory();
+        $temp_key_arr = ['technologies','support','industrial-applications','proceed-to-faqs','buying-guides','installation-manuals','installation-videos','mounting-and-upgrade-kits','noctua-support','press','compatibility-lists','where-to-buy','product-lines'];
+        if ($current_category->getDisplayMode() == \Magento\Catalog\Model\Category::DM_PRODUCT) {
+            $current_category_key = json_encode($current_category->getUrlKey());
+            $cur_cat_id = json_encode($current_category->getId());
+            $productList = $this->helper('SIT\MainAdmin\Helper\Data')->getProductNameList($current_category->getUrlKey());
+            $baseURL = $this->helper('SIT\MainAdmin\Helper\Data')->getBaseUrl();
+        }
+        if ($current_category->getDisplayMode() == \Magento\Catalog\Model\Category::DM_PAGE) {
+            if(in_array($current_category->getUrlKey(), $temp_key_arr))
+            {
+                $current_category_key = json_encode($current_category->getUrlKey());
+                $cur_cat_id = json_encode($current_category->getId());
+                $productList = $this->helper('SIT\MainAdmin\Helper\Data')->getProductNameList($current_category->getUrlKey());
+                $baseURL = $this->helper('SIT\MainAdmin\Helper\Data')->getBaseUrl();
+            }
+        }
+    }
+?>
+<div id="sit-category-div" data-bind="scope:'sit-category-div'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+               "components": {
+                    "sit-category-div": {
+                        "component": "SIT_AjaxSearch/js/koajaxsearch",
+                        "template" : "SIT_AjaxSearch/koajaxsearch",
+                        "productList": <?= /* @escapeNotVerified */ $productList ?>,
+                        "baseUrl": <?= /* @escapeNotVerified */ $baseURL ?>,
+                        "catUrlkey": <?= /* @escapeNotVerified */ $current_category_key ?>,
+                        "catId": <?= /* @escapeNotVerified */ $cur_cat_id ?>,
+                        "fullActionName": <?= /* @escapeNotVerified */ json_encode($fullActionName) ?>,
+                        "imgloader": "<?= $block->getViewFileUrl('images/loader-1.gif') ?>",
+                        "searchProductIdArray": <?= /* @escapeNotVerified */ json_encode($searchProductIdArray) ?>
+                        }
+                    }
+                }
+            }
+    }
+    </script>
+</div>

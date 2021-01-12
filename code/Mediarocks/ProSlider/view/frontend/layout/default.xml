@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [05-04-2019]
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Mediarocks_ProSlider::css/skitter.css" order="100" />
+    </head>
+    <body>
+        <referenceContainer name="columns">
+        	<container name="slider-content" label="slider-content" before="-" htmlTag="div" htmlClass="slider-container">
+        		<container name="slider-inner-content" label="slider-inner-content" before="-" htmlTag="div" htmlClass="slider-inner-content">
+                    <block class="Mediarocks\ProSlider\Block\Frontend\Page" name="slider" template="Mediarocks_ProSlider::slider.phtml" />
+                </container>
+            </container>
+        </referenceContainer>
+    </body>
+</page>

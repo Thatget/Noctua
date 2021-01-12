@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/menu.xsd">
+   <menu>
+        <add id="Emipro_Newslettergroup::grid" title="Newsletter Groups" module="Emipro_Newslettergroup" sortOrder="100" parent="Magento_Backend::marketing_communications"  action="newslettergroup/newsletter/index" resource="Emipro_Newslettergroup::grid"/>
+	</menu>
+</config>

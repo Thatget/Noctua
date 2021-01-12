@@ -1,0 +1,19 @@
+<div class="inner-box">
+	<h1 data-bind="i18n: 'FAQs'">
+    </h1>
+	<div class="inner-box-links">
+        <!-- ko foreach: faqCollection -->
+    		<p class="faq-question-title">
+                <a data-bind="text: $data.faq_que, attr:{href: 'javascript:void(0)', id: '#'+$data.entity_id}"></a>
+            </p>
+        <!--/ko-->
+	</div>
+</div>
+<div class="main-div-product-faq-content">
+    <!-- ko foreach: faqCollection -->
+        <h1 class="faq-collection-question-title" data-bind="text: $data.faq_que, attr :{id: $data.entity_id}">
+        </h1>   
+        <div class="faq-collection-answer" data-bind="html: $data.faq_ans">
+        </div>
+    <!--/ko-->
+</div>

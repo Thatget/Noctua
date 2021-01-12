@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="admin" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="content_custom" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Replace Links</label>
+                <field id="links_search" translate="label comment" type="text" sortOrder="5" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                    <label>Words Search</label>
+                    <comment>Words will be replaced with New Link. Use ',' for multi</comment>
+                </field>
+                <field id="links_replace" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                    <label>Words Replace</label>
+                    <comment>Words replace for Words Search. Use ',' for multi</comment>
+                </field>
+                <field id="roles" translate="label" type="multiselect" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                    <label>Replace for User Roles</label>
+                    <source_model>Qsoft\ContentCustom\Model\Config\Source\Roles</source_model>
+                </field>
+                <field id="users" translate="label" type="multiselect" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                    <label>Replace For User</label>
+                    <source_model>Qsoft\ContentCustom\Model\Config\Source\Users</source_model>
+                </field>
+                <field id="enable_frontend" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Replace For Frontend</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="exclude_fullaction" translate="label" type="textarea" sortOrder="60" showInStore="0"
+                       showInWebsite="0" showInDefault="1">
+                    <label>Exclude Full Action</label>
+                    <comment><![CDATA[Enter Full Action Name by comma (,). Ex: adminhtml_system_config_edit]]></comment>
+                </field>
+                <field id="fullaction_list" translate="label" type="textarea" sortOrder="60" showInStore="0"
+                       showInWebsite="0" showInDefault="1">
+                    <label>Full Action List Frontend</label>
+                    <comment><![CDATA[Enter Full Action Name by comma (,). Ex: catalog_product_view. This action for page add new link replace. ]]></comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

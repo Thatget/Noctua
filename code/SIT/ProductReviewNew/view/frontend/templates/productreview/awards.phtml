@@ -1,0 +1,23 @@
+<?php
+/**
+ * Start Check for dynamic tab
+ */
+$tabData = $block->getTabdata();
+$tabId = $tabData['id'];
+$helper = $this->helper('Swissup\Easytabs\Helper\Data');
+$params = $helper->getVisible($tabId);
+$removefrom = $helper->getRemoveFrom($tabId);
+$page = $helper->getPageInfo($params,$removefrom);
+if($page === false){
+	return true;
+}
+$awardColl = '';
+/**
+ * End Check for dynamic tab
+ */
+?>
+<img id="ajax-loader" src="" />
+<div class="section-inner-presse-page-full">
+	<div class="award_container_main_div" data-mage-init='{"awards":{}}'>
+	</div>
+</div>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [26-03-2019]
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/menu.xsd">
+   <menu>
+    	<add id="Onibi_StoreLocator::view" title="Store Locator" module="Onibi_StoreLocator" sortOrder="50" resource="Onibi_StoreLocator::view"/>
+
+        <add id="Onibi_StoreLocator::menu" title="Manage Store Locator" module="Onibi_StoreLocator" sortOrder="20" parent="Onibi_StoreLocator::view" action="onibi_storelocator/index/index" resource="Onibi_StoreLocator::menu"/>
+	</menu>
+</config>

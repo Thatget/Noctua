@@ -1,0 +1,64 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [1-3-2019]
+ */
+?>
+<?php
+	$sitHelper = $this->helper('SIT\MainAdmin\Helper\Data');
+	$currentProduct = $sitHelper->getCurrentProduct();
+	$currentProductId = $currentProduct->getId();
+	$gridType = 'Case';
+	$sitProdHelper = $this->helper('SIT\ProductCompatibility\Helper\Data');
+	$collectionSize = $sitProdHelper->getCollectionSize($gridType,$currentProductId);
+	$attributeSetId = $currentProduct->getAttributeSetId();
+
+	if($attributeSetId == 36) {
+	    $prod_comp_block = $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('case_fan_compatibility_pretext')->toHtml();
+	} else{
+		$prod_comp_block = $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('case_compatibility_pretext')->toHtml();
+	}
+
+	$case_description = '';
+	if($currentProduct->getResource()->getAttribute('case_compatibility_pretext')){
+		$case_description = $currentProduct->getResource()->getAttribute('case_compatibility_pretext')->getFrontend()->getValue($currentProduct);
+	}
+	if ($collectionSize > 0){
+?>
+<div class="service-case-comp custom-scroller">
+	<div class="section-inner-presse-page-full">
+		<div class="case-comp-pretext">
+			<?php			
+				echo str_replace("{{case_compatibility}}",$sitHelper->getCmsFilterContent(trim($case_description)),$sitHelper->getCmsFilterContent(trim($prod_comp_block)));
+			?>
+			<!-- <?php  ?> -->
+		</div>
+		<!-- ko scope: 'sitCompProductViewCComp' -->
+			<!-- ko template: getTemplate()  -->
+			<!-- /ko  -->
+		<!-- /ko  -->
+		<div class="case-bottom-content">
+			<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('comp_case_bottom_text')->toHtml(); ?>
+		</div>
+	</div>
+</div>
+<script type="text/x-magento-init">
+{
+	"*":{
+		"Magento_Ui/js/core/app":{
+			"components": {
+				"sitCompProductViewCComp":{
+					"component":"SIT_ProductCompatibility/js/product/view/compcase",
+					"controllerUrl":"<?= $block->getUrl('sit_productcompatibility/products/compcase');?>",
+					"currentProductId":<?= $currentProductId; ?>
+				}
+			}
+		}
+	}
+}
+</script>
+<?php }?>

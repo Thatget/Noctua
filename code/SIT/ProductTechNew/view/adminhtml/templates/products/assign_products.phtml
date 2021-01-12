@@ -1,0 +1,20 @@
+<?php
+$blockGrid = $block->getBlockGrid();
+$gridJsObjectName = $blockGrid->getJsObjectName();
+
+?>
+<?= $block->getGridHtml() ?>
+<input type="hidden" name="producttechnew_products" data-form-part="sit_producttechnew_producttechnology_form" id="producttechnew_products" value=""  />
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "SIT_ProductTechNew/js/assign-products": {
+                "selectedProducts":  <?= /* @escapeNotVerified */ $block->getProductsJson() ?>,
+                "gridJsObjectName": <?= /* @escapeNotVerified */ '"' . $gridJsObjectName . '"' ?: '{}' ?>
+            }
+        }
+    }
+</script>
+<script>
+    require('mage/apply/main').apply();
+</script>

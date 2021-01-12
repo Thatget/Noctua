@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * @var \Qsoft\NewsletterCustom\Block\Subscription\Unsubscriber $block
+ */
+$params = $block->getInfoLink();
+if (empty($params['id'])){
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $redirect = $objectManager->get('\Magento\Framework\App\Response\Http');
+    $redirect->setRedirect($block->getBaseUrl());
+}
+?>
+<div id="unsub_message_content">
+    <div id="unsub_main">
+        <p id="message_unsubscribe">You have been unsubscribed from the official Noctua newsletter.</p>
+    </div>
+</div>
+
+<style type="text/css">
+    body .page-wrapper .page-main .columns .background-main-image .column.main {
+        top: 47px;
+    }
+    #unsub_message_content{ text-align: center; padding:12rem }
+    #unsub_main { display: inline-block; font-size: 2rem; margin-top: 20px; }
+
+</style>

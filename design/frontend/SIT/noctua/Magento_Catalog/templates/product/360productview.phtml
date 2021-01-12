@@ -1,0 +1,39 @@
+<?php
+	$tabData = $block->getTabdata();
+    $tabId = $tabData['id'];
+    $helper = $this->helper('Swissup\Easytabs\Helper\Data');
+    $webHelper = $this->helper('WebRotate360\ProductViewerStandard\Helper\Data');
+    $params = $helper->getVisible($tabId);
+    $page = $helper->getCmsPageInfo($params,$tabId);
+    if($page === false):
+        return true;
+    endif;
+	$sitHelper = $this->helper('SIT\MainAdmin\Helper\Data');
+	$cmsPageData = $sitHelper->getCmsPageData('product-360-views');
+    $webRotateCollection = $webHelper->getWebRotateData();
+?>
+<div class="sit-product-360-view-container" data-mage-init='{"product360view":{}}'>
+	<?= $sitHelper->getCmsFilterContent($cmsPageData->getContent()); ?>
+    <input type="hidden" id="basurl-withoutcode" name='basurl-withoutcode' value="<?php echo $webHelper->getBaseUrlWithoutCode()?>"/>
+    <?php foreach ($webRotateCollection as $key => $data): ?>
+            <div class="sit-product-360-view-head">
+        	   <h2><?= $data->getSku(); ?></h2>
+            </div>
+            <div class="sit-product-360-view">
+                <span id="<?= $data->getSku(); ?>" data-id="view-<?= $data->getId(); ?>">360° View</span>
+            </div>
+            <div class="sit-product-360-view-textarea-container">
+                <span><?= __('HTML code for embedding:') ?></span>
+                <div class="sit-360-textarea">
+                    <textarea id="textarea-<?= $data->getId(); ?>" class="sit-product-360-textarea" readonly="true"><object width="601" height="380">&#13;&#10;&#09;<param name="movie" value="'<?= $block->getBaseUrl(); ?>webrotate360?id=<?= $data->getSku(); ?>'" />&#13;&#10;&#09;<param name="allowFullScreen" value="true" />&#13;&#10;&#09;<embed src="'<?= $block->getBaseUrl(); ?>webrotate360?id=<?= $data->getSku(); ?>'" width="650" height="417" allowFullScreen="true" />&#13;&#10;</object>
+                    </textarea>
+                    <div class="sit-360-copy-button">
+                        <input type="button" class="copy-button" value="Copy"/>
+                    </div>
+                </div>
+            </div>
+            <div class="sit-360-popup" id="view-<?= $data->getId(); ?>">
+                
+            </div>
+    <?php endforeach?>
+</div>

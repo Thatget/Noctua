@@ -1,0 +1,47 @@
+<?php
+$sitHelper = $this->helper('SIT\MainAdmin\Helper\Data');
+$currentProduct = $sitHelper->getCurrentProduct();
+$currentProductId = $currentProduct->getId();
+$gridType = 'Mainboard';
+$sitProdHelper = $this->helper('SIT\ProductCompatibility\Helper\Data');
+$collectionSize = $sitProdHelper->getCollectionSize($gridType,$currentProductId);
+$mainboard_description = '';
+if($currentProduct->getResource()->getAttribute('product_compatibility_pretext')){
+	$mainboard_description = $currentProduct->getResource()->getAttribute('product_compatibility_pretext')->getFrontend()->getValue($currentProduct);
+}
+$prod_comp_block = $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('product_compatibility_pretext')->toHtml();
+if ($collectionSize > 0):
+?>
+<div class="product-service-mainboard-content custom-scroller">
+	<div class="mainboard-inner-container">
+		<div class="mainboard-content">
+			<?php
+			echo str_replace("{{mainboard_compatibility}}",$sitHelper->getCmsFilterContent(trim($mainboard_description)),$sitHelper->getCmsFilterContent(trim($prod_comp_block)));
+			?>
+		</div>
+
+		<!-- ko scope: 'sitCompProductViewMainboard' -->
+			<!-- ko template: getTemplate() -->
+			<!-- /ko  -->
+		<!-- /ko  -->
+		<div class="mainboard-bottom-content">
+			<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('comp_mainboard_bottom_text')->toHtml(); ?>
+		</div>
+	</div>
+</div>
+<script type="text/x-magento-init">
+{
+	"*":{
+		"Magento_Ui/js/core/app":{
+			"components": {
+				"sitCompProductViewMainboard":{
+					"component":"SIT_ProductCompatibility/js/product/view/compmainboard",
+					"controllerUrl":"<?= $block->getUrl('sit_productcompatibility/products/compmainboard');?>",
+					"currentProductId":<?= $currentProductId; ?>
+				}
+			}
+		}
+	}
+}
+</script>
+<?php endif; ?>

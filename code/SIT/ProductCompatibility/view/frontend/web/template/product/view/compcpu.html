@@ -1,0 +1,77 @@
+<div class="show-all-methods">
+	<div class="image" ></div>
+	<div class="method-content">
+		<span class="motherboard-note" >
+			Please select a cpu manufacturer according to the required socket, from the list below.
+		</span>
+		<span class="cpucomp-manufacturer cpucomp-all-data comp-all-data">
+			<a href="javascript:void(0)" data-bind="click: getAllManufacturer" id="cpucomp_all"> Show all CPUs</a>
+		</span>
+	</div>
+</div>
+
+<div class="cpucomp-tables-list">
+	<div class="cpucomp-header" data-bind="css:{hide_product_view_compram: cpuList().length <= 0}">
+		<span class="cpucomp-manufacturer" data-bind="i18n: 'Manufacturer'"></span>
+		<span class="cpucomp-socket" data-bind="i18n: 'Socket'"></span>
+		<span class="cpucomp-series" data-bind="i18n: 'Series'"></span>
+	</div>
+	<div class="cpucomp-list">
+		<div class="cpucomp">
+			<!-- ko foreach: cpuList -->
+				<span class="cpucomp-manufacturer" data-bind="attr:{'data-id':'manuf_'+comp_manufacture}">
+					<a href="javascript:void(0)" data-bind="i18n: comp_manufacture_value,attr:{id:'#manuf_'+comp_manufacture},event:{'click': $parent.getManufacturer}"></a>
+				</span>
+				<span class="cpucomp-socket">
+					<!-- ko foreach: $data.comp_socket_manufacture.socket -->
+						<!-- ko if: $index() != 0 -->
+							<span> - </span>
+						<!-- /ko -->
+						<a href="javascript:void(0)" data-bind="i18n: comp_socket_value,attr:{id: '#manuf_'+$parent.comp_manufacture+'_socket_'+comp_socket},click: function(data, event) { $parents[1].getSocket($parent.comp_manufacture,$data);}"></a>
+					<!-- /ko -->
+				</span>
+				<span class="cpucomp-series">
+					<!-- ko foreach: $data.comp_socket_manufacture.series -->
+						<!-- ko if: $index() != 0 -->
+							<span> - </span>
+						<!-- /ko -->
+						<a href="javascript:void(0)" data-bind="i18n: comp_series_value,attr: {id: '#manuf_'+$parent.comp_manufacture+'_socket_'+$data.comp_socket+'_cpu_'+$data.comp_series},click: function(data, event) { $parents[1].getSeries($parent.comp_manufacture,$data);}"></a>
+						<!-- ko if: ($parentContext.$index()+1) == $parents[1].cpuList().length -->
+							<span data-bind="text:$parents[1].loadData()"></span>
+						<!-- /ko -->
+					<!-- /ko -->
+				</span>
+			<!-- /ko -->
+			<span class="cpucomp-manufacturer cpucomp-all-data comp-all-data" style="margin: 12px 0px;">
+<!--				<a href="javascript:void(0)" data-bind="click: getAllManufacturer" id="cpucomp_all"> Show all CPUs</a>-->
+			</span>
+		</div>
+	</div>
+</div>
+<!-- ko if: cpuList().length > 0 -->
+<!-- ko foreach: {data: cpuGrid, as: 'row'} -->
+<h1 class="cpucomp-table-head" data-bind="i18n: row.comp_manufacture_value,attr:{id: 'manuf_'+row.comp_manufacture}"></h1>
+	<!-- ko foreach: row.comp_socket_manufacture.socket -->
+	<div class="cpucomp-table" class="main-cpu heading" data-bind="attr:{id: 'manuf_'+row.comp_manufacture+'_socket_'+$data.comp_socket}">
+		<div class="cpucomp-table-title" >
+			<span class="pro-cpucomp-manufacturer" data-bind="i18n: 'Manufacturer'"></span>
+			<span class="pro-cpucomp-socket" data-bind="i18n: 'Socket'"></span>
+			<span class="pro-cpucomp-model" data-bind="i18n: 'Model'"></span>
+			<span class="pro-cpucomp-series" data-bind="i18n: 'Series'"></span>
+			<span class="pro-cpucomp-compatibility" data-bind="i18n: 'Compatibility'"></span>
+			<span class="pro-cpucomp-comment" data-bind="i18n: 'Comment'"></span>
+		</div>
+		<!-- ko foreach: $data.comp_models -->
+		<div class="cpucomp-table-data">
+			<span class="pro-cpucomp-manufacturer" data-bind="i18n: row.comp_manufacture_value"></span>
+			<span class="pro-cpucomp-socket" data-bind="i18n: $parent.comp_socket_value"></span>
+			<span class="pro-cpucomp-model"><a href="javascript:void(0)" data-bind="i18n: $data.comp_model_value,attr:{href:$data.url_key}"></a></span>
+			<span class="pro-cpucomp-series" data-bind="i18n: $data.comp_series_value,attr: {id: 'manuf_'+row.comp_manufacture+'_socket_'+$parent.comp_socket+'_cpu_'+$data.comp_series}"></span>
+			<span class="pro-cpucomp-compatibility"><img data-bind="attr:{src: $data.comp_compatibility}"></span>
+			<span class="pro-cpucomp-comment" data-bind="html: $data.comp_comment"></span>
+		</div>
+		<!-- /ko -->
+	</div>
+	<!-- /ko -->
+<!-- /ko -->
+<!-- /ko -->

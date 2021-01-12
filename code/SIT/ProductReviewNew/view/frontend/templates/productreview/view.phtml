@@ -1,0 +1,38 @@
+<?php
+$review = $block->getReview();
+?>
+<div class="sit-review-section-container">
+    <div class="head-line"></div>
+    <div class="sit-review-section-head">
+        <div class="sit-review-date">
+            <span><?php echo $review['created_at']; ?></span>
+            <span> // </span>
+            <span><?php echo $review['review_website']; ?></span>
+        </div>
+        <div class="sit-country-img">
+            <img src="<?php echo $review['review_country']; ?>">
+        </div>
+        <div class="sit-goto-details">
+            <a target="_blank" href="<?php echo $review['review_link'] ?>"></a>
+        </div>
+    </div>
+    <div class="sit-description">
+        <a class="sit-review-img" target="_blank" href="<?php echo $review['review_link'] ?>">
+            <img src="<?php echo $review['review_image'] ?>">
+        </a>
+        <div>
+            <a target="_blank" href="<?php echo $review['review_link']; ?>">
+                <span class="sit-review-product-name"><?php echo $review["review_pname"]; ?></span>
+            </a>
+            <div class="sit-review-desc">
+                <span><?php echo $review["review_desc"] ?></span>
+            </div>
+        </div>
+        <div class="line-separator"></div>
+        <div class="sit-short-desc">
+            <span class="sit-review-short-desc-text"><?php echo $review["review_short_desc"] ?></span>
+            <span><i></i></span>
+        </div>
+    </div>
+</div>
+<p></p>

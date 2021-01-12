@@ -1,0 +1,63 @@
+<?php
+    $tabData = $block->getTabdata();
+    $tabId = $tabData['id'];
+    $helper=$this->helper('Swissup\Easytabs\Helper\Data');
+    $params=$helper->getVisible($tabId);
+    $page = $helper->getCustomPageInfo($params,$tabId);
+    if($page === false):
+        return true;
+    endif;
+
+    $compHelper = $this->helper('SIT\ProductCompatibility\Helper\Data');
+    $urlKey = $this->getRequest()->getParam('url_key');
+    $comp_type = $this->getRequest()->getParam('comp_type');
+    $getCompData = $block->getRouteCompatibilityData($comp_type,$urlKey);
+    
+
+    /**
+     * Sort array by product name
+     */
+    $product_name = array_column($getCompData['data'], 'product_name');
+    array_multisort($product_name, SORT_ASC, $getCompData['data']);
+?>
+<div class="case-custom-router-content custom-scroller">
+    <div class="casecr-inner-container">
+        <div class="casecr-cms-content">
+            <?php
+                $case_comp = $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('case_compatibility_pretext')->toHtml();
+                echo substr($case_comp,0,strpos($case_comp,'{{case_compatibility}}'));
+            ?>
+        </div>
+        <h1 class="casecr-table-head"><?php echo str_replace("_", " ", $urlKey);?></h1>
+        <h3 class="casecr-table-head"><strong><?php echo __('Max. Cooler Height:');?></strong><?php echo " ".$getCompData['max_cooler_height'].'mm';?></h3>
+        <div class="casecr-table">
+            <div class="casecr-table-title">
+                <span class="pro-casecr-product"><?php echo __('Product');?></span>
+                <span class="pro-casecr-cooler-height"><?php echo __('Cooler Height');?></span>
+                <span class="pro-casecr-compatibility"><?php echo __('Compatibility');?></span>
+                <span class="pro-casecr-comment"><?php echo __('Comment');?></span>
+            </div>
+            <?php foreach($getCompData['data'] as $compData){ ?>
+            <div class="casecr-table-data">
+                <span class="pro-casecr-product"><a href="<?= $compData['product_url']?>"><?= $compData['product_name']?></a></span>
+                <?php if(trim($compData['height_with_fan'] != "")): ?>
+                    <?php if(trim($compData['height_with_fan_url']) != ""): ?>
+                    <span class="pro-casecr-cooler-height"><a href="<?= $compHelper->getStoreBaseUrl(). $compData['height_with_fan_url'] ?>" class="dotted_link_black"><?= $compData['height_with_fan'].'mm' ?></a></span>
+                    <?php else: ?>
+                        <span class="pro-casecr-cooler-height"><?= $compData['height_with_fan'].'mm' ?></span>
+                    <?php endif; ?>
+                <?php else: ?>
+                    <span class="pro-casecr-cooler-height"></span>
+                <?php endif; ?>
+                <span class="pro-casecr-compatibility"><img src="<?= $compData['compatiibility']?>"></span>
+                <span class="pro-casecr-comment"><ul><?= $compData['template_text_comment'].$compData['comp_extra_comment']?></ul></span>
+            </div>
+            <?php }?>
+        </div>
+        <div>
+            <div class="green"><?php echo __('Compatible');?></div>
+            <div class="blue"><?php echo __('Possible Issues (see comment)');?></div>
+            <div class="red"><?php echo __('Incompatible (see comment)');?></div>
+        </div>
+    </div>
+</div>

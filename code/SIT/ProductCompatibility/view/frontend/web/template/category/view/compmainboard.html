@@ -1,0 +1,62 @@
+<div class="show-all-methods">
+	<div class="image" ></div>
+	<div class="method-content">
+		<span class="motherboard-note" >
+			Please select a motherboard manufacturer according to the required socket, from the list below.
+		</span>
+		<span class="socket-name maincomp-all-data comp-all-data">
+			<a href="javascript:void(0)" data-bind="click: getAllSocket" id="casecomp_all"> Show all motherboards</a>
+		</span>
+	</div>
+</div>
+
+<div class="socket-manufacturer" data-bind="css:{hide_category_view_comp_compmainboard: mainboardHeader().length <= 0}" >
+	<div class="socket-manu-title">
+		<div class="socket-title" data-bind="i18n: 'Socket'"></div>
+		<div class="manufacture-title" data-bind="i18n: 'Manufacturer'"></div>
+	</div>
+	<div class="socket-manu-data">
+		<!-- ko foreach: { data: mainboardHeader} -->
+			<div class="socket-name" data-bind="attr:{'data-id':'socket_'+$data.comp_socket}">
+				<a href="javascript:void(0)" data-bind="i18n: $data.comp_socket_value,attr:{id: '#socket_'+$data.comp_socket},event:{'click': $parent.getSocket}"></a>
+			</div>
+			<div class="socket-content" data-bind="attr:{'data-id':'socket_'+$data.comp_socket}">
+				<!-- ko foreach: $data.comp_socket_manufacture -->
+					<!-- ko if: $index() != 0 -->
+						<span> - </span>
+					<!-- /ko -->
+					<a href="javascript:void(0)" data-bind="i18n: comp_manufacture_value, attr:{id: '#socket_'+$parent.comp_socket+'_manuf_'+comp_manufacture},click: function(data, event) { $parents[1].getManufacture($parent.comp_socket,$data);}"></a>
+					<!-- ko if: ($parentContext.$index()+1) == $parents[1].mainboardHeader().length -->
+						<span data-bind="text:$parents[1].loadData()"></span>
+					<!-- /ko -->
+				<!-- /ko -->
+			</div>
+		<!-- /ko -->
+		<span class="socket-name maincomp-all-data comp-all-data" style="margin: 12px 0px;">
+			<!--<a href="javascript:void(0)" data-bind="click: getAllSocket" id="casecomp_all"> Show all motherboards</a>-->
+		</span>
+	</div>
+</div>
+<div style="clear:both"></div>
+<div class="support-maincomp-border" ></div>
+<div class="socket-mainboard">
+	<!-- ko foreach: {data: mainboardList, as: 'row'} -->
+	<h1 class="socket-head" data-bind="i18n: $data.comp_socket_value,attr:{id: 'socket_'+row.comp_socket}"></h1>
+	<div class="mainboard-data">
+		<!-- ko foreach: row.comp_socket_manufacture -->
+			<div class="main-manufacturer heading" data-bind="attr:{id: 'socket_'+$parent.comp_socket+'_manuf_'+$data.comp_manufacture}">
+				<div class="mainboard-col" data-bind="i18n: 'Socket'"></div>
+				<div class="mainboard-col" data-bind="i18n: 'Manufacturer'"></div>
+				<div class="mainboard-col" data-bind="i18n: 'Model'"></div>
+			</div>
+			<!-- ko foreach: $data.comp_models -->
+				<div class="main-manufacturer">
+					<div class="mainboard-col" data-bind="i18n: row.comp_socket_value"></div>
+					<div class="mainboard-col" data-bind="i18n:$parent.comp_manufacture_value"></div>
+					<div class="mainboard-col"><a href="javascript:void(0)" data-bind="i18n: $data.comp_model_value,attr:{href:$data.url_key}"></a></div>
+				</div>
+			<!-- /ko -->
+		<!-- /ko -->
+	</div>
+	<!-- /ko -->
+</div>

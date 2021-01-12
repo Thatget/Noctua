@@ -1,0 +1,64 @@
+<?php
+
+/**
+ * Start Check for dynamic tab
+ */
+$tabData = $block->getTabdata();
+$tabId = $tabData['id'];
+$helper=$this->helper('Swissup\Easytabs\Helper\Data');
+$params=$helper->getVisible($tabId);
+$removefrom=$helper->getRemoveFrom($tabId);
+$page = $helper->getPageInfo($params,$removefrom);
+if($page === false){
+	return true;
+}
+
+$page="";
+$productUrlParam="";
+$languageUrlParam="";
+$limitUrlParam="";
+
+if ($this->getRequest()->getParam("p")) {
+	$page = $this->getRequest()->getParam("p");
+}
+if ($this->getRequest()->getParam("product")) {
+	$productUrlParam = $this->getRequest()->getParam("product");
+}
+if ($this->getRequest()->getParam("lng")) {
+	$languageUrlParam = $this->getRequest()->getParam("lng");
+}
+if ($this->getRequest()->getParam("limit")) {
+	$limitUrlParam = $this->getRequest()->getParam("limit");
+}
+$sitHelper = $this->helper('SIT\MainAdmin\Helper\Data');
+$pageLast = $sitHelper->getImage('default/images','/pager_next.png');
+$pageFirst = $sitHelper->getImage('default/images','/pager_prev.png');
+$review_block = $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('review_award_pretext')->toHtml();
+?>
+<div data-bind="scope: 'sitPagination'">
+	<!-- ko template: getTemplate()  -->
+	<!-- /ko  -->
+</div>
+
+<script type="text/x-magento-init">
+{
+	"*":{
+		"Magento_Ui/js/core/app":{
+			"components": {
+				"sitPagination":{
+					"component":"SIT_ProductReviewNew/js/koreviews",
+					"allproductsname": <?= $block->getProductNameList()?>,
+					"base_url":"<?= $block->getBaseUrl();?>",
+					"pageNumber":"<?= $page?>",
+					"productUrlParam":"<?= $productUrlParam?>",
+					"languageUrlParam":"<?= $languageUrlParam?>",
+					"limitUrlParam":"<?= $limitUrlParam?>",
+					"pageLast":"<?= $pageLast ?>",
+					"pageFirst":"<?= $pageFirst ?>",
+					"review_block":"<?= $review_block ?>"
+				}
+			}
+		}
+	}
+}
+</script>

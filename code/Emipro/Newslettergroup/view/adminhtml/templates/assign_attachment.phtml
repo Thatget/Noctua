@@ -1,0 +1,19 @@
+<?php
+$blockGrid = $block->getBlockGrid();
+$gridJsObjectName = $blockGrid->getJsObjectName();
+?>
+<?php  echo $block->getGridHtml(); ?>
+<input type="hidden" name="subscriber_user" id="in_category_products" data-form-part="newslettergroup_form" value="" />
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Emipro_Newslettergroup/js/assign-attachment": {
+                "selectedProducts": <?= /* @escapeNotVerified */ $block->getAttachmentJson() ?>,
+                "gridJsObjectName": <?= /* @escapeNotVerified */ '"' . $gridJsObjectName . '"' ?: '{}' ?>
+            }
+        }
+    }
+</script>
+<script>
+    require('mage/apply/main').apply();
+</script>

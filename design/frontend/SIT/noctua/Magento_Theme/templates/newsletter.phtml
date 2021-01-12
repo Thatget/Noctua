@@ -1,0 +1,304 @@
+<?php
+/**
+ * Get Country Collection
+ */
+$helper = $this->helper('Emipro\Newsletterpopup\Helper\Data');
+$countryCollection = $helper->getCountryList();
+$storeCode = $helper->getStoreCode();
+$siteKey = $helper->getSiteKey();
+?>
+<link rel="stylesheet" type="text/css" href="<?= $block->getViewFileUrl('css/newsletter-popup.css')?>">
+<form id="newsletter_popup_form" name="custom-form" onsubmit="return checkcaptcha();" action="<?= $this->getUrl('newsletter/subscriber/newaction'); ?>" method="post">
+    <div class="focus">
+        <div class="noctua-popup" id="popup-modal">
+            <div class="popup-header">
+                <span><?= __('Newsletter Subscription') ?></span>
+                <a id="close" class="popup-close-button"></a>
+            </div>
+            <hr>
+            <div class="popup-container">
+                <div class="row">
+                    <label class="newsletter-popup-label"><em>*</em><?= __('Your E-mail'); ?></label>
+                    <input type="email" name="email" id="newsletter" class="textbox" placeholder="<?= $block->escapeHtml(__('Enter your email address')) ?>"/>
+                    <div class="error" id="error-email">
+                            <?= __('This is a required field.') ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="newsletter-popup-label"><em>*</em><?= __('Country'); ?></label>
+                    <select name="country-dropdown" id="country-dropdown" class="dropdown">
+                        <option value=""><?= "-- ".__('Please Select')." --"; ?></option>
+                        <?php
+                            foreach ($countryCollection as $country) {
+                            ?>
+                                <option value="<?= __($country['value']) ?>"><?= __($country['label']) ?></option>
+                            <?php
+                            }
+                        ?>
+                    </select>
+                    <div class="tool-tip">
+                    </div>
+                    <div class="error" id="error-country">
+                            <?= __('Please select an option.') ?>
+                    </div>
+                    <div class="tooltip-content" >
+                        <?= $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('newsletter_country_and_state_data_agreement')->toHtml(); ?>
+                    </div>
+                </div>
+                <div class="row div-state">
+                    <label class="newsletter-popup-label"><em>*</em><?= __('State'); ?></label>
+                    <select name="state-dropdown" id="state-dropdown" class="dropdown">
+                        <option value=""><?= __('-- Please Select --'); ?></option>
+                    </select>
+                    <div class="error" id="error-state">
+                            <?= __('Please select an option.') ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="terms">
+                        <div class="popup-terms">
+                            <?= $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('newsletter_newsletter_agreement')->toHtml(); ?>
+                        </div>
+                        <div class="error" id="error-terms">
+                            <?= __('Please confirm this checkbox.') ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="terms">
+                        <div class="popup-terms">
+                            <?= $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('newsletter_gdpr_agreement_newsletter')->toHtml(); ?>
+                        </div>
+                        <div class="error" id="error-acknowledge">
+                            <?= __('Please confirm this checkbox.') ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="g-recaptcha-newsletter ept-captcha-div sit-captcha-div terms" data-sitekey="<?= $siteKey; ?>" id="RecaptchaFieldNewsletter"></div>
+                    <input type="hidden" class="hiddenRecaptcha" name="newslleter_hiddenRecaptcha" id="newslleter_hiddenRecaptcha">
+                    <span class="captcha-error"><?= __('Please check the captcha form.') ?></span>
+                </div>
+                <div class="row">
+                    <div class="terms">
+                        <button type="submit" id="newsletter_popup_submit" class="newsletter-submit" title="submit" disabled="disabled">
+                            <?= __('Submit') ?>
+                        </button>
+                        <button type="reset" id="newsletter_popup_reset" class="newsletter-reset" title="reset">
+                            <?= __('Reset') ?>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script src="https://www.recaptcha.net/recaptcha/api.js?hl=<?= $storeCode ?>&onload=CaptchaCallback&render=explicit"></script>
+<script type="text/javascript">
+require(['jquery','Magento_Ui/js/modal/modal'],function($) {
+    $(document).ready(function() {
+        $('#newsletter_popup_form input, #newsletter_popup_form select').change(function(){
+                var validation = checkValidations();
+                if(validation == true){
+                    jQuery('#newsletter_popup_submit').removeAttr('disabled');
+                } else {
+                    jQuery('#newsletter_popup_submit').attr('disabled','disabled');
+                }
+        });
+
+        $('#error-email').hide();
+        $('#error-country').hide();
+        $('.error-state').hide();
+        $('#error-acknowledge').hide();
+        $('#error-terms').hide();
+        $('.focus').show();
+        $('.noctua-popup').show();
+        $('.popup-close-button').click(function(){
+            $('.noctua-popup').hide();
+            $('.focus').hide();
+        });
+
+        //Get state drop-down onchange of country
+        $("#country-dropdown").change(function() {
+            country_code = $(this).val();
+            var li = "";
+            if ((country_code == "US") || (country_code == "CN") || (country_code == "CA")) {
+                $('div.div-state').css('display', 'block');
+                $.ajax({
+                    url: "<?= $this->getUrl("newsletterpopup/index/state"); ?>",
+                    type: "post",
+                    data: {
+                        country: country_code
+                    },
+                    success: function(country_data) {
+                        var parseData = $.parseJSON(country_data);
+                        $.each(parseData, function(key, value) {
+                            li += '<option value="' + value.name + '">' + value.name + '</option>';
+                        });
+                        $('#state-dropdown option:not(:first)').remove();
+                        $("#state-dropdown").append(li);
+                        $('#error-state').addClass('error-state');
+                    }
+                });
+            } else {
+                $('div.div-state').css('display', 'none');
+                $('#error-state').removeClass('error-state');
+            }
+        });
+
+        //Reset Popup
+        $("#newsletter_popup_reset").click(function() {
+            $("#country-dropdown,#state-dropdown").prop('defaultSelected');
+            $('div.div-state').css('display', 'none');
+            $('.error-state').hide();
+            $("#newsletter").val('');
+            $("#gdpr_popup_chkbox").prop('checked',false);
+            $("input#gdpr_popup_chkbox_terms_condition_newsletter").attr('checked', false);
+            grecaptcha.reset();
+        });
+        if("js-recaptcha-reset's resetRecaptcha" === "yes") {
+            if(typeof grecaptcha !== 'undefined' && grecaptcha && grecaptcha.reset) {
+                grecaptcha.reset();
+            }
+        }
+    });//document.ready END
+});//require(['jquery]..) END
+
+//Captcha Validation
+var CaptchaCallback = function() {
+    var newsletterCaptcha;
+    var webformCaptcha;
+    var siteKey = "<?= $siteKey;?>";
+    if (jQuery('#RecaptchaFieldNewsletter').length) {
+        newsletterCaptcha = grecaptcha.render('RecaptchaFieldNewsletter', {'sitekey' : siteKey, 'callback' : correctCaptcha_newsletter});
+    }
+    if (jQuery('#RecaptchaFieldForm').length) {
+        webformCaptcha = grecaptcha.render('RecaptchaFieldForm', {'sitekey' : siteKey, 'callback' : correctCaptcha_contact});
+    }
+};
+var correctCaptcha_newsletter = function(response) {
+    jQuery("#newslleter_hiddenRecaptcha").val(response);
+    var validation = checkValidations();
+    if(validation == true){
+        jQuery('#newsletter_popup_submit').removeAttr('disabled');
+    } else {
+        jQuery('#newsletter_popup_submit').attr('disabled','disabled');
+    }
+};
+var correctCaptcha_contact = function(response) {
+    jQuery("#form_hiddenRecaptcha").val(response);
+};
+
+function checkValidations() {
+    var newsletter = jQuery.trim(jQuery('#newsletter').val());
+    var countryDropdown = jQuery.trim(jQuery('#country-dropdown').val());
+    var stateDropdown = jQuery.trim(jQuery('#state-dropdown').val());
+    var captchaVal = jQuery.trim(jQuery("#newslleter_hiddenRecaptcha").val());
+    var checkboxCheck = 0;
+    if(jQuery('#gdpr_popup_chkbox').is(":checked") && jQuery('#gdpr_popup_chkbox_terms_condition_newsletter').is(":checked")){
+         checkboxCheck = 1;
+    }
+    if(newsletter != '' && checkboxCheck == 1 && captchaVal != ''){
+        if(countryDropdown == "US" || countryDropdown == "CN" || countryDropdown == "CA"){
+            if(stateDropdown != ''){
+                return true;
+            } else {
+                return false;
+            }
+        }  else {
+            if(countryDropdown != ''){
+                return true;
+            } else {
+                return false;
+            }
+        }
+    } else {
+        return false;
+    }
+}
+
+function checkcaptcha() {
+    var newsletter = jQuery.trim(jQuery('#newsletter').val());
+    var countryDropdown = jQuery.trim(jQuery('#country-dropdown').val());
+    var stateDropdown = jQuery.trim(jQuery('#state-dropdown').val());
+    var checkboxCheck = 0;
+
+    if(jQuery('#newsletter').val() == ''){
+            jQuery('#error-email').show();
+    }
+    else{
+        jQuery('#error-email').hide();
+    }
+
+    if(jQuery('#country-dropdown').val() == ''){
+            jQuery('#error-country').show();
+    }
+    else{
+        jQuery('#error-country').hide();
+    }
+
+    if(jQuery('#error-state').hasClass('error-state')){
+        if(jQuery('#state-dropdown').val() == '') {
+            jQuery('.error-state').show();
+        }
+        else {
+            jQuery('.error-state').hide();
+        }
+    }
+    if(jQuery('#gdpr_popup_chkbox').prop('checked') == false && jQuery('#gdpr_popup_chkbox_terms_condition_newsletter').prop('checked') == false){
+        jQuery('#error-terms').show();
+        jQuery('#error-acknowledge').show();
+        return false;
+    }
+    if(jQuery('#gdpr_popup_chkbox').prop('checked') == false){
+        jQuery('#error-terms').show();
+        jQuery('#error-acknowledge').hide();
+        return false;
+    }
+    else{
+        jQuery('#error-terms').hide();
+    }
+
+    if(jQuery('#gdpr_popup_chkbox_terms_condition_newsletter').prop('checked') == false){
+            jQuery('#error-acknowledge').show();
+            jQuery('#error-terms').hide();
+            return false;
+    }
+    else{
+        jQuery('#error-acknowledge').hide();
+    }
+
+    jQuery("#newsletter_popup_form").submit(function(e) {
+        if ((jQuery('#newslleter_hiddenRecaptcha').val()) == '') {
+            jQuery('.captcha-error').css('display', 'inline-block');
+            return false;
+        } else {
+            jQuery('.captcha-error').css('display', 'none');
+            if(jQuery('#gdpr_popup_chkbox_terms_condition_newsletter').prop('checked') == true && jQuery('#gdpr_popup_chkbox').prop('checked') == true){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+    });
+
+    if(jQuery('#gdpr_popup_chkbox').is(":checked") && jQuery('#gdpr_popup_chkbox_terms_condition_newsletter').is(":checked")){
+         checkboxCheck = 1;
+    }
+
+    if (newsletter != '' && countryDropdown != '' && checkboxCheck == 1) {
+        if(countryDropdown == "US" || countryDropdown == "CN" || countryDropdown == "CA"){
+            if(stateDropdown != ''){
+                jQuery('#newsletter_popup_submit,#newsletter_popup_reset').attr('disabled','disabled');
+                jQuery('#newsletter_popup_submit,#newsletter_popup_reset').css('background','#551805ad');
+            }
+        }
+        else {
+            jQuery('#newsletter_popup_submit,#newsletter_popup_reset').attr('disabled','disabled');
+            jQuery('#newsletter_popup_submit,#newsletter_popup_reset').css('background','#551805ad');
+        }
+    }
+}
+</script>

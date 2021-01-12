@@ -1,0 +1,49 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : MD [06-06-2019]
+ */
+namespace SIT\ProductCompatibility\Block\Adminhtml\MassAction\Tab\Renderer;
+
+use Magento\Framework\DataObject;
+use SIT\ProductCompatibility\Helper\Data as ProductCompHelper;
+
+class CompSocket extends \Magento\Backend\Block\Widget\Grid\Column\Renderer\AbstractRenderer
+{
+    /**
+     * @var ProductCompHelper
+     */
+    protected $prodCompHelper;
+
+    /**
+     * [__construct description]
+     * @param ProductCompHelper $prodCompHelper [description]
+     */
+    public function __construct(
+        ProductCompHelper $prodCompHelper
+    ) {
+        $this->prodCompHelper = $prodCompHelper;
+    }
+
+    /**
+     * [render description]
+     * @param  DataObject $row [description]
+     * @return [type]          [description]
+     */
+    public function render(DataObject $row)
+    {
+        $socketInfo = $this->prodCompHelper->getAttributeInfo(ProductCompHelper::COMP_EAV_TYPE, ProductCompHelper::COMP_SOCKET);
+        $socketId = $socketInfo->getAttributeId();
+        $socketAllOption = $this->prodCompHelper->getAttributeOptionAll($socketId);
+        foreach ($socketAllOption as $key => $item) {
+            $socketArr[$item->getOptionId()] = $item->getValue();
+        }
+        if (array_key_exists($row->getCompSocket(), $socketArr)) {
+            return $socketArr[$row->getCompSocket()];
+        }
+    }
+}

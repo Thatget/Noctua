@@ -1,0 +1,75 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/* @var $block \Magento\Catalog\Block\Product\AbstractProduct */
+?>
+
+<?php
+$tabData = $block->getTabdata();
+$tabId = $tabData['id'];
+$helper=$this->helper('Swissup\Easytabs\Helper\Data');
+$params=$helper->getVisible($tabId);
+$removefrom=$helper->getRemoveFrom($tabId);
+$page = $helper->getProductInfo($params,$removefrom);
+if($page === false):
+    return true;
+endif;
+$Relatedblock = $this->getLayout()->createBlock('Magento\Catalog\Block\Product\ProductList\Related');
+$exist = $Relatedblock->getItems()->getSize();
+$items = $Relatedblock->getItems();
+$sitHelper = $this->helper('SIT\MainAdmin\Helper\Data');
+$imageHelper=$this->helper('\Magento\Catalog\Helper\Image');
+
+
+?>
+<?php if ($exist):?>
+
+<div class="products wrapper list products-list">
+    <ol class="products list items product-items custom-data accessories">
+        <?php foreach ($items as $_item): ?>
+        <li class="item product product-item">
+            <div class="product-item-info" data-container="product-list">
+                 <a href="<?= /* @escapeNotVerified */ $Relatedblock->getProductUrl($_item) ?>" class="product photo product-item-photo">
+                         <?php //$Relatedblock->getImage($_item, $image)->toHtml()?>
+                         <span class="product-image-container" style="width:100px;">
+                         	 <span class="product-image-wrapper" vstyle="padding-bottom: 100%;" >
+                         	 	 <img class="product-image-photo" src=" <?php echo $imageHelper->init($_item, 'small_image')->setImageFile($_item->getSmallImage())->getUrl();?>"
+                         	 	 alt="<?= $block->escapeHtml($_item->getName()) ?>"/>
+                         	 </span>
+                         </span>
+
+                    </a>
+                <div class="product details product-item-details">
+                    <strong class="product name product-item-name">
+                        <a class="product-item-link"href="<?= /* @escapeNotVerified */ $Relatedblock->getProductUrl($_item) ?>">
+                             <?= $block->escapeHtml($_item->getName()) ?></a>
+                    </strong>
+                    <div class="product-item-inner">
+                        <div class="lining"></div>
+                        <div class="product-content">
+                            <div class="product-attributes"><?php echo $sitHelper->getCmsFilterContent($_item->getData('feature_1_en')); ?></div>
+                            <div class="product-details-right-img">
+
+                                <span class="product-image-container" style="width:100px;">
+                         	 <span class="product-image-wrapper" vstyle="padding-bottom: 100%;" >
+                         	 	 <img class="product-image-photo" src=" <?php echo $imageHelper->init($_item, 'thumbnail')->setImageFile($_item->getThumbnail())->getUrl();?>"
+                         	 	 alt="<?= $block->escapeHtml($_item->getName()) ?>"/>
+                         	 </span>
+                         </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+<?php endforeach; ?>
+    </ol>
+</div>
+
+<?php endif; ?>
+

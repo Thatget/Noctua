@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [1-3-2019]
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+
+
+    <!--    For Tranlation     -->
+    <virtualType name="SITLanguageTranslatorTranlationFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="SITLanguageTranslatorTranlationFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">SIT\LanguageTranslator\Model\ResourceModel\Tranlation\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">SITLanguageTranslatorTranlationFilterPool</argument>
+        </arguments>
+    </virtualType>
+    <type name="SIT\LanguageTranslator\Model\ResourceModel\Tranlation\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">sit_translation</argument>
+            <argument name="eventPrefix" xsi:type="string">sit_languagetranslator_tranlation_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">tranlation_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">SIT\LanguageTranslator\Model\ResourceModel\Tranlation</argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="sit_languagetranslator_tranlation_listing_data_source" xsi:type="string">SIT\LanguageTranslator\Model\ResourceModel\Tranlation\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <preference for="Magento\Framework\Translate" type="SIT\LanguageTranslator\Translate" />
+</config>

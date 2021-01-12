@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="6ccc7119-1d64-4665-8e9c-b1ac8f747f96" name="testNoctua" url="http://127.0.0.2">
+        <fileTransfer host="127.0.0.2" port="22" rootFolder="/var/www/html/TestNoctua" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

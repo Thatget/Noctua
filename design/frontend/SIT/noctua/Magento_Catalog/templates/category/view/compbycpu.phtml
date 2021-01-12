@@ -1,0 +1,42 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [1-3-2019]
+ */
+?>
+
+<div class="comp-cpu custom-scroller">
+	<div class="section-inner-presse-page-full">
+		<div class="cpucomp-content">
+			<?php
+				$cpu_comp = $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('cpu_compatibility_pretext')->toHtml();
+				echo substr($cpu_comp,0,strpos($cpu_comp,'{{cpu_compatibility}}'));
+			?>
+		</div>
+		<div data-bind="scope: 'sitCompCpu'">
+			<!-- ko template: getTemplate()  -->
+			<!-- /ko  -->
+		</div>
+		<div class="cpu-bottom-content">
+			<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('comp_bottom_text')->toHtml(); ?>
+		</div>
+	</div>
+</div>
+<script type="text/x-magento-init">
+{
+	"*":{
+		"Magento_Ui/js/core/app":{
+			"components": {
+				"sitCompCpu":{
+					"component":"SIT_ProductCompatibility/js/category/view/compcpu",
+					"controllerUrl":"<?= $block->getUrl('sit_productcompatibility/category/compcpu');?>"
+				}
+			}
+		}
+	}
+}
+</script>

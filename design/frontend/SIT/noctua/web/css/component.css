@@ -1,0 +1,428 @@
+.dl-menuwrapper {
+	max-width: 100%;
+    width: 100%;
+    float: left;
+    position: relative;
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
+    -webkit-perspective-origin: 50% 200%;
+    perspective-origin: 50% 200%;
+    background: #FFF;
+    position: absolute;
+}
+.custom-body .dl-menuwrapper {
+	/* transition: all 1.3s ease-in-out; */
+	visibility: visible;
+}
+.custom-body {
+	overflow: hidden;
+    height: 100%;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.dl-menuwrapper:first-child {
+	margin-right: 100px;
+}
+
+.dl-menuwrapper ul {
+    background: #FFF;
+}
+
+.dl-menuwrapper ul {
+	padding: 0;
+	list-style: none;
+	-webkit-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+}
+
+.dl-menuwrapper li {
+	position: relative;
+	border-bottom: 1px solid #cdcdcd;
+	margin-bottom: 0px;
+}
+
+.dl-menuwrapper li a {
+	display: block;
+    position: relative;
+    padding: 16px 0 12px;
+    font-size: 19px;
+    line-height: 19px;
+    font-weight: 400;
+    color: #323232;
+    font-family: "HelveticaNeueLTStd-47LC";
+    text-transform: uppercase;
+}
+
+.no-touch .dl-menuwrapper li a:hover {
+	background: rgba(255,248,213,0.1);
+}
+
+.dl-menuwrapper li.dl-back > a {
+	padding-left: 30px;
+	background: rgba(0,0,0,0.1);
+}
+
+.dl-menuwrapper li.dl-back:after,
+.dl-menuwrapper li > a:not(:only-child):after {
+	position: absolute;
+    top: 0;
+    line-height: 50px;
+    font-family: 'Flaticon';
+    speak: none;
+    -webkit-font-smoothing: antialiased;
+    content: url(../images/mobile_menu_pfeil_grau.svg);
+    font-size: 24px;
+    color: #323232;
+    right: 0;
+    width: 10px;
+}
+.dl-menuwrapper .dl-back {
+    border-bottom: none;
+    position: absolute;
+    top: -50px;
+    left: 10%;
+    padding: 0;
+    display: block;
+    z-index: 6;
+    cursor: pointer;
+}
+.dl-menuwrapper > li.dl-back > a {
+    padding: 0px;
+    background: transparent;
+}
+.dl-menuwrapper > li.dl-back:after {
+    color: #FFF;
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+    content: url(../images/mobile_menu_pfeil_weis.svg);
+    width: 12px;
+    top: -7px;
+}
+.dl-menuwrapper .dl-menu {
+	position: relative;
+	opacity: 0;
+	pointer-events: none;
+	top: -300px;
+	/*-webkit-transform: translateY(-1000%);
+	transform: translateY(-100%);*/
+    width: 76%;
+    margin: 0 auto;
+    padding: 0 12%;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+	transition: all 1s ease-in-out;
+}
+
+.dl-menuwrapper .dl-menu.dl-menu-toggle {
+	/* transition: top 1s ease-in; */
+}
+
+.dl-menuwrapper .dl-menu.dl-menuopen {
+	opacity: 1;
+    pointer-events: auto;
+    /*-webkit-transform: translateY(0px);
+    transform: translateY(0px);*/
+    top: 10px;
+    overflow: auto;
+}
+
+li.dl-subview,
+.dl-menuwrapper li.dl-subviewopen,
+.dl-menuwrapper .dl-menu li:last-child,
+.dl-menuwrapper .dl-submenu li:last-child {
+    border: none;
+}
+
+/** Back menu Title css */
+.custom-body .menu-title {
+	display: block;
+}
+.menu-title {
+    background: #551805;
+    position: absolute;
+    text-align: left;
+    font-size: 28px;
+    padding-left: 12%;
+    color: #fff;
+    padding-top: 12px;
+    font-family: "HelveticaNeueLTStd-57C";
+    text-transform: uppercase;
+    bottom: 0;
+    padding-bottom: 5px;
+    width: 80%;
+    display: none;
+    pointer-events: none;
+}
+.menu-footer {
+    position: fixed;
+    width: 100%;
+    background: #eee;
+    padding-top: 5px;
+    bottom: 0;
+    padding-bottom: 0;
+    text-align: center;
+}
+.mobile-sticky-navigation .menu-footer{
+	bottom: 0px;
+}
+.menu-footer-inner:nth-child(2) {
+    width: auto;
+    text-align: center;
+    float: none;
+    padding: 10px 0;
+}
+.menu-footer-inner:nth-child(3) {
+    text-align: right;
+    float: right;
+    padding: 10px 10px 10px 0px;
+}
+.menu-footer-inner {
+    width: auto;
+    display: inline-block;
+    padding: 10px 0 10px 10px;
+    text-align: left;
+    float: left;
+}
+.menu-footer-inner a {
+    color: #551805;
+    font-size: 16px;
+    font-family: "HelveticaNeueLTStd-47LC";
+    text-transform: capitalize;
+    transition: color .2s linear 0s;
+    font-weight: 400;
+    letter-spacing: .4px;
+    cursor: pointer;
+}
+
+/* Hide the inner submenus */
+.dl-menuwrapper li .dl-submenu {
+	display: none;
+}
+
+/*
+When a submenu is openend, we will hide all li siblings.
+For that we give a class to the parent menu called "dl-subview".
+We also hide the submenu link.
+The opened submenu will get the class "dl-subviewopen".
+All this is done for any sub-level being entered.
+*/
+.dl-menu.dl-subview li,
+.dl-menu.dl-subview li.dl-subviewopen > a,
+.dl-menu.dl-subview li.dl-subview > a {
+	display: none;
+}
+
+.dl-menu.dl-subview li.dl-subview,
+.dl-menu.dl-subview li.dl-subview .dl-submenu,
+.dl-menu.dl-subview li.dl-subviewopen,
+.dl-menu.dl-subview li.dl-subviewopen > .dl-submenu,
+.dl-menu.dl-subview li.dl-subviewopen > .dl-submenu > li {
+	display: block;
+}
+
+/* Dynamically added submenu outside of the menu context */
+.dl-menuwrapper > .dl-submenu {
+	position: absolute;
+	width: 100%;
+	top: 50px;
+	left: 0;
+	margin: 0;
+}
+
+/* Animation classes for moving out and in */
+
+.dl-menu.dl-animate-out-2 {
+	-webkit-animation: MenuAnimOut2 1s ease-in-out;
+	animation: MenuAnimOut2 1s ease-in-out;
+}
+/** Added by AR  */
+.custom-body .logo , .custom-body .block.block-search{
+	opacity: 0;
+	visibility: hidden;
+	z-index: 5;
+}
+.custom-body .nav-sections {
+	position: inherit;
+	overflow: inherit;
+	margin: 0
+}
+.custom-body .nav-sections-items {
+    position: relative;
+    z-index: 1;
+}
+.custom-level {
+    position: fixed;
+    height: 90%;
+    width: 100%;
+    background: #fff;
+    visibility: hidden;
+}
+.custom-level.active {
+	visibility: visible;
+}
+
+.custom-body #sit-scrolltop {
+	z-index: 0;
+}
+.custom-body footer.page-footer {
+    z-index: 0;
+}
+@media screen and (orientation: landscape) {
+
+    @supports (-webkit-overflow-scrolling: touch) {
+
+	}
+}
+/** End by AR  */
+
+@-webkit-keyframes MenuAnimOut2 {
+	0% { }
+	100% {
+		-webkit-transform: translateX(-100%);
+		opacity: 0;
+	}
+}
+
+@keyframes MenuAnimOut2 {
+	0% { }
+	100% {
+		-webkit-transform: translateX(-100%);
+		transform: translateX(-100%);
+		opacity: 0;
+	}
+}
+
+
+.dl-menu.dl-animate-in-2 {
+	-webkit-animation: MenuAnimIn2 1s ease-in-out;
+	animation: MenuAnimIn2 1s ease-in-out;
+}
+
+@-webkit-keyframes MenuAnimIn2 {
+	0% {
+		-webkit-transform: translateX(-100%);
+		opacity: 0;
+	}
+	100% {
+		-webkit-transform: translateX(0px);
+		opacity: 1;
+	}
+}
+
+@keyframes MenuAnimIn2 {
+	0% {
+		-webkit-transform: translateX(-100%);
+		transform: translateX(-100%);
+		opacity: 0;
+	}
+	100% {
+		-webkit-transform: translateX(0px);
+		transform: translateX(0px);
+		opacity: 1;
+	}
+}
+
+.dl-menuwrapper > .dl-submenu.dl-animate-in-2 {
+	-webkit-animation: SubMenuAnimIn2 1s ease-in-out;
+	animation: SubMenuAnimIn2 1s ease-in-out;
+}
+
+@-webkit-keyframes SubMenuAnimIn2 {
+	0% {
+		-webkit-transform: translateX(100%);
+		opacity: 0;
+		width: 76%;
+		top:10px;
+	}
+	100% {
+		-webkit-transform: translateX(16%);
+		opacity: 1;
+		width: 76%;
+		top:10px;
+	}
+}
+
+@keyframes SubMenuAnimIn2 {
+	0% {
+		-webkit-transform: translateX(100%);
+		transform: translateX(100%);
+		opacity: 0;
+		width: 76%;
+		top:10px;
+	}
+	100% {
+		-webkit-transform: translateX(16%);
+		transform: translateX(16%);
+		opacity: 1;
+		width: 76%;
+		top:10px;
+	}
+}
+
+.dl-menuwrapper > .dl-submenu.dl-animate-out-2 {
+	-webkit-animation: SubMenuAnimOut2 1s ease-in-out;
+	animation: SubMenuAnimOut2 1s ease-in-out;
+}
+
+@-webkit-keyframes SubMenuAnimOut2 {
+	0% {
+		-webkit-transform: translateX(16%);
+		opacity: 1;
+		width: 76%;
+		top:10px;
+	}
+	100% {
+		-webkit-transform: translateX(100%);
+		opacity: 0;
+		width: 76%;
+		top:10px;
+	}
+}
+
+@keyframes SubMenuAnimOut2 {
+	0% {
+		-webkit-transform: translateX(16%);
+		transform: translateX(16%);
+		opacity: 1;
+		width: 76%;
+		top:10px;
+	}
+	100% {
+		-webkit-transform: translateX(100%);
+		transform: translateX(100%);
+		opacity: 0;
+		width: 76%;
+		top:10px;
+	}
+}
+
+/* No JS Fallback */
+.no-js .dl-menuwrapper .dl-menu {
+	position: relative;
+	opacity: 1;
+	-webkit-transform: none;
+	transform: none;
+}
+
+.no-js .dl-menuwrapper li .dl-submenu {
+	display: block;
+}
+
+.no-js .dl-menuwrapper li.dl-back {
+	display: none;
+}
+
+.no-js .dl-menuwrapper li > a:not(:only-child) {
+	background: rgba(0,0,0,0.1);
+}
+
+.no-js .dl-menuwrapper li > a:not(:only-child):after {
+	content: '';
+}
+@media screen and (max-width: 480px) {
+	.menu-footer-inner a {
+	    font-size: 14px;
+	}
+}

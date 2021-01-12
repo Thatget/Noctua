@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [1-3-2019]
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <fieldset name="main_fieldset">
+        <field name="news_title">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">15</item>
+                </item>
+            </argument>
+        </field>
+        <field name="news_shortdesc">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">25</item>
+                </item>
+            </argument>
+        </field>
+        <field name="news_desc">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">45</item>
+                </item>
+            </argument>
+        </field>
+        <field name="url_key">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">55</item>
+                </item>
+            </argument>
+        </field>
+        <field name="created_at">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">65</item>
+                </item>
+            </argument>
+        </field>
+        <field name="use_default_news_title_config" component="Qsoft_GeneralNewsCustom/js/components/use-default-config" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="value" xsi:type="string">1</item>
+                    <item name="valueFromConfig" xsi:type="object">Qsoft\GeneralNewsCustom\Model\Source\Adminhtml\General\NewsTitleConfiguration</item>
+                    <item name="keyInConfiguration" xsi:type="string">news_title</item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                </item>
+            </argument>
+            <settings>
+                <links>
+                    <link name="linkedValue">${ $.provider }:${ $.parentScope }.news_title</link>
+                </links>
+                <exports>
+                    <link name="checked">${$.parentName}.news_title:disabled</link>
+                </exports>
+            </settings>
+            <formElements>
+                <checkbox class="Qsoft\GeneralNewsCustom\Ui\Component\Form\Element\UseDefaultConfig">
+                    <settings>
+                        <description translate="true">Use Default Config</description>
+                        <valueMap>
+                            <map name="false" xsi:type="string">0</map>
+                            <map name="true" xsi:type="string">1</map>
+                        </valueMap>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <field name="use_default_news_short_description_config" component="Qsoft_GeneralNewsCustom/js/components/use-default-config" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="value" xsi:type="string">1</item>
+                    <item name="valueFromConfig" xsi:type="object">Qsoft\GeneralNewsCustom\Model\Source\Adminhtml\General\NewsShortDescriptionConfiguration</item>
+                    <item name="keyInConfiguration" xsi:type="string">news_shortdesc</item>
+                    <item name="sortOrder" xsi:type="number">30</item>
+                </item>
+            </argument>
+            <settings>
+                <links>
+                    <link name="linkedValue">${ $.provider }:${ $.parentScope }.news_shortdesc</link>
+                </links>
+                <exports>
+                    <link name="checked">${$.parentName}.news_shortdesc:disabled</link>
+                </exports>
+            </settings>
+            <formElements>
+                <checkbox class="Qsoft\GeneralNewsCustom\Ui\Component\Form\Element\UseDefaultConfig">
+                    <settings>
+                        <description translate="true">Use Default Config</description>
+                        <valueMap>
+                            <map name="false" xsi:type="string">0</map>
+                            <map name="true" xsi:type="string">1</map>
+                        </valueMap>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+
+        <field name="use_default_news_description_config" component="Qsoft_GeneralNewsCustom/js/components/use-default-config" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="value" xsi:type="string">1</item>
+                    <item name="valueFromConfig" xsi:type="object">Qsoft\GeneralNewsCustom\Model\Source\Adminhtml\General\NewsDescriptionConfiguration</item>
+                    <item name="keyInConfiguration" xsi:type="string">news_desc</item>
+                    <item name="sortOrder" xsi:type="number">50</item>
+                </item>
+            </argument>
+            <settings>
+                <links>
+                    <link name="linkedValue">${ $.provider }:${ $.parentScope }.news_desc</link>
+                </links>
+                <exports>
+                    <link name="checked">${$.parentName}.news_desc:disabled</link>
+                </exports>
+            </settings>
+            <formElements>
+                <checkbox class="Qsoft\GeneralNewsCustom\Ui\Component\Form\Element\UseDefaultConfig">
+                    <settings>
+                        <description translate="true">Use Default Config</description>
+                        <valueMap>
+                            <map name="false" xsi:type="string">0</map>
+                            <map name="true" xsi:type="string">1</map>
+                        </valueMap>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+    </fieldset>
+</form>

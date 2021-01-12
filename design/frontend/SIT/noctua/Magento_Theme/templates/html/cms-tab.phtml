@@ -1,0 +1,14 @@
+<?php
+    $tabData = $block->getTabdata();
+    $tabId = $tabData['id'];
+    $helper=$this->helper('Swissup\Easytabs\Helper\Data');
+    $params=$helper->getVisible($tabId);
+    $page = $helper->getCmsPageInfo($params,$tabId);
+    if($page === false):
+        return true;
+    endif;
+    $sitHelper = $this->helper('SIT\MainAdmin\Helper\Data');
+    $pageId=$helper->getCurrentPageUrlKey();
+    $cmsPageData = $sitHelper->getCmsPageData($pageId);
+    echo $sitHelper->getCmsFilterContent($cmsPageData->getContent());
+?>

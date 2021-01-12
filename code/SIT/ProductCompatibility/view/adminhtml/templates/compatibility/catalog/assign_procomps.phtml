@@ -1,0 +1,20 @@
+<?php
+$blockGrid = $block->getBlockGrid();
+$gridJsObjectName = $blockGrid->getJsObjectName();
+
+?>
+<?= $block->getGridHtml() ?>
+<input type="hidden" name="comp_product" data-form-part="product_form" id="comp_product" value=""  />
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "SIT_ProductCompatibility/js/assign_procomps": {
+                "selectedProducts":  <?= /* @escapeNotVerified */ $block->getProductsJson() ?>,
+                "gridJsObjectName": <?= /* @escapeNotVerified */ '"' . $gridJsObjectName . '"' ?: '{}' ?>
+            }
+        }
+    }
+</script>
+<script>
+    require('mage/apply/main').apply();
+</script>

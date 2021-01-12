@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * @var \Magento\Theme\Block\Html\Header\Logo $block
+ */
+?>
+<?php $storeName = $block->getThemeName() ? $block->getThemeName() : $block->getLogoAlt(); ?>
+<div class="menu-title" name="<?php echo __('Menu'); ?>"><span><?php echo __('Menu'); ?><span></div>
+<span data-action="toggle-nav" class="action nav-toggle">
+    <span class="toggle-nav-icon"></span>
+    <span class="toggle-nav-icon"></span>
+    <span class="toggle-nav-icon"></span>
+    <span class="toggle-nav-icon"></span>
+
+</span>
+<a class="logo" href="<?= substr($block->getUrl(''), 0, -1) ?>" title="<?= /* @escapeNotVerified */ $storeName ?>">
+    <img src="<?= /* @escapeNotVerified */ $block->getLogoSrc() ?>" title="<?= $block->escapeHtmlAttr($block->getLogoAlt()) ?>" alt="<?= $block->escapeHtmlAttr($block->getLogoAlt()) ?>" <?= $block->getLogoWidth() ? 'width="' . $block->getLogoWidth() . '"' : '' ?> <?= $block->getLogoHeight() ? 'height="' . $block->getLogoHeight() . '"' : '' ?> />
+</a>

@@ -1,0 +1,19 @@
+<form id="create-duplicate-form-<%- entityid %>" method="get" enctype="multipart/form-data" action="<%- formaction %>">
+    <div class="modal-body">
+        <div class="bootbox-body">
+            <table align="center">
+                <tr><td>How Many Times&nbsp</td><td><input type="text" name="howmany" value="1"></td></tr>
+                <tr><td>&nbsp</td><td>&nbsp</td></tr>
+                <tr><td>With Product&nbsp</td><td><input type="checkbox" name="withproduct" checked></td></tr>
+                <tr><td>&nbsp</td><td>&nbsp</td></tr>
+                <tr><td><button type="submit" class="btn btn-primary"><span><%- submitlabel %></span></button></td><td><button type="reset" class="btn btn-default"><span><%- cancellabel %></span></button>
+                </td></tr>
+            </table>
+            <input type="hidden" name="entity_id" value="<%- entityid %>">
+        </div>
+    </div>
+    <div class="modal-footer">
+        <span class="error"></span>
+        <span class="clear"></span>
+    </div>
+</form>

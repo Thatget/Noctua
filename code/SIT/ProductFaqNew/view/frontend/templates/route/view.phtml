@@ -1,0 +1,21 @@
+<?php
+$tabData = $block->getTabdata();
+$tabId = $tabData['id'];
+$helper=$this->helper('Swissup\Easytabs\Helper\Data');
+$params=$helper->getVisible($tabId);
+$page = $helper->getCustomPageInfo($params,$tabId);
+if($page === false):
+    return true;
+endif;
+   
+$faq_id = $this->getRequest()->getParam('id');
+$sitHelper = $this->helper('SIT\MainAdmin\Helper\Data');
+$productFaq = $block->getCustomRouteFAQ($faq_id);
+?>
+<div class="faq-custom-router-content">
+	<div class="faq-custom-router-que"><?= 'FAQ: '.$productFaq->getFaqQue(); ?></div>
+	<div class="faq-custom-router-ans"><?= $sitHelper->getCmsFilterContent($productFaq->getFaqAns()); ?></div>
+	<div class="product-faq-custom-tab-footer">
+		<?php echo __('Do you have a question concerning one of our products? Please use %1this form%2 to pose a question!','<strong><a class="dotted_link" href="' . $sitHelper->getStoreBaseUrl().'contact' . '">','</a></strong>'); ?>
+	</div>
+</div>

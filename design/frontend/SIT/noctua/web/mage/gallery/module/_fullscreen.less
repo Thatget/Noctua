@@ -1,0 +1,161 @@
+// /**
+// * Copyright © Magento, Inc. All rights reserved.
+// * See COPYING.txt for license details.
+// */
+
+.fotorama__nav--thumbs .fotorama__nav__frame {
+    padding: 0px 2px;
+    height: 50px !important;
+    
+    margin: 0px 5px;
+}
+.fotorama__fullscreen .fotorama__nav--thumbs .fotorama__nav__frame {
+border: 1px solid #ddd;
+}
+
+.fotorama__fullscreen .fotorama__nav__frame.fotorama__nav__frame--thumb.fotorama__active {
+    border-color: blue;
+}
+
+.fotorama__fullscreen .fullscreen-logo-image{
+position: absolute;
+    width: 51px;
+    height: 40px;
+    background-color: #ddd;
+    top: 66px;
+    right: 0;
+    background-image: url(../../images/footorama_logo.svg);
+
+}
+.fotorama__nav--thumbs
+{
+    text-align:center;
+}
+
+ .fotorama__fullscreen .fotorama__nav-wrap--horizontal .fotorama__thumb__arr--right 
+ {
+    right: 0;
+  }
+
+ .fotorama__fullscreen .fotorama__nav-wrap--horizontal .fotorama__thumb__arr--left
+{
+    left: 0;
+}
+ .fotorama__fullscreen .fotorama__nav-wrap.fotorama__nav-wrap--horizontal {
+   /* bottom: 15%;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    */
+    margin-top: 20px;
+    position: relative;
+    width: 280px;
+margin: 30px auto;
+}
+
+
+.fotorama--fullscreen {
+    bottom: 0 !important; 
+    position: fixed !important; 
+    float: none !important;
+    left: 0px !important;
+    margin: 0 !important;
+    right: 0 !important;
+    top: 0px !important;
+    width: 100% !important;
+    background: rgba(0,0,0,0.85);
+    z-index: @z-index-10 !important;
+    &:extend(.fotorama-gpu);
+    .fotorama__wrap {
+        max-width: 100%;
+        background: #fff;
+        top: 10%;
+        left: 10%;
+        bottom: 10%;
+        right: 10%;
+        position: fixed;
+
+    }
+}
+
+.fotorama__fullscreen {
+    overflow: hidden;
+    position: relative;
+    .fotorama__zoom-in,
+    .fotorama__zoom-out {
+        cursor: pointer;
+        display: block;
+        height: @size-fotorama-block;
+        overflow: hidden;
+        position: absolute;
+        width: @size-fotorama-block;
+
+    }
+    .fotorama__zoom-out {
+        &:extend(.fotorama-sprite);
+        background-position: 0 (-@size-fotorama-block) !important;
+        top: 80px;
+        &.fotorama__zoom-out--disabled {
+            display: none;
+        }
+    }
+
+.fotorama__fullscreen-icon {
+    background-position: -57px -20px;
+   
+}
+
+    .fotorama__zoom-in {
+        &:extend(.fotorama-sprite);
+        background-position: 0 0 !important;
+        top: 0;
+        &.fotorama__zoom-in--disabled {
+            display: none;
+        }
+    }
+    .fotorama__video-close {
+        display: none;
+    }
+}
+
+.fotorama--fullscreen .fotorama__loaded--full {
+    .fotorama__img {
+        display: none;
+    }
+    .fotorama__img--full {
+        display: block;
+    }
+}
+.fotorama--fullscreen .fotorama__wrap {
+    max-width:100%;
+    background:#fff;
+    top:50%;
+    left:50%;
+    right:10%;
+    position:fixed;
+    transform: translate(-50%,-50%);
+    max-height:800px;
+    height:100%;
+    width:100%;
+    border-radius: 5px;
+}
+
+@media screen and (max-width: 767px) {
+.fotorama--fullscreen .fotorama__wrap {
+    max-width: 100%;
+    background: #fff;
+    top: 0;
+    left: 0;
+    bottom: 30%;
+    transform: translate(0%,0%);
+    right: 0;
+    position: fixed;
+    height:80%;
+}
+.fotorama--fullscreen {
+
+    top: 59px !important;
+   }
+
+
+}

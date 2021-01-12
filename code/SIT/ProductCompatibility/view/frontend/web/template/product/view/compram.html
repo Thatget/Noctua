@@ -1,0 +1,75 @@
+<div class="show-all-methods">
+	<div class="image" ></div>
+	<div class="method-content">
+		<span class="motherboard-note" >
+			Please select a ram manufacturer according to the required socket, from the list below.
+		</span>
+		<span class="cpucomp-manufacturer ram-title ram-all-data comp-all-data">
+			<a href="javascript:void(0)" data-bind="click: getAllSocket" id="cpucomp_all"> Show all ram</a>
+		</span>
+	</div>
+</div>
+
+<div class="ram-tables-list">
+	<div class="ram-header" data-bind="css:{hide_product_view_compram: ramList().length <= 0}">
+		<div class="ram-title" data-bind="i18n: 'Socket'"></div>
+		<div class="ram-content" data-bind="i18n: 'Manufacturer'"></div>
+	</div>
+	<div class="ram-list">
+		<!-- ko foreach: ramList -->
+			<div class="ram">
+				<span class="ram-title" data-bind="attr:{'data-id':'socket_'+$data.comp_socket}">
+					<a href="javascript:void(0)" data-bind="i18n: $data.comp_socket_value,attr:{id: '#socket_'+$data.comp_socket},event:{'click': $parent.getSocket}"></a>
+				</span>
+				<span class="ram-content">
+					<!-- ko foreach: $data.comp_socket_manufacture -->
+						<!-- ko if: $index() != 0 -->
+							<span> - </span>
+						<!-- /ko -->
+						<a href="javascript:void(0)" data-bind="i18n: comp_manufacture_value,attr:{id: '#socket_'+$parent.comp_socket+'_manuf_'+comp_manufacture},click: function(data, event) { $parents[1].getManufacture($parent.comp_socket,$data);}"></a>
+						<!-- ko if: ($parentContext.$index()+1) == $parents[1].ramList().length -->
+							<span data-bind="text:$parents[1].loadData()"></span>
+						<!-- /ko -->
+					<!-- /ko -->
+				</span>
+			</div>
+		<!-- /ko -->
+		<span class="ram-title ram-all-data comp-all-data" style="margin: 12px 0px;">
+				<!--<a href="javascript:void(0)" data-bind="click: getAllSocket" id="cpucomp_all"> Show all ram</a>-->
+		</span>
+	</div>
+</div>
+<div class="pro-service-case" data-bind="css:{hide_product_view_compram: ramList().length <= 0}">
+	<div class="green" data-bind="i18n: 'Compatible'"></div>
+	<div class="blue" data-bind="i18n: 'Possible Issues (see comment)'"></div>
+	<div class="red" data-bind="i18n: 'Incompatible (see comment)'"></div>
+</div>
+<!-- ko if: ramList().length > 0 -->
+<!-- ko foreach: {data: ramGrid, as: 'row'} -->
+<h1 class="ram-table-head" data-bind="i18n: $data.comp_socket_value,attr:{id: 'socket_'+row.comp_socket}"></h1>
+	<!-- ko foreach: row.comp_socket_manufacture -->
+		<div class="ram-table">
+			<div class="ram-table-title" data-bind="attr:{id: 'socket_'+$parent.comp_socket+'_manuf_'+$data.comp_manufacture}">
+				<span class="pro-ram-socket" data-bind="i18n: 'Socket'"></span>
+				<span class="pro-ram-manufacturer" data-bind="i18n: 'Manufacturer'"></span>
+				<span class="pro-ram-model" data-bind="i18n: 'Model'"></span>
+				<span class="pro-ram-compatibility" data-bind="i18n: 'Compatibility'"></span>
+				<span class="pro-ram-comment" data-bind="i18n: 'Comment'"></span>
+			</div>
+		<!-- ko foreach: $data.comp_models -->
+			<div class="ram-table-data">
+				<span class="pro-ram-socket" data-bind="i18n: row.comp_socket_value"></span>
+				<span class="pro-ram-manufacturer" data-bind="i18n:$parent.comp_manufacture_value"></span>
+				<span class="pro-ram-model">
+					<a href="javascript:void(0)" data-bind="i18n: $data.comp_model_value,attr:{href:$data.url_key}"></a>
+				</span>
+				<span class="pro-ram-compatibility">
+					<img data-bind="attr:{src: $data.comp_compatibility}">
+				</span>
+				<span class="pro-ram-comment" data-bind="html:$data.comp_comment"></span>
+			</div>
+		<!-- /ko -->
+		</div>
+	<!-- /ko -->
+<!-- /ko -->
+<!-- /ko -->

@@ -1,0 +1,57 @@
+<?php
+    $tabData = $block->getTabdata();
+    $tabId = $tabData['id'];
+    $helper=$this->helper('Swissup\Easytabs\Helper\Data');
+    $params=$helper->getVisible($tabId);
+    $page = $helper->getCustomPageInfo($params,$tabId);
+    if($page === false):
+        return true;
+    endif;
+    ?>
+
+<?php
+	$compHelper = $this->helper('SIT\ProductCompatibility\Helper\Data');
+	$urlKey = $this->getRequest()->getParam('url_key');
+	$comp_type = $this->getRequest()->getParam('comp_type');
+	$getCompData = $block->getRouteCompatibilityData($comp_type,$urlKey);
+
+	/**
+     * Sort array by product name
+     */
+    $product_name = array_column($getCompData, 'product_name');
+    array_multisort($product_name, SORT_ASC, $getCompData);
+?>
+<div class="cpu-custom-router-content custom-scroller">
+	<div class="cpucr-inner-container">
+		<div class="cpucr-cms-content">
+			<?php
+                $cpu_comp = $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('cpu_compatibility_pretext')->toHtml();
+                echo substr($cpu_comp,0,strpos($cpu_comp,'{{cpu_compatibility}}'));
+            ?>
+		</div>
+		<h1 class="cpucr-table-head"><?php echo str_replace("_", " ", $urlKey);?></h1>
+		<div class="cpucr-table">
+			<div class="cpucr-table-title">
+				<span class="pro-cpucr-product"><?php echo __('Product');?></span>
+				<span class="pro-cpucr-coolerHeight"><?php echo __('Cooler Height');?></span>
+				<span class="pro-cpucr-compatibility"><?php echo __('Compatibility');?></span>
+				<span class="pro-cpucr-comment"><?php echo __('Comment');?></span>
+			</div>
+			<?php foreach($getCompData as $compData){ ?>
+			<div class="cpucr-table-data">
+				<span class="pro-cpucr-product"><a href="<?= $compData['product_url']?>"><?= $compData['product_name']?></a></span>
+				<?php if(trim($compData['height_with_fan_url']) != ""): ?>
+					<span class="pro-cpucr-coolerHeight"><a href="<?= $compHelper->getStoreBaseUrl(). $compData['height_with_fan_url'] ?>" class="dotted_link_black"><?= $compData['height_with_fan'].'mm'?></a></span>
+				<?php else: ?>
+					<span class="pro-cpucr-coolerHeight"><?= $compData['height_with_fan'].'mm'?></span>
+				<?php endif; ?>
+				<span class="pro-cpucr-compatibility"><img src="<?= $compData['compatiibility']?>"></span>
+				<span class="pro-cpucr-comment"><ul><?= $compData['template_text_comment'].$compData['comp_extra_comment']?></ul></span>
+			</div>
+			<?php }?>
+		</div>
+		<div class="pro-cpucr-router-bottom">
+			<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('cpu_compatibility_bottom_text')->toHtml(); ?>
+		</div>
+	</div>
+</div>

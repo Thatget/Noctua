@@ -1,0 +1,51 @@
+<!-- ko foreach: productReviewList().collection -->
+<div data-bind="attr:{id: 'review'+($index()+1)}">
+    <div class="sit-review-section-container">
+            <div class="head-line"></div>
+            <!-- start review section head -->
+            <div class="sit-review-section-head">
+                <div class="sit-review-date"> <span data-bind="i18n: $data.created_at"></span> // <span data-bind="i18n: $data.review_website"></span></div>
+                <div class="sit-country-img"> <img data-bind="attr: {src: $data.review_country}"></img> </div>
+                <div class="sit-goto-details"> <a data-bind="attr: {href: $data.review_link}" target="_blank"></a></div>
+            </div>
+        <!-- //over review section head -->
+        <div class="sit-description">
+            <!-- start review image -->
+            <div class="sit-review-img">
+                <a data-bind="attr: {href: $data.review_link}" target="_blank">
+                    <img data-bind="attr: {src: $data.review_image}"></img>
+                </a>
+            </div>
+            <!-- /over review image -->
+
+            <!-- start review desc -->
+            <div>
+                <div class="sit-review-product-name">
+                    <a data-bind="attr: {href: $data.review_link}" target="_blank">
+                        <span data-bind="i18n: review_pname"></span>
+                    </a>
+                </div>
+                <div class="sit-review-desc">
+                    <span data-bind="html: review_desc"></span>
+                </div>
+            </div>
+            <!-- //over review desc -->
+            <div class="line-separator"></div>
+            <!-- start review short desc -->
+            <div class="sit-short-desc">
+                <span class="sit-review-short-desc-text" data-bind="i18n: 'Test verdict:'"></span>
+                <span data-bind="html: review_short_desc"></span>
+            </div>
+            <!-- //over review short desc -->
+        </div>
+    </div>
+</div>
+<!-- /ko -->
+<!-- ko if: productReviewList().collection -->
+<!-- ko if: productReviewList().collection.length >= 10 -->
+<div class="sit-product-review-link">
+    <a class="dotted_link" data-bind="attr:{href: getReviewPageUrl(),target: '_blank'},text: productReviewList().text"></a>
+    <!--<a class="dotted_link" data-bind="attr:{href: getReviewPageUrl(),target: '_blank'},i18n: 'See all '+productReviewList().totalreviews+' reviews for this product'"></a>-->
+</div>
+<!-- /ko -->
+<!-- /ko -->

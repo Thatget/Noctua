@@ -1,0 +1,312 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [1-3-2019]
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">sit_productcompatibility_ram_form.sit_productcompatibility_ram_form_data_source</item>
+            <item name="deps" xsi:type="string">sit_productcompatibility_ram_form.sit_productcompatibility_ram_form_data_source</item>
+        </item>
+        <item name="config" xsi:type="array">
+            <item name="dataScope" xsi:type="string">data</item>
+            <item name="namespace" xsi:type="string">sit_productcompatibility_ram_form</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+        <item name="label" xsi:type="string" translate="true">Add Product Compatibility RAM</item>
+        <item name="buttons" xsi:type="array">
+            <item name="back" xsi:type="string">SIT\ProductCompatibility\Block\Adminhtml\RAM\Edit\BackButton</item>
+            <item name="reset" xsi:type="string">SIT\ProductCompatibility\Block\Adminhtml\RAM\Edit\ResetButton</item>
+            <item name="duplicate" xsi:type="string">SIT\ProductCompatibility\Block\Adminhtml\RAM\Edit\DuplicateButton</item>
+            <item name="delete" xsi:type="string">SIT\ProductCompatibility\Block\Adminhtml\RAM\Edit\DeleteButton</item>
+            <item name="save" xsi:type="string">SIT\ProductCompatibility\Block\Adminhtml\RAM\Edit\SaveButton</item>
+            <item name="save_and_continue" xsi:type="string">SIT\ProductCompatibility\Block\Adminhtml\RAM\Edit\SaveAndContinueButton</item>
+        </item>
+    </argument>
+    <dataSource name="sit_productcompatibility_ram_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">SIT\ProductCompatibility\Ui\Component\Form\RAM\DataProvider</argument>
+            <argument name="name" xsi:type="string">sit_productcompatibility_ram_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">entity_id</argument>
+            <argument name="requestFieldName" xsi:type="string">entity_id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="submit_url" xsi:type="url" path="*/*/save"/>
+                    <item name="validate_url" xsi:type="url" path="*/*/validate"/>
+                </item>
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+    <fieldset name="main_fieldset">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">Product Compatibility RAM Information</item>
+            </item>
+        </argument>
+        <field name="status">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">10</item>
+                    <item name="dataType" xsi:type="string">boolean</item>
+                    <item name="formElement" xsi:type="string">checkbox</item>
+                    <item name="prefer" xsi:type="string">toggle</item>
+                    <item name="label" xsi:type="string" translate="true">Enabled</item>
+                    <item name="valueMap" xsi:type="array">
+                        <item name="true" xsi:type="number">1</item>
+                        <item name="false" xsi:type="number">0</item>
+                    </item>
+                    <item name="valuesForOptions" xsi:type="array">
+                        <item name="boolean" xsi:type="string">boolean</item>
+                    </item>
+                    <item name="default" xsi:type="number">1</item>
+                    <item name="dataScope" xsi:type="string">status</item>
+                </item>
+            </argument>
+        </field>
+        <field name="entity_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">ID</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">entity_id</item>
+                    <item name="dataScope" xsi:type="string">entity_id</item>
+                    <item name="disabled" xsi:type="boolean">true</item>
+                </item>
+            </argument>
+        </field>
+        <field name="url_key">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">URL Key</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">url_key</item>
+                    <item name="dataScope" xsi:type="string">url_key</item>
+                    <item name="disabled" xsi:type="boolean">true</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="comp_socket" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">comp_socket</item>
+                </item>
+            </argument>
+            <settings>
+                <notice translate="true">For autocomplete suggestion, you must need to enter minimum two characters.</notice>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>int</dataType>
+                <label translate="true">Socket</label>
+                <dataScope>comp_socket</dataScope>
+                 <imports>
+                    <link name="disabled">${ $.provider}:data.do_we_hide_it</link>
+                </imports>
+            </settings>
+        </field>
+        <field name="comp_manufacture" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">comp_manufacture</item>
+                </item>
+            </argument>
+            <settings>
+                <notice translate="true">For autocomplete suggestion, you must need to enter minimum two characters.</notice>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>int</dataType>
+                <label translate="true">Manufacturer</label>
+                <dataScope>comp_manufacture</dataScope>
+                 <imports>
+                    <link name="disabled">${ $.provider}:data.do_we_hide_it</link>
+                </imports>
+            </settings>
+        </field>
+        <field name="comp_model" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">comp_model</item>
+                </item>
+            </argument>
+            <settings>
+                <notice translate="true">For autocomplete suggestion, you must need to enter minimum two characters.</notice>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>int</dataType>
+                <label translate="true">Model</label>
+                <dataScope>comp_model</dataScope>
+                 <imports>
+                    <link name="disabled">${ $.provider}:data.do_we_hide_it</link>
+                </imports>
+            </settings>
+        </field>
+        <field name="comp_value" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">SIT\ProductCompatibility\Model\Config\Source\GetCompatibilityList</item>
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">comp_value</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>int</dataType>
+                <label translate="true">Compatibility</label>
+                <dataScope>comp_value</dataScope>
+                 <imports>
+                    <link name="disabled">${ $.provider}:data.do_we_hide_it</link>
+                </imports>
+            </settings>
+        </field>
+        <field name="comp_type">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">varchar</item>
+                    <item name="label" xsi:type="string" translate="true">Type</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">comp_type</item>
+                    <item name="dataScope" xsi:type="string">comp_type</item>
+                    <item name="default" xsi:type="string" translate="true">RAM</item>
+                    <item name="disabled" xsi:type="boolean">true</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="template_text_1">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">SIT\ProductCompatibility\Model\Config\Source\GetTemplate</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">int</item>
+                    <item name="label" xsi:type="string" translate="true">Select Template Text 1</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">template_text_1</item>
+                    <item name="dataScope" xsi:type="string">template_text_1</item>
+                    <item name="component" xsi:type="string">SIT_ProductCompatibility/js/getTemplateTextFirst</item>
+                    <item name="custom_form" xsi:type="string">ram</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="template_text_2">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">SIT\ProductCompatibility\Model\Config\Source\GetTemplate</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">int</item>
+                    <item name="label" xsi:type="string" translate="true">Select Template Text 2</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">template_text_2</item>
+                    <item name="dataScope" xsi:type="string">template_text_2</item>
+                    <item name="component" xsi:type="string">SIT_ProductCompatibility/js/getTemplateTextSecond</item>
+                    <item name="custom_form" xsi:type="string">ram</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="template_text_3">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">SIT\ProductCompatibility\Model\Config\Source\GetTemplate</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">int</item>
+                    <item name="label" xsi:type="string" translate="true">Select Template Text 3</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">template_text_3</item>
+                    <item name="dataScope" xsi:type="string">template_text_3</item>
+                    <item name="component" xsi:type="string">SIT_ProductCompatibility/js/getTemplateTextThird</item>
+                    <item name="custom_form" xsi:type="string">ram</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="template_text_4">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">SIT\ProductCompatibility\Model\Config\Source\GetTemplate</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">int</item>
+                    <item name="label" xsi:type="string" translate="true">Select Template Text 4</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">template_text_4</item>
+                    <item name="dataScope" xsi:type="string">template_text_4</item>
+                    <item name="component" xsi:type="string">SIT_ProductCompatibility/js/getTemplateTextFourth</item>
+                    <item name="custom_form" xsi:type="string">ram</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="comment">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Additional Comment</item>
+                    <item name="additionalClasses" xsi:type="string">sit_additional_comment_textarea</item>
+                    <item name="formElement" xsi:type="string">textarea</item>
+                    <item name="source" xsi:type="string">comment</item>
+                    <item name="dataScope" xsi:type="string">comment</item>
+                    <item name="disabled" xsi:type="boolean">true</item>
+                    <item name="cols" xsi:type="number">15</item>
+                    <item name="rows" xsi:type="number">25</item>
+                </item>
+            </argument>
+        </field>
+        <field name="comp_extra_comment">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Extra Comment</item>
+                    <item name="formElement" xsi:type="string">textarea</item>
+                    <item name="source" xsi:type="string">comp_extra_comment</item>
+                    <item name="dataScope" xsi:type="string">comp_extra_comment</item>
+                    <item name="cols" xsi:type="number">15</item>
+                    <item name="rows" xsi:type="number">25</item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+    <fieldset name="assign_to_product">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">Associated Products</item>
+                <item name="sortOrder" xsi:type="number">20</item>
+            </item>
+        </argument>
+        <container name="assign_products_container" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">160</item>
+                </item>
+            </argument>
+            <htmlContent name="html_content">
+                <argument name="block" xsi:type="object">SIT\ProductCompatibility\Block\Adminhtml\RAM\AssignProducts</argument>
+            </htmlContent>
+        </container>
+    </fieldset>
+</form>

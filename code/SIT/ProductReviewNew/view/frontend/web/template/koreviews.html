@@ -1,0 +1,177 @@
+<div class="review-container form">
+    <div class="review-filter-option">
+        <!-- Start For filter page range -->
+        <div class="review-filter-page-range">
+            <div class="review-filter-page-range-content">
+                <!-- Move to first page -->
+                <span class="toolbar-page-title" data-bind="i18n: 'PAGE '"></span>
+                <button data-bind="css:{disabled: Page() <= 1},click: changePageTo('first') ">
+                        <span aria-hidden="true" class="pagerFirst"></span>
+                </button>
+
+                <!-- Move to previous page -->
+                <button data-bind="click: changePageBy(-1), css:{disabled: Page() <= 1}">
+                    <span aria-hidden="true" class="singlepagerPrev"></span>
+                </button>
+
+                <!-- Current page -->
+                <button class="sit-review-current-page" data-bind="text: ReviewCollection().length == 0 ? 0 : Page()">
+                </button>
+                <span class="toolbar-page-slash" data-bind='i18n:"//"'></span>
+                <!-- Total Number of pages -->
+                <button class="sit-review-total-page" data-bind="text: ReviewCollection().length == 0 ? 0 : totalPage()">
+                </button>
+
+                <!-- Move to next page -->
+                <button data-bind="css:{disabled: totalPage() == Page()},click: changePageBy(1)">
+                   <span aria-hidden="true" class="singlepagerNext"></span>
+                </button>
+
+                <!-- Move to last page -->
+                <button data-bind="css:{disabled: totalPage() == Page()},click: changePageTo('last')">
+                    <span class="pagerLast"></span>
+                </button>
+            </div>
+        </div>
+        <!-- //Over For filter page range -->
+        <div class="jump-to-page">
+            <!-- For move to specific page -->
+             <span data-bind="i18n: 'Jump To Page'"></span><input id="jumptopage" data-bind="event: { 'keyup': JumpToPage, 'focusout': jumpToPageFocusOut }" />
+        </div>
+
+        <div class="review-filter-page">
+            <!-- Per page size -->
+            <span data-bind="i18n: 'Per Page'"></span>
+            <select id="per_page" data-bind="options: sizePerPage,event:{'change': setLimit}">
+            </select>
+        </div>
+    </div>
+</div>
+    <!-- //Over For filter page range -->
+
+    <!-- Start For filter container -->
+    <div class="review-filter-container" afterRender="bindAfterRender">
+        <div class="review-filter-after-page">
+            <div class="review_block_content" data-bind="html:reviewBlock()"></div>
+            <div class="review-filter-product">
+                <!-- For product filter -->
+                <span data-bind="i18n: 'Product'"></span>
+                <select class="fieldValue" id="product_filter" data-bind="event:{change:productFilterData}">
+                    <option value="All" data-bind="i18n: 'All'"></option>
+                    <!-- ko foreach: categoryProducts -->
+                    <optgroup data-bind="attr: {label: label}, foreach: category">
+                    <option data-bind="attr: {value: label.id},text: label.name, value: label.id"></option>
+                    </optgroup>
+                    <!-- /ko -->
+                </select>
+            </div>
+            <div class="review-filter-language">
+                <!-- For language filter -->
+                <span data-bind="i18n: 'Language'"></span>
+                   <select id="language_filter" data-bind="event:{change:languageSetParam}">
+                    <!-- ko foreach: language -->
+                        <option data-bind="i18n:$data.label,attr :{value: $data.value}"></option>
+                    <!-- /ko -->
+                </select>
+            </div>
+        </div>
+    </div>
+<!-- //over For filter container -->
+
+<!-- for display all reviews -->
+<div data-bind="foreach: ReviewCollection">
+    <div data-bind="attr:{id:'review'+ ($index()+1)}" class="sit-review-section-container">
+            <div class="head-line"></div>
+
+        <!-- start review section head -->
+        <div class="sit-review-section-head">
+            <div class="sit-review-date"> <span data-bind="i18n: $data.created_at"></span> // <span data-bind="html: $data.review_website"></span></div>
+            <div class="sit-country-img"> <img data-bind="attr: { src: $data.review_country }"></img> </div>
+            <div class="sit-goto-details">
+                <a data-bind="attr: { href: $data.review_link }" target="_blank"></a>
+            </div>
+        </div>
+        <!-- //over review section head -->
+        <div class="sit-description">
+            <!-- start review image -->
+            <a class="sit-review-img" data-bind="attr: { href: $data.review_link }" target="_blank">
+                <img data-bind="attr: { src: $data.review_image }"></img>
+            </a>
+            <!-- /over review image -->
+            <!-- start review desc -->
+            <div>
+                <a data-bind="attr: { href: $data.review_link }" target="_blank">
+                    <span data-bind="i18n: $data.review_pname" class="sit-review-product-name"></span>
+                </a>
+                <div class="sit-review-desc">
+                    <span data-bind="html: $data.review_desc"></span>
+                </div>
+            </div>
+            <!-- //over review desc -->
+            <div class="line-separator"></div>
+            <!-- start review short desc -->
+            <div class="sit-short-desc">
+                <span class="sit-review-short-desc-text" data-bind="i18n: 'Test verdict:'"></span>
+                <span data-bind="html: $data.review_short_desc"></span>
+            </div>
+            <!-- //over review short desc -->
+        </div>
+    </div>
+</div>
+<!-- ko if: Page() == 0 -->
+<div class="sit-review-section-container">
+    <div class="head-line"></div>
+    <div class="sit-review-section-head"></div>
+    <div class="sit-review-no-found" data-bind="i18n: 'No reviews available'"></div>
+</div>
+<!-- /ko -->
+<!-- Footer pagination -->
+<div class="review-container form" data-bind="css:{sit_review_hide_current_page: ReviewCollection().length <= 0}">
+    <div class="review-filter-option">
+        <!-- Start For filter page range -->
+        <div class="review-filter-page-range">
+            <div class="review-filter-page-range-content">
+                <!-- Move to first page -->
+                <span class="toolbar-page-title" data-bind="i18n: 'PAGE '"></span>
+                <button data-bind="css:{disabled: Page() <= 1},click: changePageTo('first') ">
+                    <span aria-hidden="true" class="pagerFirst"></span>
+                </button>
+
+                <!-- Move to previous page -->
+                <button data-bind="click: changePageBy(-1), css:{disabled: Page() <= 1}">
+                    <span aria-hidden="true" class="singlepagerPrev"></span>
+                </button>
+
+                <!-- Current page -->
+                <button class="sit-review-current-page" data-bind="text: ReviewCollection().length == 0 ? 0 : Page()">
+                </button>
+                <span class="toolbar-page-slash" data-bind='i18n:"//"'></span>
+                <!-- Total Number of pages-->
+                <button class="sit-review-total-page" data-bind="text: ReviewCollection().length == 0 ? 0 : totalPage()">
+                </button>
+
+                <!-- Move to next page -->
+                <button data-bind="css:{disabled: totalPage() == Page()},click: changePageBy(1)">
+                   <span aria-hidden="true" class="singlepagerNext"></span>
+                </button>
+
+                <!-- Move to last page -->
+                <button data-bind="css:{disabled: totalPage() == Page()},click: changePageTo('last')">
+                    <span class="pagerLast"></span>
+                </button>
+            </div>
+        </div>
+        <!-- //Over For filter page range -->
+        <div class="jump-to-page">
+            <!-- For move to specific page -->
+             <span data-bind="i18n: 'Jump To Page'"></span><input id="jumptopage_bottom" data-bind="event: { 'keyup': JumpToPageBottom, 'focusout': jumpToPageFocusOutBottom }" />
+        </div>
+
+        <div class="review-filter-page">
+            <!-- Per page size -->
+            <span data-bind="i18n: 'Per Page'"></span>
+            <select id="per_page_bottom" data-bind="options: sizePerPage,event:{'change': setLimitBottom}">
+            </select>
+        </div>
+    </div>
+</div>

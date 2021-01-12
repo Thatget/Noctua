@@ -1,0 +1,46 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [1-3-2019]
+ */
+?>
+<?php
+    $tabData = $block->getTabdata();
+    $tabId = $tabData['id'];
+    $helper = $this->helper('Swissup\Easytabs\Helper\Data');
+    $params = $helper->getVisible($tabId);
+    $removefrom = $helper->getRemoveFrom($tabId);
+    $page = $helper->getPageInfo($params,$removefrom);
+    if($page === false):
+        return true;
+    endif;
+
+    $sizeOptions = $block->getFanSearchAttrOptions('size_mm');
+    $connectorOptions = $block->getFanSearchAttrOptions('connector');
+    $industrialCollection = $block->getFanSearchProList('line-industrial');
+
+?>
+<div id="sit-ajaxindustrialsearch-category-div" data-bind="scope:'sit-ajaxindustrialsearch-category-div'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+               "components": {
+                    "sit-ajaxindustrialsearch-category-div": {
+                        "component": "SIT_AjaxFanSearch/js/koajaxindustrialsearch",
+                        "template" : "SIT_AjaxFanSearch/koajaxindustrialsearch",
+                        "sizeOptions": <?= /* @escapeNotVerified */ $sizeOptions ?>,
+                        "connectorOptions": <?= /* @escapeNotVerified */ $connectorOptions ?>,
+                        "industrialCollection": <?= /* @escapeNotVerified */ $industrialCollection ?>
+                        }
+                    }
+                }
+            }
+    }
+    </script>
+</div>

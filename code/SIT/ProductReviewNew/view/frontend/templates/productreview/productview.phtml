@@ -1,0 +1,40 @@
+<?php
+/**
+ * Start Check for dynamic tab
+ */
+$tabData = $block->getTabdata();
+$tabId = $tabData['id'];
+$helper = $this->helper('Swissup\Easytabs\Helper\Data');
+$sitHelper = $this->helper('SIT\MainAdmin\Helper\Data');
+$params = $helper->getVisible($tabId);
+$removefrom = $helper->getRemoveFrom($tabId);
+$page = $helper->getProductInfo($params,$removefrom);
+if($page === false){
+    return true;
+}
+$currentProductId = $sitHelper->getCurrentProduct()->getId();
+$blockObj = $block->getLayout()->createBlock('SIT\ProductReviewNew\Block\ProductReview\ListReview');
+$reviewCount = $blockObj->getListReviewCountData($currentProductId);
+if ($reviewCount > 0) {
+?>
+<script type="text/x-magento-init">
+{
+    "*":{
+        "Magento_Ui/js/core/app":{
+            "components": {
+                "sitProductview":{
+                    "component":"SIT_ProductReviewNew/js/product/koproductview",
+                    "controllerUrl":"<?= $block->getUrl('productreviewnew/productreview/koproductview'); ?>",
+                    "reviewPageUrl":"<?= rtrim($block->getUrl('reviews'),"/")."?product=".$currentProductId; ?>",
+                    "productId":"<?= $currentProductId; ?>"
+                }
+            }
+        }
+    }
+}
+</script>
+<div data-bind="scope: 'sitProductview'" class="product-review-main">
+    <!-- ko template: getTemplate()  -->
+    <!-- /ko  -->
+</div>
+<?php } ?>

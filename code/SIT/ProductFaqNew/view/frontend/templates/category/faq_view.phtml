@@ -1,0 +1,46 @@
+<?php
+    $tabData = $block->getTabdata();
+    $tabId = $tabData['id'];
+    $mainAdminHelper = $this->helper('SIT\MainAdmin\Helper\Data');
+    $helper=$this->helper('Swissup\Easytabs\Helper\Data');
+    $params=$helper->getVisible($tabId);
+    $page = $helper->getCustomPageInfo($params,$tabId);
+    if($page === false):
+        return true;
+    endif;
+    $categoryName=$this->getRequest()->getParam('category');
+	$categoryId = $block->getCategoryId($categoryName);
+    $faqs = $block->getFaqCollection($categoryId);
+?>
+<div class="product-service-faq-content">
+    <div class="faq-inner-container">
+        <div class="inner-box">
+            <h1><?php echo __('general FAQs'." (".$categoryName.")") ?></h1>
+            <div class="inner-box-links">
+                <?php foreach ($faqs as $key => $faq): ?>
+                <p class="faq-question-title">
+                    <a href="javascript:void(0)" id="#<?= $faq->getEntityId() ?>"><?= $faq->getFaqQue() ?></a>
+                </p>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <div class="main-div-product-faq-content">
+            <?php foreach  ($faqs as $key => $faq) : ?>
+            <h1 class="faq-collection-question-title" id="<?= $faq->getEntityId() ?>"><?= $faq->getFaqQue() ?></h1>
+            <div class="faq-collection-answer">
+                <?= $mainAdminHelper->getCmsFilterContent($faq->getFaqAns())?>
+            </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    require(['jquery'],function($){
+        $('.faq-question-title a').click( function() {
+            var element = $(this).attr('id');
+            var top = $(element).offset().top - 100;
+            $('body,html').animate({scrollTop:top}, 'slow');
+        });
+    });
+</script>

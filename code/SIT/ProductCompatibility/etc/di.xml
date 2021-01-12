@@ -1,0 +1,259 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [1-3-2019]
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Eav\Model\Entity\AttributeCache">
+        <arguments>
+            <argument name="unsupportedTypes" xsi:type="array">
+                <item name="sit_productcompatibility" xsi:type="string">sit_productcompatibility</item>
+            </argument>
+        </arguments>
+    </type>
+    <!-- Mainboard -->
+    <type name="SIT\ProductCompatibility\UI\Component\Listing\Mainboard\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">SIT\ProductCompatibility\Model\ResourceModel\ProductCompatibility\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">RefMainboardGridFilterPool</argument>
+        </arguments>
+    </type>
+    <virtualType name="RefMainboardGridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="sit_productcompatibility_mainboard_listing_data_source" xsi:type="string">SIT\ProductCompatibility\Model\ResourceModel\ProductCompatibility\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <!-- Changed by MD for Unused an Duplicate records[START][23-05-2019] -->
+   <!-- unused [START]-->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="sit_productcompatibility_mainboard_unused_listing_data_source" xsi:type="string">SIT\ProductCompatibility\Model\ResourceModel\ProductCompatibility\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="sit_productcompatibility_cpu_unused_listing_data_source" xsi:type="string">SIT\ProductCompatibility\Model\ResourceModel\ProductCompatibility\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="sit_productcompatibility_unused_unused_listing_data_source" xsi:type="string">SIT\ProductCompatibility\Model\ResourceModel\ProductCompatibility\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="sit_productcompatibility_ram_unused_listing_data_source" xsi:type="string">SIT\ProductCompatibility\Model\ResourceModel\ProductCompatibility\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="sit_productcompatibility_coolers_unused_listing_data_source" xsi:type="string">SIT\ProductCompatibility\Model\ResourceModel\ProductCompatibility\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="sit_productcompatibility_fans_unused_listing_data_source" xsi:type="string">SIT\ProductCompatibility\Model\ResourceModel\ProductCompatibility\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <!-- unused [END]-->
+    <!-- duplicate [START] -->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="sit_productcompatibility_mainboard_duplicate_listing_data_source" xsi:type="string">SIT\ProductCompatibility\Model\ResourceModel\ProductCompatibility\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="sit_productcompatibility_cpu_duplicate_listing_data_source" xsi:type="string">SIT\ProductCompatibility\Model\ResourceModel\ProductCompatibility\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="sit_productcompatibility_ram_duplicate_listing_data_source" xsi:type="string">SIT\ProductCompatibility\Model\ResourceModel\ProductCompatibility\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="sit_productcompatibility_coolers_duplicate_listing_data_source" xsi:type="string">SIT\ProductCompatibility\Model\ResourceModel\ProductCompatibility\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="sit_productcompatibility_fans_duplicate_listing_data_source" xsi:type="string">SIT\ProductCompatibility\Model\ResourceModel\ProductCompatibility\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <!-- duplicate [END] -->
+    <!-- Changed by MD for Unused an Duplicate records[END][23-05-2019] -->
+    <!-- Start Import Uploader -->
+    <type name="SIT\ProductCompatibility\Model\FileUploader">
+        <arguments>
+            <argument name="baseTmpPath" xsi:type="string">importcomp/tmp/file</argument>
+            <argument name="basePath" xsi:type="string">importcomp/file</argument>
+            <argument name="allowedExtensions" xsi:type="array">
+                <item name="csv" xsi:type="string">csv</item>
+            </argument>
+        </arguments>
+    </type>
+    <!-- End Import Uploader -->
+    <type name="SIT\ProductCompatibility\Model\ResourceModel\ProductCompatibility\Grid\Collection">
+        <arguments>
+            <argument name="eventPrefix" xsi:type="string">sit_productcompatibility_mainboard_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">sit_productcompatibility_mainboard_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">SIT\ProductCompatibility\Model\ResourceModel\ProductCompatibility</argument>
+        </arguments>
+    </type>
+    <!-- RAM -->
+    <type name="SIT\ProductCompatibility\UI\Component\Listing\RAM\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">SIT\ProductCompatibility\Model\ResourceModel\ProductCompatibility\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">RefRamGridFilterPool</argument>
+        </arguments>
+    </type>
+    <virtualType name="RefRamGridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="sit_productcompatibility_ram_listing_data_source" xsi:type="string">SIT\ProductCompatibility\Model\ResourceModel\ProductCompatibility\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="SIT\ProductCompatibility\Model\ResourceModel\ProductCompatibility\Grid\Collection">
+        <arguments>
+            <argument name="eventPrefix" xsi:type="string">sit_productcompatibility_ram_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">sit_productcompatibility_ram_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">SIT\ProductCompatibility\Model\ResourceModel\ProductCompatibility</argument>
+        </arguments>
+    </type>
+    <!-- CPU -->
+    <type name="SIT\ProductCompatibility\UI\Component\Listing\CPU\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">SIT\ProductCompatibility\Model\ResourceModel\ProductCompatibility\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">RefCPUGridFilterPool</argument>
+        </arguments>
+    </type>
+    <virtualType name="RefCPUGridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="sit_productcompatibility_cpu_listing_data_source" xsi:type="string">SIT\ProductCompatibility\Model\ResourceModel\ProductCompatibility\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="SIT\ProductCompatibility\Model\ResourceModel\ProductCompatibility\Grid\Collection">
+        <arguments>
+            <argument name="eventPrefix" xsi:type="string">sit_productcompatibility_cpu_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">sit_productcompatibility_cpu_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">SIT\ProductCompatibility\Model\ResourceModel\ProductCompatibility</argument>
+        </arguments>
+    </type>
+    <!-- Coolers -->
+    <type name="SIT\ProductCompatibility\UI\Component\Listing\Coolers\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">SIT\ProductCompatibility\Model\ResourceModel\ProductCompatibility\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">RefCoolersGridFilterPool</argument>
+        </arguments>
+    </type>
+    <virtualType name="RefCoolersGridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="sit_productcompatibility_coolers_listing_data_source" xsi:type="string">SIT\ProductCompatibility\Model\ResourceModel\ProductCompatibility\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="SIT\ProductCompatibility\Model\ResourceModel\ProductCompatibility\Grid\Collection">
+        <arguments>
+            <argument name="eventPrefix" xsi:type="string">sit_productcompatibility_coolers_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">sit_productcompatibility_coolers_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">SIT\ProductCompatibility\Model\ResourceModel\ProductCompatibility</argument>
+        </arguments>
+    </type>
+    <!-- Fans -->
+    <type name="SIT\ProductCompatibility\UI\Component\Listing\Fans\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">SIT\ProductCompatibility\Model\ResourceModel\ProductCompatibility\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">RefFansGridFilterPool</argument>
+        </arguments>
+    </type>
+    <virtualType name="RefFansGridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="sit_productcompatibility_fans_listing_data_source" xsi:type="string">SIT\ProductCompatibility\Model\ResourceModel\ProductCompatibility\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="SIT\ProductCompatibility\Model\ResourceModel\ProductCompatibility\Grid\Collection">
+        <arguments>
+            <argument name="eventPrefix" xsi:type="string">sit_productcompatibility_fans_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">sit_productcompatibility_fans_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">SIT\ProductCompatibility\Model\ResourceModel\ProductCompatibility</argument>
+        </arguments>
+    </type>
+</config>

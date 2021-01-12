@@ -1,0 +1,234 @@
+<?php
+//Tab Start
+$tabData = $block->getTabdata();
+$tabId = $tabData['id'];
+$helper = $this->helper('Swissup\Easytabs\Helper\Data');
+$params = $helper->getVisible($tabId);
+$removefrom = $helper->getRemoveFrom($tabId);
+$page = $helper->getProductInfo($params, $removefrom);
+if ($page === false) {
+    return true;
+}
+//Tab End
+$mainHelper = $this->helper('SIT\MainAdmin\Helper\Data');
+$_product = $mainHelper->getCurrentProduct();
+?>
+<?php if ($_product->getAmazonAsinCom() != '' || $_product->getAmazonAsinCa() != '' || $_product->getAmazonAsinCoUk() != '' || $_product->getAmazonAsinDe() != '' || $_product->getAmazonAsinEs() != '' || $_product->getAmazonAsinFr() != '' || $_product->getAmazonAsinIt() != '') : ?>
+    <div id="product_buy_contents">
+        <div class="section-inner-presse-page product_buy_listing_div" id="product_buy_listing_div">
+            <?php
+            $content = $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('product_buy_before')->toHtml();
+            $variable = $mainHelper->getCurrentProduct()->getData('buy_tab_note');
+            if($variable) {
+                $variable = '<p style="margin-bottom: 5px;">' . $variable . '</p>';
+                $va = '/<p style=\"margin-bottom:5px;\">.{0,}<\/p>/';
+                $content = preg_replace($va, $variable, $content);
+            }
+            echo "<div class='product_buy_before'>" . $content . "</div>";
+            /**
+             * Get Amazon asin attribute's value
+             */
+            $amazonAsinCom = $_product->getAmazonAsinCom();
+            $amazonAsinCa = $_product->getAmazonAsinCa();
+            $amazonAsinCoUk = $_product->getAmazonAsinCoUk();
+            $amazonAsinDe = $_product->getAmazonAsinDe();
+            $amazonAsinEs = $_product->getAmazonAsinEs();
+            $amazonAsinFr = $_product->getAmazonAsinFr();
+            $amazonAsinIt = $_product->getAmazonAsinIt();
+            $amazonAsinSg = $_product->getAmazonAsinSg();
+            $amazonAsinNl = $_product->getAmazonAsinNl();
+            $amazonAsinMx = $_product->getAmazonAsinMx();
+            /**
+             * Get Custom variable value for Amazon link
+             */
+            $amazonCom = $mainHelper->getVariableValue('amazon_link_com');
+            $amazonCa = $mainHelper->getVariableValue('amazon_link_ca');
+            $amazonCoUk = $mainHelper->getVariableValue('amazon_link_co_uk');
+            $amazonDe = $mainHelper->getVariableValue('amazon_link_de');
+            $amazonEs = $mainHelper->getVariableValue('amazon_link_es');
+            $amazonFr = $mainHelper->getVariableValue('amazon_link_fr');
+            $amazonIt = $mainHelper->getVariableValue('amazon_link_it');
+            $amazonSg = $mainHelper->getVariableValue('amazon_link_sg');
+            $amazonNl = $mainHelper->getVariableValue('amazon_link_nl');
+            $amazonMx = $mainHelper->getVariableValue('amazon_link_mx');
+            /**
+             * Get Amazon bundle attribute's value
+             */
+            $amazonBundleCom = $_product->getAmazonBundleCom();
+            $amazonBundleCa = $_product->getAmazonBundleCa();
+            $amazonBundleCoUk = $_product->getAmazonBundleCoUk();
+            $amazonBundleDe = $_product->getAmazonBundleDe();
+            $amazonBundleEs = $_product->getAmazonBundleEs();
+            $amazonBundleFr = $_product->getAmazonBundleFr();
+            $amazonBundleIt = $_product->getAmazonBundleIt();
+            $amazonBundleSg = $_product->getAmazonBundleSg();
+            $amazonBundleNl = $_product->getAmazonBundleNl();
+            $amazonBundleMx = $_product->getAmazonBundleMx();
+            /**
+             * Get Custom variable value for Amazon tag
+             */
+            $amazonTagCom = $mainHelper->getVariableValue('amazon_tag_com');
+            $amazonTagCa = $mainHelper->getVariableValue('amazon_tag_ca');
+            $amazonTagCoUk = $mainHelper->getVariableValue('amazon_tag_co_uk');
+            $amazonTagDe = $mainHelper->getVariableValue('amazon_tag_de');
+            $amazonTagEs = $mainHelper->getVariableValue('amazon_tag_es');
+            $amazonTagFr = $mainHelper->getVariableValue('amazon_tag_fr');
+            $amazonTagIt = $mainHelper->getVariableValue('amazon_tag_it');
+            $amazonTagSg = $mainHelper->getVariableValue('amazon_tag_sg');
+            $amazonTagNl = $mainHelper->getVariableValue('amazon_tag_nl');
+            $amazonTagMx = $mainHelper->getVariableValue('amazon_tag_mx');
+            $bundlesOn = $mainHelper->getVariableValue('bundles_on');
+            /**
+             * For Amazon asin
+             */
+            if ($amazonAsinCom != '') {
+                if ($amazonTagCom != '') {
+                    echo '<div class="amazon-product-buy"><a href="' . $amazonCom . '/dp/' . $amazonAsinCom . '?tag=' . $amazonTagCom . '" target="_blank" class="dotted_link">Amazon.com</a></div>';
+                } else {
+                    echo '<div class="amazon-product-buy"><a href="' . $amazonCom . '/dp/' . $amazonAsinCom . '" target="_blank" class="dotted_link">Amazon.com</a></div>';
+                }
+            }
+            if ($amazonAsinCa != '') {
+                if ($amazonTagCa != '') {
+                    echo '<div class="amazon-product-buy"><a href="' . $amazonCa . '/dp/' . $amazonAsinCa . '?tag=' . $amazonTagCa . '" target="_blank" class="dotted_link">Amazon.ca</a></div>';
+                } else {
+                    echo '<div class="amazon-product-buy"><a href="' . $amazonCa . '/dp/' . $amazonAsinCa . '" target="_blank" class="dotted_link">Amazon.ca</a></div>';
+                }
+            }
+            if ($amazonAsinCoUk != '') {
+                if ($amazonTagCoUk != '') {
+                    echo '<div class="amazon-product-buy"><a href="' . $amazonCoUk . '/dp/' . $amazonAsinCoUk . '?tag=' . $amazonTagCoUk . '" target="_blank" class="dotted_link">Amazon.co.uk</a></div>';
+                } else {
+                    echo '<div class="amazon-product-buy"><a href="' . $amazonCoUk . '/dp/' . $amazonAsinCoUk . '" target="_blank" class="dotted_link">Amazon.co.uk</a></div>';
+                }
+            }
+            if ($amazonAsinDe != '') {
+                if ($amazonTagDe != '') {
+                    echo '<div class="amazon-product-buy"><a href="' . $amazonDe . '/dp/' . $amazonAsinDe . '?tag=' . $amazonTagDe . '" target="_blank" class="dotted_link">Amazon.de</a></div>';
+                } else {
+                    echo '<div class="amazon-product-buy"><a href="' . $amazonDe . '/dp/' . $amazonAsinDe . '" target="_blank" class="dotted_link">Amazon.de</a></div>';
+                }
+            }
+            if ($amazonAsinEs != '') {
+                if ($amazonTagEs != '') {
+                    echo '<div class="amazon-product-buy"><a href="' . $amazonEs . '/dp/' . $amazonAsinEs . '?tag=' . $amazonTagEs . '" target="_blank" class="dotted_link">Amazon.es</a></div>';
+                } else {
+                    echo '<div class="amazon-product-buy"><a href="' . $amazonEs . '/dp/' . $amazonAsinEs . '" target="_blank" class="dotted_link">Amazon.es</a></div>';
+                }
+            }
+            if ($amazonAsinFr != '') {
+                if ($amazonTagFr != '') {
+                    echo '<div class="amazon-product-buy"><a href="' . $amazonFr . '/dp/' . $amazonAsinFr . '?tag=' . $amazonTagFr . '" target="_blank" class="dotted_link">Amazon.fr</a></div>';
+                } else {
+                    echo '<div class="amazon-product-buy"><a href="' . $amazonFr . '/dp/' . $amazonAsinFr . '" target="_blank" class="dotted_link">Amazon.fr</a></div>';
+                }
+            }
+            if ($amazonAsinIt != '') {
+                if ($amazonTagIt != '') {
+                    echo '<div class="amazon-product-buy"><a href="' . $amazonIt . '/dp/' . $amazonAsinIt . '?tag=' . $amazonTagIt . '" target="_blank" class="dotted_link">Amazon.it</a></div>';
+                } else {
+                    echo '<div class="amazon-product-buy"><a href="' . $amazonIt . '/dp/' . $amazonAsinIt . '" target="_blank" class="dotted_link">Amazon.it</a></div>';
+                }
+            }
+            if ($amazonAsinSg != '') {
+                if ($amazonTagSg != '') {
+                    echo '<div class="amazon-product-buy"><a href="' . $amazonSg . '/dp/' . $amazonAsinSg . '?tag=' . $amazonTagSg . '" target="_blank" class="dotted_link">Amazon.sg</a></div>';
+                } else {
+                    echo '<div class="amazon-product-buy"><a href="' . $amazonSg . '/dp/' . $amazonAsinSg . '" target="_blank" class="dotted_link">Amazon.sg</a></div>';
+                }
+            }
+            if ($amazonAsinNl != '') {
+                if ($amazonTagNl != '') {
+                    echo '<div class="amazon-product-buy"><a href="' . $amazonNl . '/dp/' . $amazonAsinNl . '?tag=' . $amazonTagNl . '" target="_blank" class="dotted_link">Amazon.nl</a></div>';
+                } else {
+                    echo '<div class="amazon-product-buy"><a href="' . $amazonNl . '/dp/' . $amazonAsinNl . '" target="_blank" class="dotted_link">Amazon.nl</a></div>';
+                }
+            }
+            if ($amazonAsinMx != '') {
+                if ($amazonTagMx != '') {
+                    echo '<div class="amazon-product-buy"><a href="' . $amazonMx . '/dp/' . $amazonAsinMx . '?tag=' . $amazonTagMx . '" target="_blank" class="dotted_link">Amazon.com.mx</a></div>';
+                } else {
+                    echo '<div class="amazon-product-buy"><a href="' . $amazonMx . '/dp/' . $amazonAsinMx . '" target="_blank" class="dotted_link">Amazon.com.mx</a></div>';
+                }
+            }
+            /**
+             * For Amazon bundle
+             */
+            if ($amazonBundleCom != ''  || $amazonBundleCa != '' || $amazonBundleCoUk != '' || $amazonBundleDe  != '' || $amazonBundleDe != '' || $amazonBundleEs != '' || $amazonBundleFr != '' || $amazonBundleIt != '') {
+                echo "<div class='product_buy_bundle_before'>" . $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('product_buy_bundle_before')->toHtml() . "</div>";
+            }
+            if ($amazonBundleCom != '') {
+                if ($amazonTagCom != '') {
+                    echo '<div class="amazon-product-buy">' . $bundlesOn . '<a href="' . $amazonCom . '/stores/page/' . $amazonBundleCom . '?tag=' . $amazonTagCom . '" target="_blank" class="dotted_link"> Amazon.com</a></div>';
+                } else {
+                    echo '<div class="amazon-product-buy">' . $bundlesOn . '<a href="' . $amazonCom . '/stores/page/' . $amazonBundleCom . '" target="_blank" class="dotted_link"> Amazon.com</a></div>';
+                }
+            }
+            if ($amazonBundleCa != '') {
+                if ($amazonTagCa != '') {
+                    echo '<div class="amazon-product-buy">' . $bundlesOn . '<a href="' . $amazonCa . '/stores/page/' . $amazonBundleCa . '?tag=' . $amazonTagCa . '" target="_blank" class="dotted_link"> Amazon.ca</a></div>';
+                } else {
+                    echo '<div class="amazon-product-buy">' . $bundlesOn . '<a href="' . $amazonCa . '/stores/page/' . $amazonBundleCa . '" target="_blank" class="dotted_link"> Amazon.ca</a></div>';
+                }
+            }
+            if ($amazonBundleCoUk != '') {
+                if ($amazonTagCoUk != '') {
+                    echo '<div class="amazon-product-buy">' . $bundlesOn . '<a href="' . $amazonCoUk . '/stores/page/' . $amazonBundleCoUk . '?tag=' . $amazonTagCoUk . '" target="_blank" class="dotted_link"> Amazon.co.uk</a></div>';
+                } else {
+                    echo '<div class="amazon-product-buy">' . $bundlesOn . '<a href="' . $amazonCoUk . '/stores/page/' . $amazonBundleCoUk . '" target="_blank" class="dotted_link"> Amazon.co.uk</a></div>';
+                }
+            }
+            if ($amazonBundleDe != '') {
+                if ($amazonTagDe != '') {
+                    echo '<div class="amazon-product-buy">' . $bundlesOn . '<a href="' . $amazonDe . '/stores/page/' . $amazonBundleDe . '?tag=' . $amazonTagDe . '" target="_blank" class="dotted_link"> Amazon.de</a></div>';
+                } else {
+                    echo '<div class="amazon-product-buy">' . $bundlesOn . '<a href="' . $amazonDe . '/stores/page/' . $amazonBundleDe . '" target="_blank" class="dotted_link"> Amazon.de</a></div>';
+                }
+            }
+            if ($amazonBundleEs != '') {
+                if ($amazonTagEs != '') {
+                    echo '<div class="amazon-product-buy">' . $bundlesOn . '<a href="' . $amazonEs . '/stores/page/' . $amazonBundleEs . '?tag=' . $amazonTagEs . '" target="_blank" class="dotted_link"> Amazon.es</a></div>';
+                } else {
+                    echo '<div class="amazon-product-buy">' . $bundlesOn . '<a href="' . $amazonEs . '/stores/page/' . $amazonBundleEs . '" target="_blank" class="dotted_link"> Amazon.es</a></div>';
+                }
+            }
+            if ($amazonBundleFr != '') {
+                if ($amazonTagFr != '') {
+                    echo  '<div class="amazon-product-buy">' . $bundlesOn . '<a href="' . $amazonFr . '/stores/page/' . $amazonBundleFr . '?tag=' . $amazonTagFr . '" target="_blank" class="dotted_link"> Amazon.fr</a></div>';
+                } else {
+                    echo  '<div class="amazon-product-buy">' . $bundlesOn . '<a href="' . $amazonFr . '/stores/page/' . $amazonBundleFr . '" target="_blank" class="dotted_link"> Amazon.fr</a></div>';
+                }
+            }
+            if ($amazonBundleIt != '') {
+                if ($amazonTagIt != '') {
+                    echo '<div class="amazon-product-buy">' . $bundlesOn . '<a href="' . $amazonIt . '/stores/page/' . $amazonBundleIt . '?tag=' . $amazonTagIt . '" target="_blank" class="dotted_link"> Amazon.it</a></div>';
+                } else {
+                    echo '<div class="amazon-product-buy">' . $bundlesOn . '<a href="' . $amazonIt . '/stores/page/' . $amazonBundleIt . '" target="_blank" class="dotted_link"> Amazon.it</a></div>';
+                }
+            }
+            if ($amazonBundleSg != '') {
+                if ($amazonTagSg != '') {
+                    echo '<div class="amazon-product-buy">' . $bundlesOn . '<a href="' . $amazonSg . '/stores/page/' . $amazonBundleSg . '?tag=' . $amazonTagSg . '" target="_blank" class="dotted_link"> Amazon.sg</a></div>';
+                } else {
+                    echo '<div class="amazon-product-buy">' . $bundlesOn . '<a href="' . $amazonSg . '/stores/page/' . $amazonBundleSg . '" target="_blank" class="dotted_link"> Amazon.sg</a></div>';
+                }
+            }
+            if ($amazonBundleNl != '') {
+                if ($amazonTagNl != '') {
+                    echo '<div class="amazon-product-buy">' . $bundlesOn . '<a href="' . $amazonNl . '/stores/page/' . $amazonBundleNl . '?tag=' . $amazonTagNl . '" target="_blank" class="dotted_link"> Amazon.nl</a></div>';
+                } else {
+                    echo '<div class="amazon-product-buy">' . $bundlesOn . '<a href="' . $amazonNl . '/stores/page/' . $amazonBundleNl . '" target="_blank" class="dotted_link"> Amazon.nl</a></div>';
+                }
+            }
+            if ($amazonBundleMx != '') {
+                if ($amazonTagMx != '') {
+                    echo '<div class="amazon-product-buy">' . $bundlesOn . '<a href="' . $amazonMx . '/stores/page/' . $amazonBundleMx . '?tag=' . $amazonTagMx . '" target="_blank" class="dotted_link"> Amazon.com.mx</a></div>';
+                } else {
+                    echo '<div class="amazon-product-buy">' . $bundlesOn . '<a href="' . $amazonMx . '/stores/page/' . $amazonBundleMx . '" target="_blank" class="dotted_link"> Amazon.com.mx</a></div>';
+                }
+            }
+            echo "<div class='product_buy_after'>" . $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('product_buy_after')->toHtml() . "</div>";
+            ?>
+        </div>
+    </div>
+<?php endif; ?>

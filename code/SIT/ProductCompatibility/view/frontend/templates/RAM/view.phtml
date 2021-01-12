@@ -1,0 +1,52 @@
+<?php
+    $tabData = $block->getTabdata();
+    $tabId = $tabData['id'];
+    $helper=$this->helper('Swissup\Easytabs\Helper\Data');
+    $params=$helper->getVisible($tabId);
+    $page = $helper->getCustomPageInfo($params,$tabId);
+    if($page === false):
+        return true;
+    endif;
+    $urlKey = $this->getRequest()->getParam('url_key');
+    $comp_type = $this->getRequest()->getParam('comp_type');
+    $getCompData = $block->getRouteCompatibilityData($comp_type,$urlKey);
+
+    /**
+     * Sort array by product name
+     */
+    $product_name = array_column($getCompData, 'product_name');
+    array_multisort($product_name, SORT_ASC, $getCompData);
+?>
+
+<div class="ram-custom-router-content custom-scroller">
+    <div class="section-inner-presse-page-full">
+        <div class="ramcr-inner-container">
+            <div class="ramcr-cms-content">
+                <?php
+                    $ram_comp = $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('ram_compatibility_pretext')->toHtml();
+                    echo substr($ram_comp,0,strpos($ram_comp,'{{ram_compatibility}}'));
+                ?>
+            </div>
+            <h1 class="ramcr-table-head"><?php echo str_replace("_", " ", $urlKey);?></h1>
+            <div class="ramcr-table">
+                <div class="ramcr-table-title">
+                    <span class="pro-ramcr-product"><?php echo __('Product');?></span>
+                    <span class="pro-ramcr-compatibility"><?php echo __('Compatibility');?></span>
+                    <span class="pro-ramcr-comment"><?php echo __('Comment');?></span>
+                </div>
+                <?php foreach($getCompData as $compData){ ?>
+                <div class="ramcr-table-data">
+                    <span class="pro-ramcr-product"><a href="<?= $compData['product_url']?>"><?= $compData['product_name']?></a></span>
+                    <span class="pro-ramcr-compatibility"><img src="<?= $compData['compatiibility']?>"></span>
+                    <span class="pro-ramcr-comment"><ul><?= $compData['template_text_comment'].$compData['comp_extra_comment']?></ul></span>
+                </div>
+                <?php }?>
+            </div>
+            <div>
+                <div class="green"><?php echo __('Compatible');?></div>
+                <div class="blue"><?php echo __('Possible Issues (see comment)');?></div>
+                <div class="red"><?php echo __('Incompatible (see comment)');?></div>
+            </div>
+        </div>
+    </div>
+</div>

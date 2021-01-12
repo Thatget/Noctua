@@ -1,0 +1,42 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Code standard by : Rh [1-3-2019]
+ */
+?>
+
+<div class="comp-mainboard custom-scroller">
+	<div class="section-inner-presse-page-full">
+		<div class="mainboard-content">
+			<?php
+				$mainboard_comp = $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('product_compatibility_pretext')->toHtml();
+				echo substr($mainboard_comp,0,strpos($mainboard_comp,'{{mainboard_compatibility}}'));
+			?>
+		</div>
+		<div data-bind="scope: 'sitCompMainboard'">
+			<!-- ko template: getTemplate()  -->
+			<!-- /ko  -->
+		</div>
+		<div class="mainboard-bottom-content">
+			<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('comp_mainboard_bottom_text')->toHtml(); ?>
+		</div>
+	</div>
+</div>
+<script type="text/x-magento-init">
+{
+	"*":{
+		"Magento_Ui/js/core/app":{
+			"components": {
+				"sitCompMainboard":{
+					"component":"SIT_ProductCompatibility/js/category/view/compmainboard",
+					"controllerUrl":"<?= $block->getUrl('sit_productcompatibility/category/compmainboard');?>"
+				}
+			}
+		}
+	}
+}
+</script>

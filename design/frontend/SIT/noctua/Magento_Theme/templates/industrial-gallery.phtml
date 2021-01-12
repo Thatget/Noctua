@@ -1,0 +1,18 @@
+<script type="text/javascript">
+	require(['jquery','fancybox'], function($) {
+     	$(document).ready(function() {
+           $('[data-fancybox="slider1"],[data-fancybox="slider2"]').fancybox({
+                    arrows: true,
+                    infobar: true,
+                    keyboard: true,
+                    buttons : [
+                       'fullScreen',
+                       'close'
+                     ],
+                     thumbs : {
+                        autoStart : false
+                     }
+           });
+      	});
+	});
+</script>

@@ -1,0 +1,117 @@
+<?php
+$tabData = $block->getTabdata();
+$tabId = $tabData['id'];
+$helper=$this->helper('Swissup\Easytabs\Helper\Data');
+$params=$helper->getVisible($tabId);
+$removefrom=$helper->getRemoveFrom($tabId);
+$page = $helper->getProductInfo($params,$removefrom);
+
+if($page === false){
+    return true;
+}
+
+$_product = $helper->getProduct();
+$gallery = $this->getLayout()
+    ->createBlock('\Magento\Catalog\Block\Product\View\Gallery')
+    ->setTemplate('Magento_Catalog::product/view/gallery.phtml')
+    ->toHtml();
+
+/**
+ * Changed by MD for display awards on product page[START][04-04-2019]
+ */
+$blockObj = $block->getLayout()->createBlock('SIT\ProductReviewNew\Block\ProductReview\ListReview');
+$proId = $_product->getId();
+$baseUrl = $blockObj->getBaseUrl();
+$productUrl = $blockObj->getAWProductUrl();
+
+$awardColl = $blockObj->getListAwardImageData($proId);
+$reviewCount = $blockObj->getListReviewCountData($proId);
+/**
+ * Changed by MD for display awards on product page[END][04-04-2019]
+ */
+
+/**
+ * Changed by MD for display Product Technologies on product page[START][05-04-2019]
+ */
+$productTechBlock= $block->getLayout()->createBlock('SIT\ProductTechNew\Block\ProductTechnology\ProductTechnologies');
+$proTechColl = $productTechBlock->getProductTechnologyDetails($proId);
+$sitHelper = $this->helper('SIT\MainAdmin\Helper\Data');
+$currentProduct = $sitHelper->getCurrentProduct();
+/**
+ * Changed by MD for display Product Technologies on product page[END][05-04-2019]
+ */
+?>
+<div class="main-product">
+    <div class="product-left">
+        <?php if ($_product->getUpgradedProduct() && $_product->getUpgradedProduct() != 0): ?>
+            <div class="upgraded-product">
+                <?php
+                $tempProduct = $sitHelper->getProductData($_product->getUpgradedProduct());
+                if ($tempProduct) { ?>
+                    <b><?php echo __('Product discontinued. Successor model:') ?><a href='<?php echo $tempProduct->getProductUrl() ?>' class="dotted_link"><?php echo $tempProduct->getName() ?></a></b>
+                <?php } ?>
+            </div>
+        <?php endif; ?>
+        <div class="short-description">
+            <?= /* @escapeNotVerified */ $this->helper('Magento\Catalog\Helper\Output')->productAttribute($_product, $_product->getShortDescription(), 'short_description') ?>
+        </div>
+        <?php if($currentProduct->getNoteWarnings()): ?>
+            <div class="notes-and-warnings">
+                <div class="notes-and-warnings-inner-image"><img src="<?= $sitHelper->getImage('wysiwyg/','icon_antwort.png') ?>"/> </div>
+                <div class="notes-and-warnings-content">
+                    <?= /* @escapeNotVerified */ $sitHelper->getCmsFilterContent($currentProduct->getNoteWarnings()); ?>
+                </div>
+            </div>
+        <?php endif; ?>
+        <div class="product-media-info">
+            <div class="gallery-items"><span class="current-index"></span>/<span class="slider-counter"></span></div>
+            <?= $gallery ?>
+        </div>
+        <?php if(count($proTechColl) > 0): ?>
+            <div class="product-main-box">
+                <div class="product-box-title">
+                    <span>Details</span>
+                </div>
+                <div class="product-box-data">
+                    <div class="product-details-data">
+                        <?php foreach ($proTechColl as $key => $value) :
+                            $techImage = $sitHelper->getImage('producttechnology/image', $value['technology_image']);
+                            ?>
+                            <div class="feature-main-box">
+                                <div class="feature-main-box-left-img">
+                                    <img data-src="<?= $techImage; ?>" alt="<?= $value['technology_title']; ?>">
+                                </div>
+                                <div class="feature-main-box-right">
+                                    <h1><?= $value['technology_title']; ?></h1>
+                                    <div class="feature-right-box-content"><?= $sitHelper->getCmsFilterContent($value['technology_shortdesc']); ?></div>
+                                    <div style="clear:both"></div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+
+                    </div>
+                    <div class="feature-bottom-content">
+                        <i><?= $sitHelper->getCmsFilterContent($currentProduct->getData('technology_bottom_text')); ?></i>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
+    <div class="product-right">
+        <!-- Changed by MD for display awards on product page[START][04-04-2019] -->
+        <?php
+        $rc = 0;
+        if(count($awardColl['collection']) > 0):
+            foreach ($awardColl['collection'] as $key => $value) :
+                $rc++;
+                ?>
+                <a href="<?= $productUrl; ?>/review#review<?= $rc; ?>"><img data-src="<?= $value['review_image']; ?>" /></a>
+            <?php endforeach; endif; ?>
+        <?php if($awardColl['size'] > 10): ?>
+            <div class="more-review-images">
+                <a class="dotted_link" href="<?= $baseUrl;?>reviews?product=<?= $proId ?>"><?php __('See all %d reviews for this product', ['d' => $reviewCount]) ?></a>
+            </div>
+        <?php endif;?>
+        <!-- Changed by MD for display awards on product page[END][04-04-2019] -->
+    </div>
+</div>
