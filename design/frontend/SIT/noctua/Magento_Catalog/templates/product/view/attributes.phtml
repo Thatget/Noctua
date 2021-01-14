@@ -67,7 +67,7 @@ if($page === false){
                             $labelLink = $additionalBlock->getAttrData($_dataValue['code']);
                         if (in_array($_dataValue["code"],$SACd)){
                             if ($_dataValue["code"] == "product_specification_sheet") {
-                                echo "<li><a class='dotted_link' target='_blank' href='" . $_dataValue['value'] . "'>" . $_product->getName() . $_dataValue['label'] . "</a></li>";
+                                echo "<li><a class='dotted_link' target='_blank' href='" . $_dataValue['value'] . "'>" . $_product->getName() ." ". $_dataValue['label'] . "</a></li>";
                             }else {
                                 echo "<li><a class='dotted_link' target='_blank' href='" . $_dataValue['value'] . "'>" . $_dataValue['label'] . "</a></li>";
                             }
