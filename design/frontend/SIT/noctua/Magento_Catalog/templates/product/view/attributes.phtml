@@ -29,6 +29,12 @@ if($page === false){
     $specification_bottom_image = $sitHelper->getImage('catalog/product',$_product->getData('specification_bottom_image'));
     $specification_image = $sitHelper->getImage('catalog/product',$_product->getData('specification_image'));
     $baseUrl = $sitHelper->getStoreBaseUrl();
+
+    //attribute in group "Specification & compliance documents"
+    $SACd = array("product_specification_sheet", "pwm_specifications", "ce_certificate_of_compliance",
+        "iso_9001_iso_14001_compliance","rohs_certificate_of_compliance", "reach_certificate_of_complianc",
+        "ul_certificate","safety_data_sheet_msds","conflict_minerals_statement_cm","tuv_certificate");
+
 ?>
 <?php if ($_additional = $additionalBlock->getAdditionalData()):?>
     <div class="section-inner-presse-page-full specification">
@@ -49,9 +55,24 @@ if($page === false){
                         <div class="specification-main-title">
                             <span><?= $block->escapeHtml(__(str_replace('Migration_', '', $_data['title']))); ?></span>
                         </div>
+                        <?php if ($_data['attrid'] == "1051"):?>
+                        <div class="specification-data">
+                            <div class="col label" scope="row">
+                                <?php echo  __("Materials available for download") ?>
+                            </div>
+                            <div class="col data">
+                        <ul>
+                        <?php endif; ?>
                         <?php foreach ($_data['items'] as $_dataValue):
                             $labelLink = $additionalBlock->getAttrData($_dataValue['code']);
-                        if($_dataValue["code"] != 'height_with_fan_url') :
+                        if (in_array($_dataValue["code"],$SACd)){
+                            if ($_dataValue["code"] == "product_specification_sheet") {
+                                echo "<li><a class='dotted_link' target='_blank' href='" . $_dataValue['value'] . "'>" . $_product->getName() . $_dataValue['label'] . "</a></li>";
+                            }else {
+                                echo "<li><a class='dotted_link' target='_blank' href='" . $_dataValue['value'] . "'>" . $_dataValue['label'] . "</a></li>";
+                            }
+                        }
+                        if($_dataValue["code"] != 'height_with_fan_url' && !in_array($_dataValue["code"],$SACd)) :
                         ?>
                         <div class="specification-data" data-code="<?= $_dataValue['code'] ?>">
                             <?php if($labelLink) : ?>
@@ -70,6 +91,7 @@ if($page === false){
                             ?>
                                 <div class="col data" data-th="<?= $block->escapeHtml(__($_dataValue['label'])) ?>"><?= /* @escapeNotVerified */ $resultValue; ?></div>
                             <?php else :
+                                //echo $_dataValue['code']; //attribute code;
                                 $result = __('%s ' . $_dataValue['code'],$_helper->productAttribute($_product, $_dataValue['value'], $_dataValue['code']));
                                 $resultValue= str_replace("%s", "", $result);
 
@@ -91,6 +113,11 @@ if($page === false){
                         </div>
                     <?php endif; ?>
                     <?php endforeach; ?>
+                            <?php if ($_data['attrid'] == "1051"):?>
+                            </ul>
+                            </div>
+                        </div>
+                                <?php endif; ?>
                     </div>
                     <?php endif; ?>
                     <?php endforeach; ?>
