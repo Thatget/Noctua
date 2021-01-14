@@ -14,7 +14,6 @@ use Magento\Customer\Model\SessionFactory;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\HTTP\Header;
-use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 use Magento\Framework\View\Result\PageFactory;
 
 class Submit extends Action
@@ -85,12 +84,6 @@ class Submit extends Action
     protected $fieldFactory;
 
     /**
-     * @var TimezoneInterface
-     *
-     */
-    protected $_localeDate;
-
-    /**
      * [__construct description]
      * @param Context                                     $context                [description]
      * @param \Magento\Framework\Json\Encoder             $jsonEncoder            [description]
@@ -134,7 +127,6 @@ class Submit extends Action
         $this->_fieldFactory = $fieldFactory;
         $this->_resource = $resource;
         $this->header = $header;
-        $this->_localeDate = $localeDate;
         parent::__construct($context);
     }
 
@@ -418,7 +410,6 @@ class Submit extends Action
      * @return string
      */
     public function checkDateFormat($fieldData){
-        $result = "";
         try {
             foreach ($fieldData as $fiedDataKey => $fiedDataValue) {
                 $field = $this->_fieldFactory->create()->load($fiedDataKey);

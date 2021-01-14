@@ -36,7 +36,7 @@ define([
             var data={product_id: this.productId};
             storage.post(
                 this.controllerUrl,
-                JSON.stringify(data),
+                JSON.stringify(data)
             ).done(
                 function(response) {
                     self.productReviewList(response);

@@ -87,8 +87,11 @@ class Suggest extends Action implements HttpGetActionInterface
         $html_other .= $other_text;
         $html_compatibility_data = '<li class="head">' . __('COMPATIBILITY') . '</li>';
         $newPage = 'https://ncc.noctua.at/?hq=';
+        $qx = urldecode($this->getRequest()->getParam('q'));
+        $qqqq = preg_replace('/\s+/', ' ',$qx);
+
         $html_compatibility_data .= "<li class='prod'>
-            <a target='_blank' href='". /* @escapeNotVerified */ ($newPage.$this->getRequest()->getParam('q'))."' class='other-link' style='display: inline-block; height: 100%; width: 100%;'>Click here to search our compatibility database
+            <a target='_blank' href='". /* @escapeNotVerified */ ($newPage.$qqqq)."' class='other-link' style='display: inline-block; height: 100%; width: 100%;'>Click here to search our compatibility database
             </a></li>";
         $final_html_product = '<ul><li class="head">' . __('Products') . ' (' . $product_count . ')</li>';
         $final_html_product .= $html_product;

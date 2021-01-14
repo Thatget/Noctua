@@ -135,7 +135,6 @@ class Form extends \VladimirPopov\WebForms\Model\Form
                 /**
                  * Changes MD for newsletter GDPR changes[START][06-05-2019]
                  */
-
                 if ($field->getCode() == "City") {
                     $state_value = $result['field_' . $field->getId()];
                 }
