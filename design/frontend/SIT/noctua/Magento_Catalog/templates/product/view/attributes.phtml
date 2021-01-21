@@ -55,7 +55,7 @@ if($page === false){
                         <div class="specification-main-title">
                             <span><?= $block->escapeHtml(__(str_replace('Migration_', '', $_data['title']))); ?></span>
                         </div>
-                        <?php if ($_data['attrid'] == "1051"):?>
+                        <?php if (($_data['title'] == 'Specification &amp; compliance documents')||($_data['title'] == 'Specification & compliance documents')):?>
                         <div class="specification-data">
                             <div class="col label" scope="row">
                                 <?php echo  __("Materials available for download") ?>
