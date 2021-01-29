@@ -280,9 +280,25 @@ class ListReview extends \Magento\Framework\View\Element\Template
             //         }
             //     }
             // $awardCollection[$key]['product_id'] = $proId;
+			$awardCollection[$key]['review_position'] = $value['review_position'];
             $awardCollection[$key]['product_id'] = $value['product_id'];
             $awardCollection[$key]['review_image'] = $this->sitHelper->getImage('productreview/image', $value->getReviewImage());
             // }
+        }
+		$newAwardCollection = $awardCollection;
+        $i = 0;
+        foreach ($awardCollection as $key => $itemA){
+            $j = 0;
+            $i++;
+            foreach ($awardCollection as $newKey => $itemB){
+                $j++;
+                if($j <= $i) continue;
+                if ((int)$itemA['review_position'] < (int)$itemB['review_position']){
+                    $x = $awardCollection[$key];
+                    $awardCollection[$key] = $awardCollection[$newKey];
+                    $awardCollection[$newKey] = $x;
+                }
+            }
         }
         return $awardCollection;
     }
