@@ -174,6 +174,7 @@ class View extends \Magento\Framework\View\Element\Template
             }
         }
         foreach ($reviewColl as $review) {
+			$reviewArray['review_position'] = $review->getReviewPosition();
             $reviewArray["created_at"] = $this->changeDateFormat($review->getCreatedAt());
             $reviewArray["review_website"] = $review->getReviewWebsite();
             $reviewArray["review_country"] = $this->sitHelper->getImage('flags', '/' . strtolower($review->getReviewCountry() . '.gif'));
@@ -185,6 +186,20 @@ class View extends \Magento\Framework\View\Element\Template
             $reviewArray["review_r_lng"] = $options[$review->getRLng()];
             $reviewArray["review_r_lng_id"] = $review->getRLng();
             array_push($reviewsKoArray, $reviewArray);
+        }
+		        $i = 0;
+        foreach($reviewsKoArray as $key => $value){
+            $j = 0;
+            $i++;
+            foreach ($reviewsKoArray as $newKey => $newValue){
+                $j++;
+                if($j <= $i) continue;
+                if ((int)$value['review_position'] < (int)$newValue['review_position']){
+                    $x = $reviewsKoArray[$key];
+                    $reviewsKoArray[$key] = $reviewsKoArray[$newKey];
+                    $reviewsKoArray[$newKey] = $x;
+                }
+            }
         }
         return [
             "collection" => $reviewsKoArray,
