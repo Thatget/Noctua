@@ -121,14 +121,6 @@ class Koreviews extends \Magento\Framework\App\Action\Action
     {
         $resultPage = $this->resultPageFactory->create();
         $paramArray = [];
-		// if(in_array($_SERVER['REMOTE_ADDR'],array('222.252.106.93'))){
-			// var_dump("Testttt"); 
-			// var_dump("<pre>"); 
-			// var_dump($this->jsonHelper->jsonDecode($this->getRequest()->getContent())); 
-			// var_dump("</pre>"); 
-			// die();
-		// }
-
         if ($this->getRequest()->getContent()) {
             $paramArray = $this->jsonHelper->jsonDecode($this->getRequest()->getContent());
             if (array_key_exists('reviewlist', $paramArray)) {
@@ -166,6 +158,7 @@ class Koreviews extends \Magento\Framework\App\Action\Action
      */
     private function getKoReviews($paramArray)
     {
+        $attributeId = $this->eavConfig->getAttribute('sit_productreviewnew_productreview', 'review_position');
         $currentStore = $this->storeManagerInterface->getStore()->getStoreId();
         $reviewData = $this->reviewcollFactory->create();
         $reviewColl = $reviewData->setStoreId($currentStore)->addAttributeToSelect('*')->addAttributeToFilter('status', ['eq' => 1]);
@@ -183,6 +176,11 @@ class Koreviews extends \Magento\Framework\App\Action\Action
             'substring_index(GROUP_CONCAT(DISTINCT pv.value SEPARATOR \', \'),\',\',4) as pname'
         );
         $reviewColl->getSelect()->group('e.entity_id');
+        $reviewColl->getSelect()->joinLeft(
+            ['pv2' => 'sit_productreviewnew_productreview_varchar'],
+            'e.entity_id = pv2.entity_id and if( pv2.store_id = '.$currentStore.' ,pv2.store_id = '.$currentStore.',pv2.store_id = 0 ) and pv2.attribute_id = ' . $attributeId->getId(),
+            'CAST(pv2.value AS DECIMAL(10,2)) as product_review_new'
+        );
         /**
          * END : Join Query For Add Product Name : RH
          */
@@ -206,21 +204,20 @@ class Koreviews extends \Magento\Framework\App\Action\Action
          */
         $reviewColl->setPageSize($paramArray["limit"])->setCurPage($paramArray["p"]);
 
-        $reviewColl->getSelect();
+        $reviewColl->getSelect()->order('product_review_new DESC');
         $reviewArray = [];
         $reviewsKoArray = [];
         $attribute = $this->eavConfig->getAttribute('sit_productreviewnew_productreview', 'r_lng');
         $language = $attribute->getSource()->getAllOptions();
 
         $options = [];
-
         foreach ($language as $option) {
             if ($option['label'] != ' ') {
                 $options[$option['value']] = $option['label'];
             }
         }
         foreach ($reviewColl as $review) {
-	    $reviewArray['review_position'] = $review->getReviewPosition();
+            $reviewArray['review_position'] = $review->getReviewPosition();
             $reviewArray["created_at"] = $this->changeDateFormat($review->getCreatedAt());
             $reviewArray["review_website"] = $review->getReviewWebsite();
             $reviewArray["review_country"] = $this->sitHelper->getImage('flags', '/' . strtolower($review->getReviewCountry() . '.gif'));
@@ -233,21 +230,6 @@ class Koreviews extends \Magento\Framework\App\Action\Action
             $reviewArray["review_r_lng_id"] = $review->getRLng();
             array_push($reviewsKoArray, $reviewArray);
         }
-        $i = 0;
-        foreach($reviewsKoArray as $key => $value){
-            $j = 0;
-            $i++;
-            foreach ($reviewsKoArray as $newKey => $newValue){
-                $j++;
-                if($j <= $i) continue;
-                if ((int)$value['review_position'] < (int)$newValue['review_position']){
-                    $x = $reviewsKoArray[$key];
-                    $reviewsKoArray[$key] = $reviewsKoArray[$newKey];
-                    $reviewsKoArray[$newKey] = $x;
-                }
-            }
-        }
-
         /**
          * Get size of collection
          */

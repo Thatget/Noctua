@@ -130,6 +130,7 @@ class View extends \Magento\Framework\View\Element\Template
 
     public function getProductPageReviewData($productId)
     {
+        $attributeId = $this->eavConfig->getAttribute('sit_productreviewnew_productreview', 'review_position');
         $currentStore = $this->_storeManager->getStore()->getId();
         $reviewData = $this->_reviewcollFactory->create();
         $_product = $this->productFactory->create()->load($productId);
@@ -151,15 +152,20 @@ class View extends \Magento\Framework\View\Element\Template
             't2.product_id = pv.entity_id and pv.attribute_id = ' . self::PRODUCT_NAME_ATTRIBUTE_ID,
             'substring_index(GROUP_CONCAT(DISTINCT pv.value SEPARATOR \', \'),\',\',4) as pname'
         );
-        $reviewColl->getSelect()->group('e.entity_id');
         /**
          * END : Join Query For Add Product Name : RH
          */
+        $reviewColl->getSelect()->group('e.entity_id');
+        $reviewColl->getSelect()->joinLeft(
+            ['pv2' => 'sit_productreviewnew_productreview_varchar'],
+            'e.entity_id = pv2.entity_id and if( pv2.store_id = '.$currentStore.' ,pv2.store_id = '.$currentStore.',pv2.store_id = 0 ) and pv2.attribute_id = ' . $attributeId->getId(),
+            'CAST(pv2.value AS DECIMAL(10,2)) as product_review_new'
+        );
+        $reviewColl->getSelect()->where('t2.product_id = ? ', $productId);
         $reviewColl->setOrder('product_review_priority', 'desc');
         $reviewColl->setOrder('created_at', 'desc');
         // $reviewColl->setOrder('entity_id', 'desc');
-        $reviewColl->getSelect()->where('t2.product_id = ? ', $productId);
-
+        $reviewColl->getSelect()->order('product_review_new DESC');
         $totalProductReviews = $reviewData->getSize();
 
         $reviewArray = [];
@@ -174,7 +180,7 @@ class View extends \Magento\Framework\View\Element\Template
             }
         }
         foreach ($reviewColl as $review) {
-			$reviewArray['review_position'] = $review->getReviewPosition();
+            $reviewArray['review_position'] = $review->getReviewPosition();
             $reviewArray["created_at"] = $this->changeDateFormat($review->getCreatedAt());
             $reviewArray["review_website"] = $review->getReviewWebsite();
             $reviewArray["review_country"] = $this->sitHelper->getImage('flags', '/' . strtolower($review->getReviewCountry() . '.gif'));
@@ -186,20 +192,6 @@ class View extends \Magento\Framework\View\Element\Template
             $reviewArray["review_r_lng"] = $options[$review->getRLng()];
             $reviewArray["review_r_lng_id"] = $review->getRLng();
             array_push($reviewsKoArray, $reviewArray);
-        }
-		        $i = 0;
-        foreach($reviewsKoArray as $key => $value){
-            $j = 0;
-            $i++;
-            foreach ($reviewsKoArray as $newKey => $newValue){
-                $j++;
-                if($j <= $i) continue;
-                if ((int)$value['review_position'] < (int)$newValue['review_position']){
-                    $x = $reviewsKoArray[$key];
-                    $reviewsKoArray[$key] = $reviewsKoArray[$newKey];
-                    $reviewsKoArray[$newKey] = $x;
-                }
-            }
         }
         return [
             "collection" => $reviewsKoArray,

@@ -74,6 +74,11 @@ class ListReview extends \Magento\Framework\View\Element\Template
     protected $sitProductFactory;
 
     /**
+     * @var \Magento\Eav\Model\Config
+     */
+    protected $eavConfig;
+
+    /**
      * [__construct description]
      * @param \Magento\Framework\View\Element\Template\Context                          $context           [description]
      * @param \SIT\ProductReviewNew\Model\ResourceModel\ProductReview\CollectionFactory $reviewcollFactory [description]
@@ -85,6 +90,7 @@ class ListReview extends \Magento\Framework\View\Element\Template
      * @param \Magento\Framework\Json\Helper\Data                                       $jsonHelper        [description]
      * @param \SIT\ProductReviewNew\Model\ProductFactory                                $sitProductFactory [description]
      * @param array                                                                     $data              [description]
+     * @param \Magento\Eav\Model\Config                                                 $eavConfig         [description]
      */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
@@ -96,6 +102,7 @@ class ListReview extends \Magento\Framework\View\Element\Template
         \Magento\Catalog\Model\CategoryFactory $categoryFactory,
         \Magento\Framework\Json\Helper\Data $jsonHelper,
         \SIT\ProductReviewNew\Model\ProductFactory $sitProductFactory,
+        \Magento\Eav\Model\Config $eavConfig,
         array $data = []
     ) {
         $this->reviewcollFactory = $reviewcollFactory;
@@ -106,6 +113,7 @@ class ListReview extends \Magento\Framework\View\Element\Template
         $this->categoryFactory = $categoryFactory;
         $this->jsonHelper = $jsonHelper;
         $this->sitProductFactory = $sitProductFactory;
+        $this->eavConfig = $eavConfig;
         parent::__construct($context, $data);
     }
 
@@ -230,9 +238,11 @@ class ListReview extends \Magento\Framework\View\Element\Template
         /**
          * Not need to optimize code. It will return wrong sort order
          */
+        $attributeId = $this->eavConfig->getAttribute('sit_productreviewnew_productreview', 'review_position');
         $currentStore = $this->storeManager->getStore()->getId();
         $reviewData = $this->reviewcollFactory->create();
-        $reviewColl = $reviewData->setStoreId($currentStore)->addAttributeToSelect('*')->addAttributeToFilter('status', ['eq' => 1]);
+        $reviewColl = $reviewData->setStoreId($currentStore)->addAttributeToSelect('*')
+            ->addAttributeToFilter('status', ['eq' => 1]);
 
         /**
          * START : Join Query For Add Product Name : RH
@@ -248,60 +258,28 @@ class ListReview extends \Magento\Framework\View\Element\Template
             'substring_index(GROUP_CONCAT(DISTINCT pv.entity_id SEPARATOR \',\'),\',\',4) as pid'
         );
         $reviewColl->getSelect()->group('e.entity_id');
+        $reviewColl->getSelect()->joinLeft(
+            ['pv2' => 'sit_productreviewnew_productreview_varchar'],
+            'e.entity_id = pv2.entity_id and if( pv2.store_id = '.$currentStore.' ,pv2.store_id = '.$currentStore.',pv2.store_id = 0 ) and pv2.attribute_id = ' . $attributeId->getId(),
+            'CAST(pv2.value AS DECIMAL(10,2)) as product_review_new'
+        );
         $reviewColl->getSelect()->where('t2.product_id = ? ', $proId);
-        $reviewColl->setOrder('product_review_priority', 'desc');
+        //$reviewColl->setOrder('product_review_priority', 'desc');
         $reviewColl->setOrder('created_at', 'desc');
+        $reviewColl->getSelect()->order('product_review_new DESC');
         /**
          * END : Join Query For Add Product Name : RH
          */
         $awardCollection = [];
 
         foreach ($reviewColl as $key => $value) {
-            // $productIdArr = explode(',', $value['pid']);
-            // foreach ($productIdArr as $keyPro => $valuePro) {
-            //     $cat_ids = [];
-            //     $flag = false;
-            //     $_product = $this->productFactory->create()->load($valuePro);
-            //     $cat_ids = $_product->getCategoryIds();
-            //     foreach ($cat_ids as $cat) {
-            //         if ($cat == 16) {
-            //             $flag = true;
-            //         }
-            //     }
-            // }
-            // if ($flag == false) {
-            //     if ($value->getReviewImage()) {
-            //         $prolist = '';
-            //         $proId = '';
-            //         foreach ($productIdArr as $product) {
-            //             $_product = $this->productFactory->create()->load($product);
-            //             $proId = $_product->getId();
-            //             break;
-            //         }
-            //     }
-            // $awardCollection[$key]['product_id'] = $proId;
-			$awardCollection[$key]['review_position'] = $value['review_position'];
+            $awardCollection[$key]['review_position'] = $value['review_position'];
             $awardCollection[$key]['product_id'] = $value['product_id'];
             $awardCollection[$key]['review_image'] = $this->sitHelper->getImage('productreview/image', $value->getReviewImage());
-            // }
-        }
-		$newAwardCollection = $awardCollection;
-        $i = 0;
-        foreach ($awardCollection as $key => $itemA){
-            $j = 0;
-            $i++;
-            foreach ($awardCollection as $newKey => $itemB){
-                $j++;
-                if($j <= $i) continue;
-                if ((int)$itemA['review_position'] < (int)$itemB['review_position']){
-                    $x = $awardCollection[$key];
-                    $awardCollection[$key] = $awardCollection[$newKey];
-                    $awardCollection[$newKey] = $x;
-                }
-            }
         }
         return $awardCollection;
     }
+
     /**
      * List of award in product page
      *
