@@ -162,7 +162,7 @@ class View extends \Magento\Framework\View\Element\Template
             'CAST(pv2.value AS DECIMAL(10,2)) as product_review_new'
         );
         $reviewColl->getSelect()->where('t2.product_id = ? ', $productId);
-        $reviewColl->setOrder('product_review_priority', 'desc');
+        //$reviewColl->setOrder('product_review_priority', 'desc');
         $reviewColl->setOrder('created_at', 'desc');
         // $reviewColl->setOrder('entity_id', 'desc');
         $reviewColl->getSelect()->order('product_review_new DESC');
