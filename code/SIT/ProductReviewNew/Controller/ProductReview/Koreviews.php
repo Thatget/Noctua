@@ -184,7 +184,7 @@ class Koreviews extends \Magento\Framework\App\Action\Action
         /**
          * END : Join Query For Add Product Name : RH
          */
-        $reviewColl->setOrder('created_at', 'desc');
+        //$reviewColl->setOrder('created_at', 'desc');
         $reviewColl->setOrder('entity_id', 'desc');
 
         /**
@@ -204,6 +204,7 @@ class Koreviews extends \Magento\Framework\App\Action\Action
          */
         $reviewColl->setPageSize($paramArray["limit"])->setCurPage($paramArray["p"]);
 
+        $reviewColl->getSelect()->order('created_at DESC');
         $reviewColl->getSelect()->order('product_review_new DESC');
         $reviewArray = [];
         $reviewsKoArray = [];

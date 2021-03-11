@@ -163,8 +163,9 @@ class View extends \Magento\Framework\View\Element\Template
         );
         $reviewColl->getSelect()->where('t2.product_id = ? ', $productId);
         //$reviewColl->setOrder('product_review_priority', 'desc');
-        $reviewColl->setOrder('created_at', 'desc');
+        //$reviewColl->setOrder('created_at', 'desc');
         // $reviewColl->setOrder('entity_id', 'desc');
+        $reviewColl->getSelect()->order('created_at DESC');
         $reviewColl->getSelect()->order('product_review_new DESC');
         $totalProductReviews = $reviewData->getSize();
 
