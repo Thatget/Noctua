@@ -1205,14 +1205,15 @@ class Result extends \Magento\Framework\Model\AbstractModel implements IdentityI
                                     $fileList = [];
                                     $files = $this->fileCollectionFactory->create()->addFilter('result_id', $this->getId())->addFilter('field_id', $field->getId());
                                     foreach ($files as $file) {
-                                        $htmlContent = '';
-                                        /*Changed by MD for download attachment from email[START][18-07-2019]*/
-                                        if (strlen($value) > 1) {
-                                            $filename = preg_replace('/[^a-zA-Z0-9_.-]/', '_', $filename);
-                                            $htmlContent .= $file->getDownloadLinkFront($field->getId(), $filename, $this->getId());
-                                        }
-                                        /*Changed by MD for download attachment from email[END][18-07-2019]*/
-                                        $fileList[] = $htmlContent;
+										
+                                        $attachment = file_get_contents($file->getFullPath());
+                                        $this->_transportBuilder->createAttachment(
+                                            $attachment,
+                                            \Zend_Mime::TYPE_OCTETSTREAM,
+                                            \Zend_Mime::DISPOSITION_ATTACHMENT,
+                                            \Zend_Mime::ENCODING_BASE64,
+                                            $file['name']
+                                        );
                                     }
                                     $value = implode('<br>', $fileList);
                                     break;
@@ -1220,19 +1221,15 @@ class Result extends \Magento\Framework\Model\AbstractModel implements IdentityI
                                     $fileList = [];
                                     $files = $this->fileCollectionFactory->create()->addFilter('result_id', $this->getId())->addFilter('field_id', $field->getId());
                                     foreach ($files as $file) {
-                                        $htmlContent = '';
-                                        /*$img = '<figure><img src="' . urldecode($file->getThumbnail($this->_scopeConfig->getValue('webforms/images/email_thumbnail_width'), $this->_scopeConfig->getValue('webforms/images/email_thumbnail_height'))) . '"/>';*/
-                                        $filename = preg_replace('/[^a-zA-Z0-9_.-]/', '_', $filename);
-                                        $img = $file->getDownloadLinkFront($field->getId(), $filename, $this->getId());
-                                        $htmlContent .= $img;
-                                        /*Changed by MD for download attachment from email[START][18-07-2019]*/
-                                        /* if (strlen($value) > 1) {
-                                        $htmlContent .= '<figcaption><a href="' . $file->getDownloadLinkFront($field->getId(), $filename, $this->getId()) . '">' . $filename . '</a>';
-                                        $htmlContent .= ' <small>[' . $file->getSizeText() . ']</small></figcaption>';
-                                        $htmlContent .= '</figure>';
-                                        }*/
-                                        /*Changed by MD for download attachment from email[END][18-07-2019]*/
-                                        $fileList[] = $htmlContent;
+										
+                                        $attachment = file_get_contents($file->getFullPath());
+                                        $this->_transportBuilder->createAttachment(
+                                            $attachment,
+                                            \Zend_Mime::TYPE_OCTETSTREAM,
+                                            \Zend_Mime::DISPOSITION_ATTACHMENT,
+                                            \Zend_Mime::ENCODING_BASE64,
+                                            $file['name']
+                                        );
                                     }
                                     $value = implode('<br>', $fileList);
 
