@@ -156,12 +156,13 @@ define([
 
               current= config.cururlnoparams; //get current url without parameter
 
-            $('.data.switch.checkSwitch').on('click', function (e) {
+            $('.data.switch').on('click', function (e) {
 
                 title = $(this).attr('title');
                 urlValue = $(this).attr("href");
                 newurl = urlValue.replace("?tab=", "/");
 
+				if (urlValue.indexOf("?tab=") != -1) {
 
                 /**
                  * [Set Page title on tab change]
@@ -179,6 +180,7 @@ define([
                     }
                     /* remove query string from faq view url */
                     changeUrl(title, current + newurl, newurl);
+				}
             });
 
             $('#swissup-easy-tabs [role="tabpanel"][aria-hidden="false"]').show();
