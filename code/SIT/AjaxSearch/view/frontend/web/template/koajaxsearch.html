@@ -47,6 +47,9 @@
                 <div class="product details product-item-details">
                     <strong class="product name product-item-name">
                         <a class="product-item-link" data-bind="attr:{href:product_url},text:name"></a>
+						<!-- ko if: nspr -->
+                            <span style="float: right;background-color: #aaaaab;margin-top: 4px;border-radius: 20px; font-size: small" data-bind="html:nsprContent"></span>
+                        <!-- /ko -->
                     </strong>
                     <div class="product-item-inner">
                         <div class="lining"></div>

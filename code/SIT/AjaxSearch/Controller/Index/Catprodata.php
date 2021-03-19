@@ -110,6 +110,9 @@ class Catprodata extends \Magento\Framework\App\Action\Action
                     $productArray[$key]['left_image'] = $this->imageHelper->init($productData, 'small_image')->setImageFile($productData->getSmallImage())->constrainOnly(true)->keepAspectRatio(true)->keepTransparency(true)->keepFrame(false)->resize(100)->getUrl();
                     $productArray[$key]['right_image'] = $this->imageHelper->init($productData, 'thumbnail')->setImageFile($productData->getThumbnail())->getUrl();
                     $productArray[$key]['product_url'] = $productData->getProductUrl();
+                    $productArray[$key]['nspr'] = $productData->getData('nspr');
+                    $productArray[$key]['label'] = $productData->getResource()->getAttribute('nspr')->getStoreLabel();
+                    $productArray[$key]['nsprContent'] = '<span style="padding: 0px 6px 0px 6px">' . $productArray[$key]['label'] . '</span><span style="background-color: #5b1f07;border-radius: 10px;border: 1px solid #5b1f07;color: white;padding: 0px 6px 0px 6px;">'. $productArray[$key]['nspr'] .'</span>';
                     if (strpos($productData->getProductUrl(), '/products/') !== false) {
                         $urlPath = explode("/", $productData->getProductUrl());
                     }
@@ -131,6 +134,9 @@ class Catprodata extends \Magento\Framework\App\Action\Action
                 $productArray[0]['left_image'] = $this->imageHelper->init($productData, 'small_image')->setImageFile($productData->getSmallImage())->constrainOnly(true)->keepAspectRatio(true)->keepTransparency(true)->keepFrame(false)->resize(100)->getUrl();
                 $productArray[0]['right_image'] = $this->imageHelper->init($productData, 'thumbnail')->setImageFile($productData->getThumbnail())->getUrl();
                 $productArray[0]['product_url'] = $productData->getProductUrl();
+                $productArray[0]['nspr'] = $productData->getData('nspr');
+                $productArray[0]['label'] = $productData->getResource()->getAttribute('nspr')->getStoreLabel();
+                $productArray[0]['nsprContent'] = '<span style="padding: 0px 6px 0px 6px">' . $productArray[$key]['label'] . '</span><span style="background-color: #5b1f07;border-radius: 10px;border: 1px solid #5b1f07;color: white;padding: 0px 6px 0px 6px;">'. $productArray[$key]['nspr'] .'</span>';
                 if (strpos($productData->getProductUrl(), '/products/') !== false) {
                     $urlPath = explode("/", $productData->getProductUrl());
                 }
@@ -152,6 +158,9 @@ class Catprodata extends \Magento\Framework\App\Action\Action
                 $productArray[$key]['left_image'] = $this->imageHelper->init($productData, 'small_image')->setImageFile($productData->getSmallImage())->constrainOnly(true)->keepAspectRatio(true)->keepTransparency(true)->keepFrame(false)->resize(100)->getUrl();
                 $productArray[$key]['right_image'] = $this->imageHelper->init($productData, 'thumbnail')->setImageFile($productData->getThumbnail())->getUrl();
                 $productArray[$key]['product_url'] = $productData->getProductUrl();
+                $productArray[$key]['nspr'] = $productData->getData('nspr');
+                $productArray[$key]['label'] = $productData->getResource()->getAttribute('nspr')->getStoreLabel();
+                $productArray[$key]['nsprContent'] = '<span style="padding: 0px 6px 0px 6px">' . $productArray[$key]['label'] . '</span><span style="background-color: #5b1f07;border-radius: 10px;border: 1px solid #5b1f07;color: white;padding: 0px 6px 0px 6px;">'. $productArray[$key]['nspr'] .'</span>';
                 if (strpos($productData->getProductUrl(), '/products/') !== false) {
                     $urlPath = explode("/", $productData->getProductUrl());
                 }
