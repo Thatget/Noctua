@@ -162,7 +162,7 @@ define([
                 urlValue = $(this).attr("href");
                 newurl = urlValue.replace("?tab=", "/");
 
-				if (urlValue.indexOf("?tab=") != -1) {
+				if ((urlValue.indexOf("?tab=") != -1) || ($(this).attr("href") == '')) {
 
                 /**
                  * [Set Page title on tab change]
