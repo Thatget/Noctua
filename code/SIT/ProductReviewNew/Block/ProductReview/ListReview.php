@@ -238,7 +238,8 @@ class ListReview extends \Magento\Framework\View\Element\Template
         /**
          * Not need to optimize code. It will return wrong sort order
          */
-        $attributeId = $this->eavConfig->getAttribute('sit_productreviewnew_productreview', 'review_position');
+        //$attributeId = $this->eavConfig->getAttribute('sit_productreviewnew_productreview', 'review_position');
+		$attributeId = $this->eavConfig->getAttribute('sit_productreviewnew_productreview', 'product_review_priority');
         $currentStore = $this->storeManager->getStore()->getId();
         $reviewData = $this->reviewcollFactory->create();
         $reviewColl = $reviewData->setStoreId($currentStore)->addAttributeToSelect('*')

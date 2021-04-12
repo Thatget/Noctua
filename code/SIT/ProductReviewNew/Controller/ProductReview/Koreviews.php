@@ -205,7 +205,7 @@ class Koreviews extends \Magento\Framework\App\Action\Action
         $reviewColl->setPageSize($paramArray["limit"])->setCurPage($paramArray["p"]);
 
         $reviewColl->getSelect()->order('created_at DESC');
-        $reviewColl->getSelect()->order('product_review_new DESC');
+        //$reviewColl->getSelect()->order('product_review_new DESC');
         $reviewArray = [];
         $reviewsKoArray = [];
         $attribute = $this->eavConfig->getAttribute('sit_productreviewnew_productreview', 'r_lng');

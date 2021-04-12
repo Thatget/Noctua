@@ -130,7 +130,8 @@ class View extends \Magento\Framework\View\Element\Template
 
     public function getProductPageReviewData($productId)
     {
-        $attributeId = $this->eavConfig->getAttribute('sit_productreviewnew_productreview', 'review_position');
+        //$attributeId = $this->eavConfig->getAttribute('sit_productreviewnew_productreview', 'review_position');
+		$attributeId = $this->eavConfig->getAttribute('sit_productreviewnew_productreview', 'product_review_priority');
         $currentStore = $this->_storeManager->getStore()->getId();
         $reviewData = $this->_reviewcollFactory->create();
         $_product = $this->productFactory->create()->load($productId);
