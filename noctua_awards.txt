@@ -1,0 +1,16 @@
+review_position (Awards Priority cot 4)
+product_review_priority (Product Awards Priority cot 3)
+
+
+status=1;review_position > 0;
+(1,review_posotion desc
+2,created_at desc
+3,getReviewWebsite is ton tai roi thi bo qua
+4,khong la discontinue product(category_id = 16) <du la 1 trong so product cua review ay>)
+
+
+SIT\ProductReviewNew\Controller\ProductReview\Koreviews.php<http://127.0.0.2/TestNoctua/en/reviews>
+
+SIT\ProductReviewNew\Block\ProductReview\View.php<http://127.0.0.2/TestNoctua/en/nh-d15s-chromax-black/review>
+
+SIT\ProductReviewNew\Block\ProductReview\ListReview.php<http://127.0.0.2/TestNoctua/en/nh-d15s-chromax-black> "product_review_new" is review_posotion(cot 4)
