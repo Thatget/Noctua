@@ -10,7 +10,7 @@
 $page = "";
 $limitUrlParam = "";
 if ($this->getRequest()->getParam("p")) {
-    $page = $this->getRequest()->getParam("p");
+    $page = (int)$this->getRequest()->getParam("p");
 }
 if ($this->getRequest()->getParam("limit")) {
     $limitUrlParam = $this->getRequest()->getParam("limit");
@@ -29,10 +29,10 @@ if ($this->getRequest()->getParam("limit")) {
             "components": {
                 "sitGeneralnews":{
                     "component":"SIT_GeneralNews/js/kogeneralnews",
-                    "controller_url":"<?= $block->getUrl("generalnews/news/kogeneralnews");?>",
-                    "pageNumber":"<?= $page?>",
-                    "limitUrlParam":"<?= $limitUrlParam?>",
-                    "imgloader":"<?= $block->getViewFileUrl('images/loader-1.gif') ?>"
+                    "controller_url":"<?= $block->escapeUrl($block->getUrl("generalnews/news/kogeneralnews"));?>",
+                    "pageNumber":"<?= $block->escapeHtml($page)?>",
+                    "limitUrlParam":"<?= $block->escapeHtml($limitUrlParam)?>",
+                    "imgloader":"<?= $block->escapeUrl($block->getViewFileUrl('images/loader-1.gif')) ?>"
                 }
             }
         }

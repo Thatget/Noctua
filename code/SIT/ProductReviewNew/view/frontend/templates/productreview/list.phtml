@@ -47,14 +47,14 @@ $review_block = $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setB
 			"components": {
 				"sitPagination":{
 					"component":"SIT_ProductReviewNew/js/koreviews",
-					"allproductsname": <?= $block->getProductNameList()?>,
-					"base_url":"<?= $block->getBaseUrl();?>",
-					"pageNumber":"<?= $page?>",
-					"productUrlParam":"<?= $productUrlParam?>",
-					"languageUrlParam":"<?= $languageUrlParam?>",
-					"limitUrlParam":"<?= $limitUrlParam?>",
-					"pageLast":"<?= $pageLast ?>",
-					"pageFirst":"<?= $pageFirst ?>",
+					"allproductsname": <?= ($block->getProductNameList())?>,
+					"base_url":"<?= $block->escapeUrl($block->getBaseUrl());?>",
+					"pageNumber":"<?= $block->escapeHtml($page)?>",
+					"productUrlParam":"<?= $block->escapeHtml($productUrlParam)?>",
+					"languageUrlParam":"<?= $block->escapeHtml($languageUrlParam)?>",
+					"limitUrlParam":"<?= $block->escapeHtml($limitUrlParam)?>",
+					"pageLast":"<?= $block->escapeHtml($pageLast) ?>",
+					"pageFirst":"<?= $block->escapeHtml($pageFirst) ?>",
 					"review_block":"<?= $review_block ?>"
 				}
 			}

@@ -54,16 +54,16 @@
 			"components": {
 				"wheretobuy":{
 					"component":"Onibi_StoreLocator/js/wheretobuy",
-					"base_url":"<?= $block->getBaseUrl();?>",
-					"media_url":"<?= $block->getMediaUrl();?>",
-					"buyercountry":"<?= $buyercountryUrlParam;?>",
-					"sellercountry":"<?= $sellercountryUrlParam;?>",
-					"buyerprovince":"<?= $buyerprovinceUrlParam;?>",
-					"sellerprovince":"<?= $sellerprovinceUrlParam;?>",
-					"currentpage":"<?= $currentPage?>",
-					"limit":"<?= $limitUrlParam?>",
-					"whereToBuyPreText": <?= /* @escapeNotVerified */ $whereToBuyPreText ?>,
-					"sellerText":<?= /* @escapeNotVerified */ $sellerText ?>
+					"base_url":"<?= $block->escapeUrl($block->getBaseUrl()) ?>",
+					"media_url":"<?= $block->escapeUrl($block->getMediaUrl());?>",
+					"buyercountry":"<?= $block->escapeHtml($buyercountryUrlParam);?>",
+					"sellercountry":"<?= $block->escapeHtml($sellercountryUrlParam);?>",
+					"buyerprovince":"<?= $block->escapeHtml($buyerprovinceUrlParam);?>",
+					"sellerprovince":"<?= $block->escapeHtml($sellerprovinceUrlParam);?>",
+					"currentpage":"<?= $block->escapeHtml($currentPage);?>",
+					"limit":"<?= $block->escapeHtml($limitUrlParam);?>",
+					"whereToBuyPreText": <?= /* @escapeNotVerified */ $block->escapeHtml($whereToBuyPreText) ?>,
+					"sellerText":<?= /* @escapeNotVerified */ $block->escapeHtml($sellerText) ?>
 				}
 			}
 		}
