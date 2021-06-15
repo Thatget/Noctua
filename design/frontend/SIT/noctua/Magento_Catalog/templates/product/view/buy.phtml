@@ -159,8 +159,8 @@ $_product = $mainHelper->getCurrentProduct();
             $amazonLinkSe = $mainHelper->getVariableValue('amazon_link_se');
             $amazonTagSe = $mainHelper->getVariableValue('amazon_tag_se');
             $amazonAsinSe = $_product->getAmazonAsinSe();
-            if ($amazonLinkSe != '') {
-                if ($amazonAsinSe != '') {
+            if ($amazonAsinSe != '') {
+                if ($amazonTagSe != '') {
                     echo '<div class="amazon-product-buy"><a href="' . $amazonLinkSe . '/dp/' . $amazonAsinSe . '?tag=' . $amazonTagSe . '" target="_blank" class="dotted_link">Amazon.se</a></div>';
                 } else {
                     echo '<div class="amazon-product-buy"><a href="' . $amazonLinkSe . '/dp/' . $amazonAsinSe . '" target="_blank" class="dotted_link">Amazon.se</a></div>';
@@ -170,8 +170,8 @@ $_product = $mainHelper->getCurrentProduct();
             $amazonLinkPl = $mainHelper->getVariableValue('amazon_link_pl');
             $amazonTagPl = $mainHelper->getVariableValue('amazon_tag_pl');
             $amazonAsinPl = $_product->getAmazonAsinPl();
-            if ($amazonLinkPl != '') {
-                if ($amazonAsinPl != '') {
+            if ($amazonAsinPl != '') {
+                if ($amazonTagPl != '') {
                     echo '<div class="amazon-product-buy"><a href="' . $amazonLinkPl . '/dp/' . $amazonAsinPl . '?tag=' . $amazonTagPl . '" target="_blank" class="dotted_link">Amazon.pl</a></div>';
                 } else {
                     echo '<div class="amazon-product-buy"><a href="' . $amazonLinkPl . '/dp/' . $amazonAsinPl . '" target="_blank" class="dotted_link">Amazon.pl</a></div>';
@@ -181,8 +181,8 @@ $_product = $mainHelper->getCurrentProduct();
             $amazonLinkComAu = $mainHelper->getVariableValue('amazon_link_com_au');
             $amazonTagComAu = $mainHelper->getVariableValue('amazon_tag_com_au');
             $amazonAsinComAu = $_product->getAmazonAsinComAu();
-            if ($amazonLinkComAu != '') {
-                if ($amazonAsinComAu != '') {
+            if ($amazonAsinComAu != '') {
+                if ($amazonTagComAu != '') {
                     echo '<div class="amazon-product-buy"><a href="' . $amazonLinkComAu . '/dp/' . $amazonAsinComAu . '?tag=' . $amazonTagComAu . '" target="_blank" class="dotted_link">Amazon.com.au</a></div>';
                 } else {
                     echo '<div class="amazon-product-buy"><a href="' . $amazonLinkComAu . '/dp/' . $amazonAsinComAu . '" target="_blank" class="dotted_link">Amazon.com.au</a></div>';
@@ -192,8 +192,8 @@ $_product = $mainHelper->getCurrentProduct();
             $amazonLinkCoJp = $mainHelper->getVariableValue('amazon_link_co_jp');
             $amazonTagCoJp = $mainHelper->getVariableValue('amazon_tag_co_jp');
             $amazonAsinCoJp = $_product->getAmazonAsinCoJp();
-            if ($amazonLinkCoJp != '') {
-                if ($amazonAsinCoJp != '') {
+            if ($amazonAsinCoJp != '') {
+                if ($amazonTagCoJp != '') {
                     echo '<div class="amazon-product-buy"><a href="' . $amazonLinkCoJp . '/dp/' . $amazonAsinCoJp . '?tag=' . $amazonTagCoJp . '" target="_blank" class="dotted_link">Amazon.co.jp</a></div>';
                 } else {
                     echo '<div class="amazon-product-buy"><a href="' . $amazonLinkCoJp . '/dp/' . $amazonAsinCoJp . '" target="_blank" class="dotted_link">Amazon.co.jp</a></div>';
@@ -202,9 +202,9 @@ $_product = $mainHelper->getCurrentProduct();
 
             $amazonLinkComBr = $mainHelper->getVariableValue('amazon_link_com_br');
             $amazonTagComBr = $mainHelper->getVariableValue('amazon_tag_com_br');
-            $amazonAsinComBr = $_product->getAmazonAsinCoJp();
-            if ($amazonLinkComBr != '') {
-                if ($amazonAsinComBr != '') {
+            $amazonAsinComBr = $_product->getAmazonAsinComBr();
+            if ($amazonAsinComBr != '') {
+                if ($amazonTagComBr != '') {
                     echo '<div class="amazon-product-buy"><a href="' . $amazonLinkComBr . '/dp/' . $amazonAsinComBr . '?tag=' . $amazonTagComBr . '" target="_blank" class="dotted_link">Amazon.com.br</a></div>';
                 } else {
                     echo '<div class="amazon-product-buy"><a href="' . $amazonLinkComBr . '/dp/' . $amazonAsinComBr . '" target="_blank" class="dotted_link">Amazon.com.br</a></div>';
@@ -214,8 +214,8 @@ $_product = $mainHelper->getCurrentProduct();
             $amazonLinkIn = $mainHelper->getVariableValue('amazon_link_in');
             $amazonTagIn = $mainHelper->getVariableValue('amazon_tag_in');
             $amazonAsinIn = $_product->getAmazonAsinIn();
-            if ($amazonLinkIn != '') {
-                if ($amazonAsinIn != '') {
+            if ($amazonAsinIn != '') {
+                if ($amazonTagIn != '') {
                     echo '<div class="amazon-product-buy"><a href="' . $amazonLinkIn . '/dp/' . $amazonAsinIn . '?tag=' . $amazonTagIn . '" target="_blank" class="dotted_link">Amazon.in</a></div>';
                 } else {
                     echo '<div class="amazon-product-buy"><a href="' . $amazonLinkIn . '/dp/' . $amazonAsinIn . '" target="_blank" class="dotted_link">Amazon.in</a></div>';
@@ -225,8 +225,8 @@ $_product = $mainHelper->getCurrentProduct();
             $amazonLinkAe = $mainHelper->getVariableValue('amazon_link_ae');
             $amazonTagAe = $mainHelper->getVariableValue('amazon_tag_ae');
             $amazonAsinAe = $_product->getAmazonAsinAe();
-            if ($amazonLinkAe != '') {
-                if ($amazonAsinAe != '') {
+            if ($amazonAsinAe != '') {
+                if ($amazonTagAe != '') {
                     echo '<div class="amazon-product-buy"><a href="' . $amazonLinkAe . '/dp/' . $amazonAsinAe . '?tag=' . $amazonTagAe . '" target="_blank" class="dotted_link">Amazon.ae</a></div>';
                 } else {
                     echo '<div class="amazon-product-buy"><a href="' . $amazonLinkAe . '/dp/' . $amazonAsinAe . '" target="_blank" class="dotted_link">Amazon.ae</a></div>';
@@ -236,8 +236,8 @@ $_product = $mainHelper->getCurrentProduct();
             $amazonLinkSa = $mainHelper->getVariableValue('amazon_link_sa');
             $amazonTagSa = $mainHelper->getVariableValue('amazon_tag_sa');
             $amazonAsinSa = $_product->getAmazonAsinSa();
-            if ($amazonLinkSa != '') {
-                if ($amazonAsinSa != '') {
+            if ($amazonAsinSa != '') {
+                if ($amazonTagSa != '') {
                     echo '<div class="amazon-product-buy"><a href="' . $amazonLinkSa . '/dp/' . $amazonAsinSa . '?tag=' . $amazonTagSa . '" target="_blank" class="dotted_link">Amazon.sa</a></div>';
                 } else {
                     echo '<div class="amazon-product-buy"><a href="' . $amazonLinkSa . '/dp/' . $amazonAsinSa . '" target="_blank" class="dotted_link">Amazon.sa</a></div>';
@@ -247,8 +247,8 @@ $_product = $mainHelper->getCurrentProduct();
             $amazonLinkComTr = $mainHelper->getVariableValue('amazon_link_com_tr');
             $amazonTagComTr = $mainHelper->getVariableValue('amazon_tag_com_tr');
             $amazonAsinComTr = $_product->getAmazonAsinComTr();
-            if ($amazonLinkComTr != '') {
-                if ($amazonAsinComTr != '') {
+            if ($amazonAsinComTr != '') {
+                if ($amazonTagComTr != '') {
                     echo '<div class="amazon-product-buy"><a href="' . $amazonLinkComTr . '/dp/' . $amazonAsinComTr . '?tag=' . $amazonTagComTr . '" target="_blank" class="dotted_link">Amazon.com.tr</a></div>';
                 } else {
                     echo '<div class="amazon-product-buy"><a href="' . $amazonLinkComTr . '/dp/' . $amazonAsinComTr . '" target="_blank" class="dotted_link">Amazon.com.tr</a></div>';
